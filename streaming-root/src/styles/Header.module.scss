@@ -1,0 +1,33 @@
+.header {
+    height: 10vh;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 0 2rem; 
+    h1 {
+        margin: 0;
+        color: #fff; 
+        font-size: 1.2rem; 
+    }
+}
+
+.navMidUl {
+    display: flex;
+    gap: 2rem;
+    list-style-type: none;
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #FE4F2D;
+    }
+}
+
+.navRight {
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+    a {
+        text-decoration: none;
+        color: #FE4F2D;
+    }
+}
