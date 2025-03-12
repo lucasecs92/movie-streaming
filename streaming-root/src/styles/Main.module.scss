@@ -1,13 +1,44 @@
 .main {
-    background-color: #A5B68D;
-    flex-grow: 1; 
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    h1 {
-      font-size: 2.5rem; 
-      color: #fff;
-    }
+  background-color: #A5B68D;
+  flex-grow: 1; 
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  h1 {
+    font-size: 2.5rem; 
+    color: #fff;
+  }
+}
+
+.capasContainer {
+  display: flex;
+  flex-wrap: wrap; // Permite que as capas quebrem para a próxima linha
+  justify-content: center;
+  gap: 20px; // Espaçamento entre as capas
+  margin-top: 20px;
+}
+
+.capa {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: center;
+
+  img {
+    width: 200px; // Ajuste o tamanho das capas
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  &:hover {
+    transform: scale(1.05); // Efeito de zoom ao passar o mouse
+  }
 }
