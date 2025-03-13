@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <nav className={styles.navLeft}>
-        <h1>Meu Streaming</h1>
+        <h1>Cineminha</h1>
       </nav>
       <nav className={styles.navMid}>
         <ul className={styles.navMidUl}>

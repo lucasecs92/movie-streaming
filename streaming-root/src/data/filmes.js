@@ -7,14 +7,14 @@ export const filmes = [
     },
     {
       id: 2,
-      titulo: "Filme 2",
-      capa: "/caminho/da/capa2.jpg",
+      titulo: "Nosferatu (1922)",
+      capa: "../../covers/nosferatu-1922.jpg",
       iframeSrc: "https://archive.org/embed/outro-link",
     },
     {
       id: 3,
-      titulo: "Filme 3",
-      capa: "/caminho/da/capa3.jpg",
+      titulo: "O Homem da Terra (2007)",
+      capa: "../../covers/the-man-from-earth-2007.jpg",
       iframeSrc: "https://archive.org/embed/mais-um-link",
     },
     // Adicione mais filmes conforme necessário

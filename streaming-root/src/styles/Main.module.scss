@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; 
+
   h1 {
     font-size: 2.5rem; 
     color: #fff;
@@ -16,7 +17,7 @@
   display: flex;
   flex-wrap: wrap; // Permite que as capas quebrem para a próxima linha
   justify-content: center;
-  gap: 20px; // Espaçamento entre as capas
+  gap: 1.5rem; // Espaçamento entre as capas
   margin-top: 20px;
 }
 
@@ -30,6 +31,13 @@
     height: 300px;
     object-fit: cover;
     border-radius: 8px;
+    transition: 0.2s ease;
+
+    &:hover {
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+      transform: scale(1.05); // Efeito de zoom ao passar o mouse
+    }
   }
 
   p {
@@ -37,8 +45,31 @@
     font-size: 16px;
     color: #333;
   }
+}
+
+.playerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.iframe {
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.botaoVoltar {
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 
   &:hover {
-    transform: scale(1.05); // Efeito de zoom ao passar o mouse
+    background-color: #005bb5;
   }
 }
