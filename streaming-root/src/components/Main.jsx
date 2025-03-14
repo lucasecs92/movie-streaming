@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react"; // Adicionar useState
 import styles from "../styles/Main.module.scss";
+import { useState } from "react"; // Adicionar useState
 import { filmes } from "../data/filmes";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 
 export default function Main() {
   const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
@@ -40,22 +45,27 @@ export default function Main() {
         // Exibe a lista de filmes se nenhum filme estiver selecionado
         <>
           <h3>Lista de Filmes</h3>
-          <section className={styles.capasContainer}>
+          <Swiper 
+            className={styles.capasContainer}
+            modules={[Navigation]}
+            spaceBetween={-50} // Espaço entre os slides
+            slidesPerView={4} // Número de slides visíveis
+            navigation // Botões de navegação
+            loop={true} // Loop infinito
+          >
             {filmes.map((filme) => (
-              <section
-                key={filme.id}
-                className={styles.capa}
-                onClick={() => handleClick(filme)} // Passa o filme inteiro
-              >
-                <img src={filme.capa} alt={`Capa do ${filme.titulo}`} />
-                <p>
-                  {filme.titulo}
-                  <br/>
-                  {filme.ano}
-                </p>
-              </section>
+              <SwiperSlide key={filme.id} className={styles.capa}>
+                <section onClick={() => handleClick(filme)}> 
+                  <img src={filme.capa} alt={`Capa do ${filme.titulo}`} />
+                  <p>
+                    {filme.titulo}
+                    <br/>
+                    {filme.ano}
+                  </p>
+                </section>
+              </SwiperSlide>
             ))}
-          </section>
+          </Swiper>
         </>
       )}
     </main>

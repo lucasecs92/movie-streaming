@@ -4,7 +4,8 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
+  gap: 1rem; 
 
   h2 {
     font-size: 2rem; 
@@ -18,11 +19,8 @@
 }
 
 .capasContainer {
-  display: flex;
-  flex-wrap: wrap; // Permite que as capas quebrem para a próxima linha
-  justify-content: center;
-  gap: 1.5rem; // Espaçamento entre as capas
-  margin-top: 20px;
+  width: 100%;
+  padding: 20px;
 }
 
 .capa {
@@ -30,7 +28,8 @@
   transition: transform 0.2s ease;
   text-align: center;
   color: #333;   
-  
+  padding-top: 10px;
+
   &:hover {
     color: #fff;
     text-decoration: underline;
@@ -52,6 +51,35 @@
     margin-top: 10px;
     font-size: 13px;
     font-weight: bold;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #fff; // Cor dos botões de navegação
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #fff; // Cor da paginação ativa
+}
+
+.customNavigation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
