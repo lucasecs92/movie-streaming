@@ -22,7 +22,7 @@ export default function Main() {
       {filmeSelecionado ? (
         // Exibe o player do filme se um filme estiver selecionado
         <section className={styles.playerContainer}>
-          <h1>{filmeSelecionado.titulo}</h1>
+          <h2>{filmeSelecionado.titulo}</h2>
           <iframe
             className={styles.iframe}
             src={filmeSelecionado.iframeSrc}

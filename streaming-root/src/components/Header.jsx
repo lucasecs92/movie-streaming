@@ -5,9 +5,7 @@ export default function Header() {
     <header className={styles.header}>
       <nav className={styles.navLeft}>
         <h1>Cineminha</h1>
-      </nav>
-      <nav className={styles.navMid}>
-        <ul className={styles.navMidUl}>
+        <ul className={styles.navLeftUl}>
           <li>
             <a href="#">Home</a>
           </li>
@@ -18,6 +16,8 @@ export default function Header() {
             <a href="#">Séries</a>
           </li>
         </ul>
+      </nav>
+      <nav className={styles.navMid}>
       </nav>
       <nav className={styles.navRight}>
         <a href="#" className={styles.btnLogin}>LOGIN</a>
