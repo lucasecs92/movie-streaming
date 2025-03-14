@@ -20,8 +20,8 @@ export default function Header() {
         </ul>
       </nav>
       <nav className={styles.navRight}>
-        <a href="#">Login</a>
-        <a href="#">Cadastro</a>
+        <a href="#" className={styles.btnLogin}>LOGIN</a>
+        <a href="#" className={styles.btnCadastro}>CADASTRO</a>
       </nav>
     </header>
   );

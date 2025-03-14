@@ -19,15 +19,43 @@
         text-decoration: none;
         font-weight: bold;
         color: #FE4F2D;
+        &:hover {
+            text-decoration: underline;
+            text-underline-offset: 0.3em;
+            text-decoration-thickness: 2px;
+            color: #FE4F2D;
+        }
     }
 }
 
 .navRight {
     display: flex;
-    gap: 1rem;
+    gap: 0.3rem;
     list-style-type: none;
-    a {
-        text-decoration: none;
-        color: #FE4F2D;
+    align-items: center;
+}
+
+.btnCadastro, .btnLogin {
+    text-decoration: none;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.btnLogin {
+    &:hover {
+        background-color: #ffffff17;
+    }
+}
+
+.btnCadastro {
+    background-color: #FE4F2D;
+    &:hover {
+       background-color: #fe502dbe; 
+       outline: 2px solid #fe502dbe;
     }
 }

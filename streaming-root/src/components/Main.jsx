@@ -48,7 +48,11 @@ export default function Main() {
                 onClick={() => handleClick(filme)} // Passa o filme inteiro
               >
                 <img src={filme.capa} alt={`Capa do ${filme.titulo}`} />
-                <p>{filme.titulo}</p>
+                <p>
+                  {filme.titulo}
+                  <br/>
+                  {filme.ano}
+                </p>
               </section>
             ))}
           </section>
