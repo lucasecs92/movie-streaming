@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/Main.module.scss";
-import { useState } from "react"; // Adicionar useState
+import { useState } from "react";
 import { filmes } from "../data/filmes";
 
 import "swiper/css";
@@ -48,15 +48,15 @@ export default function Main() {
           <Swiper 
             className={styles.capasContainer}
             modules={[Navigation]}
-            spaceBetween={-50} // Espaço entre os slides
+            spaceBetween={-10} // Espaço entre os slides
             slidesPerView={4} // Número de slides visíveis
             navigation // Botões de navegação
             loop={true} // Loop infinito
           >
             {filmes.map((filme) => (
               <SwiperSlide key={filme.id} className={styles.capa}>
-                <section onClick={() => handleClick(filme)}> 
-                  <img src={filme.capa} alt={`Capa do ${filme.titulo}`} />
+                <section onClick={() => handleClick(filme)} className={styles.capaWrap}> 
+                  <img src={filme.capa} alt={`Capa do ${filme.titulo}`}/>
                   <p>
                     {filme.titulo}
                     <br/>

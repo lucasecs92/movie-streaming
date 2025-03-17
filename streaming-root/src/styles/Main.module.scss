@@ -28,34 +28,42 @@
 }
 
 .capa {
-  cursor: pointer;
   transition: transform 0.2s ease;
   text-align: center;
   color: #333;   
   padding-top: 10px;
 
-  &:hover {
-    color: #fff;
-    text-decoration: underline;
-  }
-
   img {
     width: 200px; // Ajuste o tamanho das capas
     height: 300px;
-    object-fit: cover;
     border-radius: 8px;
 
     &:hover {
       outline: 3px solid #fff;
       outline-offset: 2px;
+      cursor: pointer;
     }
   }
 
   p {
-    margin-top: 10px;
+    width: 200px;
+    margin: 10px 0;
     font-size: 13px;
     font-weight: bold;
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      text-decoration: underline;
+    }
   }
+}
+
+.capaWrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 .playerContainer {
