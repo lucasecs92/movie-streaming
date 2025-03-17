@@ -1,3 +1,7 @@
+:root {
+  --swiper-navigation-color: #fff; // Cor do ícone
+}
+
 .main {
   background-color: #A5B68D;
   flex-grow: 1; 
@@ -51,35 +55,6 @@
     margin-top: 10px;
     font-size: 13px;
     font-weight: bold;
-  }
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  color: #fff; // Cor dos botões de navegação
-}
-
-.swiper-pagination-bullet-active {
-  background-color: #fff; // Cor da paginação ativa
-}
-
-.customNavigation {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
