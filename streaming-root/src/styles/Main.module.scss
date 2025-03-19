@@ -34,7 +34,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 }
 
 .slideFilmes {
@@ -47,7 +46,7 @@
   width: 100%;
   display: flex;
   transition: transform 0.5s ease-in-out; // Efeito de transição suave
-  margin: 0 -10px; // Margem negativa para compensar o padding dos filhos
+  margin: 10px 0;
 }
 
 .capaWrap {
@@ -93,18 +92,23 @@
 }
 
 .navButton {
-  padding: 10px 20px;
-  background-color: rgb(74, 74, 180);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: transparent;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 2rem;
   font-family: 'Ubuntu', sans-serif;
   transition: 0.2s all ease-in-out;
+  z-index: 1;
 
   &:hover {
-    background-color: darken(blue, 10%);
+    transform: scale(1.8);
+    z-index: 2;
   }
 }
 

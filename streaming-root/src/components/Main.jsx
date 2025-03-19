@@ -3,6 +3,7 @@
 import styles from "../styles/Main.module.scss";
 import { useEffect, useState } from "react";
 import { filmes } from "../data/filmes";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
 export default function Main() {
   const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
@@ -75,7 +76,9 @@ export default function Main() {
           <section className={styles.listaContainer}>
             <h3>Lista de Filmes</h3>
             <section className={styles.carouselContainer}>
-              <button onClick={prevSlide} className={styles.navButton}>Prev</button>
+              <button onClick={prevSlide} className={styles.navButton}>
+                <BsChevronLeft />
+              </button>
               <section className={styles.slideFilmes}>
                 <section className={styles.slideWrapper} style={{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`, transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none' }}>
                   {filmes.map((filme) => (
@@ -90,7 +93,9 @@ export default function Main() {
                   ))}
                 </section>
               </section>
-              <button onClick={nextSlide} className={styles.navButton}>Next</button>
+              <button onClick={nextSlide} className={styles.navButton}>
+                <BsChevronRight />
+              </button>
             </section>
           </section>
         </>
