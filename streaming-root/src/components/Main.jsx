@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/Main.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { filmes } from "../data/filmes";
 
 import "swiper/css";
@@ -11,6 +11,7 @@ import { Navigation } from "swiper/modules";
 
 export default function Main() {
   const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
+  const [slidesPerView, setSlidesPerView] = useState(4);
 
   // Função para exibir o filme selecionado
   const handleClick = (filme) => {
@@ -21,6 +22,21 @@ export default function Main() {
   const voltarParaLista = () => {
     setFilmeSelecionado(null); // Limpa o filme selecionado
   };
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 795) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(4);
+      }
+    };
+  
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Configura o valor inicial
+  
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -44,28 +60,34 @@ export default function Main() {
       ) : (
         // Exibe a lista de filmes se nenhum filme estiver selecionado
         <>
-          <h3>Lista de Filmes</h3>
-          <Swiper 
-            className={styles.capasContainer}
-            modules={[Navigation]}
-            spaceBetween={-10} // Espaço entre os slides
-            slidesPerView={4} // Número de slides visíveis
-            navigation // Botões de navegação
-            loop={true} // Loop infinito
-          >
-            {filmes.map((filme) => (
-              <SwiperSlide key={filme.id} className={styles.capa}>
-                <section onClick={() => handleClick(filme)} className={styles.capaWrap}> 
-                  <img src={filme.capa} alt={`Capa do ${filme.titulo}`}/>
-                  <p>
-                    {filme.titulo}
-                    <br/>
-                    {filme.ano}
-                  </p>
-                </section>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <section className={styles.listaContainer}>
+            <h3>Lista de Filmes</h3>
+            <section className={styles.slideFilmes}>
+              <Swiper
+                modules={[Navigation]}
+              //spaceBetween={10} // Espaço entre os slides
+                slidesPerView={slidesPerView} // Número de slides visíveis
+                slidesPerGroup={slidesPerView} // Número de slides a avançar de uma vez
+                navigation // Botões de navegação
+                loop={true} // Loop infinito
+              >
+                {filmes.map((filme) => {
+                  return (
+                    <SwiperSlide key={filme.id} className={styles.capa}>
+                      <section className={styles.capaWrap}>
+                        <img src={filme.capa} alt={`Capa do ${filme.titulo}`} onClick={() => handleClick(filme)}/>
+                        <p onClick={() => handleClick(filme)}>
+                          {filme.titulo}
+                          <br/>
+                          {filme.ano}
+                        </p>
+                      </section>
+                    </SwiperSlide>
+                  )
+                })}
+              </Swiper>
+            </section>
+          </section>
         </>
       )}
     </main>

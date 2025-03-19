@@ -3,40 +3,42 @@
 }
 
 .main {
+  width: 100%;
+  height: 100%;
+  // max-width: 1440px;
+  margin: 0 auto;
+  padding: 4rem 15%;
   background-color: #A5B68D;
-  flex-grow: 1; 
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem; 
-
-  h2 {
-    font-size: 2rem; 
-    color: #fff;
-  }
-
-  h3 {
-    color: #333;
-    padding-left: 10px;
-  }
+  gap: 1rem;
 }
 
-.capasContainer {
+.listaContainer {
   width: 100%;
   padding: 20px;
+  
+  h3 {
+    color: #333;
+    text-align: center;
+    margin: 30px 0;
+    font-family: 'Young Serif', serif;
+    font-size: 2rem;
+    font-weight: 100;
+  }
 }
 
 .capa {
   transition: transform 0.2s ease;
   text-align: center;
-  color: #333;   
+  color: #333;
   padding-top: 10px;
 
   img {
-    width: 200px; // Ajuste o tamanho das capas
-    height: 300px;
-    border-radius: 8px;
+    width: 250px;
+    height: 350px;
+    border-radius: 5px;
 
     &:hover {
       outline: 3px solid #fff;
@@ -51,6 +53,8 @@
     font-size: 13px;
     font-weight: bold;
     text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+
     &:hover {
       cursor: pointer;
       color: #fff;
@@ -71,24 +75,83 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 20px;
+  }
 }
 
 .iframe {
   margin-top: 20px;
   border: 2px solid #ccc;
   border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
 }
 
 .botaoVoltar {
   padding: 10px 20px;
-  background-color: #0070f3;
+  background-color: rgb(74, 74, 180); 
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  transition: 0.2s all ease-in-out;
 
   &:hover {
-    background-color: #005bb5;
+    background-color: darken(blue, 10%); 
   }
 }
+
+@media (max-width: 1730px) {
+  .main {
+    padding: 4rem 10%;
+  }
+}
+
+@media (max-width: 1530px) {
+  .main {
+    padding: 4rem 8%;
+  }
+}
+
+@media (max-width: 1330px) {
+  .main {
+    padding: 4rem 6%;
+  }
+  .capa img {
+    width: 200px;
+    height: 270px;
+  }
+}
+
+@media (max-width: 995px) {
+  .main {
+    padding: 4rem 5%;
+  }
+  .capa img {
+    width: 160px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 795px) {
+  .main {
+    padding: 0;
+  }
+
+  .capa img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+// @media (max-width: 575px;) {
+
+// }
