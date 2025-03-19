@@ -3,7 +3,8 @@
 import styles from "../styles/Main.module.scss";
 import { useEffect, useState } from "react";
 import { filmes } from "../data/filmes";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import Player from "./Player";
+import MovieList from "./MovieList";
 
 export default function Main() {
   const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
@@ -48,57 +49,25 @@ export default function Main() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Calcula os filmes visíveis com base no índice atual
-  const visibleFilmes = filmes.slice(currentIndex, currentIndex + slidesPerView);
-
   return (
     <main className={styles.main}>
       {filmeSelecionado ? (
         // Exibe o player do filme se um filme estiver selecionado
-        <section className={styles.playerContainer}>
-          <h2>{filmeSelecionado.titulo}</h2>
-          <iframe
-            className={styles.iframe}
-            src={filmeSelecionado.iframeSrc}
-            width="560"
-            height="384"
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            allowFullScreen
-          ></iframe>
-          <button onClick={voltarParaLista} className={styles.botaoVoltar}>
-            Voltar para a lista
-          </button>
-        </section>
+        <Player 
+          filmeSelecionado={filmeSelecionado} 
+          voltarParaLista={voltarParaLista} 
+        />
       ) : (
         // Exibe a lista de filmes se nenhum filme estiver selecionado
-        <>
-          <section className={styles.listaContainer}>
-            <h3>Lista de Filmes</h3>
-            <section className={styles.carouselContainer}>
-              <button onClick={prevSlide} className={styles.navButton}>
-                <BsChevronLeft />
-              </button>
-              <section className={styles.slideFilmes}>
-                <section className={styles.slideWrapper} style={{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`, transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none' }}>
-                  {filmes.map((filme) => (
-                    <section key={filme.id} className={styles.capaWrap}>
-                      <img src={filme.capa} alt={`Capa do ${filme.titulo}`} onClick={() => handleClick(filme)} />
-                      <p onClick={() => handleClick(filme)}>
-                        {filme.titulo}
-                        <br />
-                        {filme.ano}
-                      </p>
-                    </section>
-                  ))}
-                </section>
-              </section>
-              <button onClick={nextSlide} className={styles.navButton}>
-                <BsChevronRight />
-              </button>
-            </section>
-          </section>
-        </>
+        <MovieList 
+          filmes={filmes}
+          currentIndex={currentIndex}
+          slidesPerView={slidesPerView}
+          transitionEnabled={transitionEnabled}
+          nextSlide={nextSlide}
+          prevSlide={prevSlide}
+          handleClick={handleClick}
+        />
       )}
     </main>
   );
