@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/Main.module.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { filmes } from "../data/filmes";
 import Player from "./Player";
 import MovieList from "./MovieList";
@@ -13,26 +13,27 @@ export default function Main() {
   const [transitionEnabled, setTransitionEnabled] = useState(true); // Estado para habilitar/desabilitar a transição
 
   // Função para exibir o filme selecionado
-  const handleClick = (filme) => {
+  const handleClick = useCallback((filme) => {
     setFilmeSelecionado(filme); // Define o filme selecionado
-  };
+  }, []);
+
 
   // Função para voltar à lista de filmes
-  const voltarParaLista = () => {
+  const voltarParaLista = useCallback(() => {
     setFilmeSelecionado(null); // Limpa o filme selecionado
-  };
+  }, []);
 
   // Função para avançar para o próximo conjunto de filmes
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setTransitionEnabled(true); // Habilita a transição
     setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
-  };
+  }, [slidesPerView]);
 
   // Função para voltar ao conjunto anterior de filmes
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setTransitionEnabled(true); // Habilita a transição
     setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
-  };
+  }, [slidesPerView]);
   
   useEffect(() => {
     const handleResize = () => {
