@@ -70,4 +70,19 @@ export const filmes = [
       iframeSrc: "https://archive.org/embed/mais-um-link",
     },
     // Adicione mais filmes conforme necessário
+    {
+      id: 11,
+      titulo: "Sintel",
+      ano: "(2010)",
+      capa: "../../covers/sintel-2010.jpg",
+      iframeSrc: "https://archive.org/embed/mais-um-link",
+    },
+    {
+      id: 12,
+      titulo: "Bancando o Águia",
+      ano: "(1924)",
+      capa: "../../covers/sherlock-jr-1924.jpg",
+      iframeSrc: "https://archive.org/embed/mais-um-link",
+    },
+    // Adicione mais filmes conforme necessário
 ];

@@ -4,14 +4,11 @@ import styles from "../styles/Main.module.scss";
 import { useEffect, useState } from "react";
 import { filmes } from "../data/filmes";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
 export default function Main() {
   const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
   const [slidesPerView, setSlidesPerView] = useState(4);
+  const [currentIndex, setCurrentIndex] = useState(0); // Estado para controlar o índice atual do carrossel
+  const [transitionEnabled, setTransitionEnabled] = useState(true); // Estado para habilitar/desabilitar a transição
 
   // Função para exibir o filme selecionado
   const handleClick = (filme) => {
@@ -21,6 +18,18 @@ export default function Main() {
   // Função para voltar à lista de filmes
   const voltarParaLista = () => {
     setFilmeSelecionado(null); // Limpa o filme selecionado
+  };
+
+  // Função para avançar para o próximo conjunto de filmes
+  const nextSlide = () => {
+    setTransitionEnabled(true); // Habilita a transição
+    setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
+  };
+
+  // Função para voltar ao conjunto anterior de filmes
+  const prevSlide = () => {
+    setTransitionEnabled(true); // Habilita a transição
+    setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
   };
   
   useEffect(() => {
@@ -37,6 +46,9 @@ export default function Main() {
   
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Calcula os filmes visíveis com base no índice atual
+  const visibleFilmes = filmes.slice(currentIndex, currentIndex + slidesPerView);
 
   return (
     <main className={styles.main}>
@@ -62,30 +74,23 @@ export default function Main() {
         <>
           <section className={styles.listaContainer}>
             <h3>Lista de Filmes</h3>
-            <section className={styles.slideFilmes}>
-              <Swiper
-                modules={[Navigation]}
-              //spaceBetween={10} // Espaço entre os slides
-                slidesPerView={slidesPerView} // Número de slides visíveis
-                slidesPerGroup={slidesPerView} // Número de slides a avançar de uma vez
-                navigation // Botões de navegação
-                loop={true} // Loop infinito
-              >
-                {filmes.map((filme) => {
-                  return (
-                    <SwiperSlide key={filme.id} className={styles.capa}>
-                      <section className={styles.capaWrap}>
-                        <img src={filme.capa} alt={`Capa do ${filme.titulo}`} onClick={() => handleClick(filme)}/>
-                        <p onClick={() => handleClick(filme)}>
-                          {filme.titulo}
-                          <br/>
-                          {filme.ano}
-                        </p>
-                      </section>
-                    </SwiperSlide>
-                  )
-                })}
-              </Swiper>
+            <section className={styles.carouselContainer}>
+              <button onClick={prevSlide} className={styles.navButton}>Prev</button>
+              <section className={styles.slideFilmes}>
+                <section className={styles.slideWrapper} style={{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`, transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none' }}>
+                  {filmes.map((filme) => (
+                    <section key={filme.id} className={styles.capaWrap}>
+                      <img src={filme.capa} alt={`Capa do ${filme.titulo}`} onClick={() => handleClick(filme)} />
+                      <p onClick={() => handleClick(filme)}>
+                        {filme.titulo}
+                        <br />
+                        {filme.ano}
+                      </p>
+                    </section>
+                  ))}
+                </section>
+              </section>
+              <button onClick={nextSlide} className={styles.navButton}>Next</button>
             </section>
           </section>
         </>
