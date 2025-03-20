@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../styles/Main.module.scss";
+import styles from "../styles/Player.module.scss";
 
 const Player = ({ filmeSelecionado, voltarParaLista }) => {
   return (

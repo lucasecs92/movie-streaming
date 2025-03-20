@@ -1,205 +1,60 @@
-// :root {
-//   --swiper-navigation-color: #fff; // Cor do ícone
-// }
-
 .main {
   width: 100%;
-  height: 100%;
+  height: 80vh;
   // max-width: 1440px;
   margin: 0 auto;
-  // padding: 4rem 15%;
   padding: min(4em, 15%);
-  background-color: #A5B68D;
+  background-color: #a5b68d;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
 }
 
-.listaContainer {
-  width: 100%;
-  // padding: 20px;
-  
-  h3 {
-    color: #333;
-    text-align: center;
-    margin: 30px 0;
-    font-family: 'Young Serif', serif;
-    font-size: 3vw;
-    font-weight: 100;
-  }
-}
-
-.carouselContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slideFilmes {
-  width: 100%;
-  overflow: hidden; // Esconde o conteúdo que ultrapassa o contêiner
-  position: relative;
-}
-
-.slideWrapper {
-  width: 100%;
-  display: flex;
-  transition: transform 0.5s ease-in-out; // Efeito de transição suave
-  margin: 10px 0;
-}
-
-.capaWrap {
-  transition: transform 0.2s ease;
+.banner {
   text-align: center;
-  color: #333;
-  padding: 1rem;
-  flex: 0 0 calc(100% / 4); // Define o tamanho de cada filme no carrossel
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: auto;
-    // max-width: 100%;
-    // aspect-ratio: 9 / 16;
-    // object-fit: contain;
-    border-radius: 5px;
-
-    &:hover {
-      outline: 3px solid #fff;
-      outline-offset: 2px;
-      cursor: pointer;
-    }
-  }
-
-  p {
-    width: 200px;
-    margin: 10px 0;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-
-    &:hover {
-      cursor: pointer;
-      color: #fff;
-      text-decoration: underline;
-    }
-  }
-}
-
-.navButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background-color: transparent;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 2rem;
-  font-family: 'Ubuntu', sans-serif;
-  transition: 0.2s all ease-in-out;
-  z-index: 1;
-
-  &:hover {
-    transform: scale(1.8);
-    z-index: 2;
-  }
-}
-
-.playerContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-
-  h2 {
-    font-size: 2rem;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-}
-
-.iframe {
-  margin-top: 20px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
+  padding: 20px;
+  background-color: #f0f0f0;
   width: 100%;
-  max-width: 800px;
-  height: 450px;
 }
 
-.botaoVoltar {
-  padding: 10px 20px;
-  background-color: rgb(74, 74, 180); 
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.banner h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.banner p {
   font-size: 16px;
-  font-family: 'Ubuntu', sans-serif;
-  transition: 0.2s all ease-in-out;
-
-  &:hover {
-    background-color: darken(blue, 10%); 
-  }
+  color: #666;
 }
 
 @media (max-width: 1730px) {
   .main {
-    // padding: 4rem 10%;
     padding: min(4em, 10%);
   }
 }
 
 @media (max-width: 1530px) {
   .main {
-    // padding: 4rem 8%;
     padding: min(4em, 8%);
   }
 }
 
 @media (max-width: 1330px) {
   .main {
-    // padding: 4rem 6%;
     padding: min(4em, 6%);
-  }
-  .capa img {
-    width: 200px;
-    height: 270px;
   }
 }
 
 @media (max-width: 995px) {
   .main {
-    // padding: 4rem 5%;
     padding: min(4em, 5%);
-  }
-  .capa img {
-    width: 160px;
-    height: 240px;
   }
 }
 
 @media (max-width: 795px) {
   .main {
     padding: 0;
-  }
-
-  .capaWrap {
-    flex: 0 0 calc(100% / 2); // 2 filmes por vez em telas menores
-    padding: 1rem;
-  }
-
-  .capa img {
-    width: 100%;
-    height: auto;
   }
 }
 

@@ -1,0 +1,121 @@
+.listaContainer {
+  width: 100%;
+  // padding: 20px;
+
+  h3 {
+    color: #333;
+    text-align: center;
+    margin: 30px 0;
+    font-family: "Young Serif", serif;
+    font-size: 3vw;
+    font-weight: 100;
+  }
+}
+
+.carouselContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideFilmes {
+  width: 100%;
+  overflow: hidden; // Esconde o conteúdo que ultrapassa o contêiner
+  position: relative;
+}
+
+.slideWrapper {
+  width: 100%;
+  display: flex;
+  transition: transform 0.5s ease-in-out; // Efeito de transição suave
+  margin: 10px 0;
+}
+
+.capaWrap {
+  transition: transform 0.2s ease;
+  text-align: center;
+  color: #333;
+  padding: 1rem;
+  flex: 0 0 calc(100% / 4); // Define o tamanho de cada filme no carrossel
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: auto;
+    // max-width: 100%;
+    // aspect-ratio: 9 / 16;
+    // object-fit: contain;
+    border-radius: 5px;
+
+    &:hover {
+      outline: 3px solid #fff;
+      outline-offset: 2px;
+      cursor: pointer;
+    }
+  }
+
+  p {
+    width: 200px;
+    margin: 10px 0;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-family: "Ubuntu", sans-serif;
+  transition: 0.2s all ease-in-out;
+  z-index: 1;
+
+  &:hover {
+    transform: scale(1.8);
+    z-index: 2;
+  }
+}
+
+@media (max-width: 1330px) {
+  .capa img {
+    width: 200px;
+    height: 270px;
+  }
+}
+
+@media (max-width: 995px) {
+  .capaWrap img {
+    width: 160px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 795px) {
+  .capaWrap {
+    flex: 0 0 calc(100% / 2); // 2 filmes por vez em telas menores
+    padding: 1rem;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.playerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+}
+
+.iframe {
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+}
+
+.botaoVoltar {
+  padding: 10px 20px;
+  background-color: rgb(74, 74, 180);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Ubuntu", sans-serif;
+  transition: 0.2s all ease-in-out;
+
+  &:hover {
+    background-color: darken(blue, 10%);
+  }
+}

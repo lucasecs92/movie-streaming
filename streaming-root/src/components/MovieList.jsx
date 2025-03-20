@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../styles/Main.module.scss";
+import styles from "../styles/MovieList.module.scss";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
 const MovieList = ({
