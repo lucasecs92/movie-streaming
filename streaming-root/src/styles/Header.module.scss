@@ -20,10 +20,12 @@
     display: flex;
     gap: 2rem;
     list-style-type: none;
-    a {
+    li {
         text-decoration: none;
         font-weight: bold;
         color: #FE4F2D;
+        cursor: pointer;
+
         &:hover {
             text-decoration: underline;
             text-underline-offset: 0.3em;
@@ -38,6 +40,12 @@
     gap: 0.3rem;
     list-style-type: none;
     align-items: center;
+}
+
+.navRightUl {
+    display: flex;
+    list-style-type: none;
+    gap: 0.6rem;
 }
 
 .btnCadastro, 
