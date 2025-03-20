@@ -6,19 +6,14 @@ import { filmes } from "../data/filmes";
 import Player from "./Player";
 import MovieList from "./MovieList";
 
-export default function Main({ onFilmesClick, showBanner }) { // Recebe showBanner como prop
-  const [filmeSelecionado, setFilmeSelecionado] = useState(null);
+export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista }) {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
   const handleClick = useCallback((filme) => {
     setFilmeSelecionado(filme);
-  }, []);
-
-  const voltarParaLista = useCallback(() => {
-    setFilmeSelecionado(null);
-  }, []);
+  }, [setFilmeSelecionado]);
 
   const nextSlide = useCallback(() => {
     setTransitionEnabled(true);
