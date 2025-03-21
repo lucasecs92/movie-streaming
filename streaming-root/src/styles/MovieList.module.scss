@@ -97,20 +97,35 @@
 }
 
 @media (max-width: 1330px) {
+  .listaContainer {
+    padding: 50px 0;
+  }
   .capa img {
     width: 200px;
     height: 270px;
   }
 }
 
-@media (max-width: 995px) {
-  .capaWrap img {
-    width: 160px;
-    height: 240px;
+@media (max-width: 1020px) {
+  .capaWrap {
+    padding: 0;
+
+    img {
+      width: 80%;
+      height: 240px;
+    }
   }
+  
 }
 
-@media (max-width: 795px) {
+// @media (max-width: 995px) {
+//   .capaWrap img {
+//     width: 160px;
+//     height: 240px;
+//   }
+// }
+
+@media (max-width: 960px) {
   .capaWrap {
     flex: 0 0 calc(100% / 2); // 2 filmes por vez em telas menores
     padding: 1rem;
