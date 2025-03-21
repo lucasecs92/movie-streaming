@@ -3,7 +3,7 @@
   // padding: 20px;
 
   h3 {
-    color: #333;
+    color: #fff;
     text-align: center;
     margin: 30px 0;
     font-family: "Young Serif", serif;
@@ -34,13 +34,13 @@
 .capaWrap {
   transition: transform 0.2s ease;
   text-align: center;
-  color: #333;
   padding: 1rem;
   flex: 0 0 calc(100% / 4); // Define o tamanho de cada filme no carrossel
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 0.5rem;
 
   img {
     width: 100%;
@@ -64,6 +64,7 @@
     font-weight: bold;
     text-align: center;
     font-family: "Ubuntu", sans-serif;
+    color: #6b6b6b;
 
     &:hover {
       cursor: pointer;

@@ -1,10 +1,11 @@
 .main {
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   // max-width: 1440px;
   margin: 0 auto;
-  padding: min(4em, 15%);
-  background-color: #a5b68d;
+  padding: min(7em, 15%);
+  background-color: #151B23;
+  // background-color: #a5b68d;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,25 +31,31 @@
 
 @media (max-width: 1730px) {
   .main {
-    padding: min(4em, 10%);
+    padding: min(7em, 10%);
   }
 }
 
 @media (max-width: 1530px) {
   .main {
-    padding: min(4em, 8%);
+    padding: min(7em, 8%);
   }
 }
 
 @media (max-width: 1330px) {
   .main {
-    padding: min(4em, 6%);
+    padding: min(7em, 6%);
+  }
+}
+
+@media (max-width: 1130px) {
+  .main {
+    padding: min(7em, 1%);
   }
 }
 
 @media (max-width: 995px) {
   .main {
-    padding: min(4em, 5%);
+    padding: min(7em, 5%);
   }
 }
 

@@ -1,4 +1,12 @@
 .footer {
-    height: 30vh;
+    height: 8vh;
     background-color: #015551;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+        margin: 10px;
+        color: #fff;
+        font-size: 14px;
+    }
 }
