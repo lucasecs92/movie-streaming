@@ -18,12 +18,12 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
   const nextSlide = useCallback(() => {
     setTransitionEnabled(true);
     setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
-  }, [slidesPerView]);
+  }, [slidesPerView, filmes.length]);
 
   const prevSlide = useCallback(() => {
     setTransitionEnabled(true);
     setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
-  }, [slidesPerView]);
+  }, [slidesPerView, filmes.length]);
 
   useEffect(() => {
     const handleResize = () => {
