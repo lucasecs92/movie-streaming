@@ -1,10 +1,16 @@
 .header {
-    height: 10vh;
     display: flex;
     align-items: center; 
     justify-content: space-between; 
     padding: 0 2rem; 
     background-color: #151b23b6;
+    
+    position: fixed;    
+    height: 10vh;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+
     h1 {
         margin: 0;
         color: #fff; 
