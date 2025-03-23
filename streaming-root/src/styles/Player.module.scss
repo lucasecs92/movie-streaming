@@ -1,8 +1,10 @@
 .playerContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
+  height: 100vh;
 
   h2 {
     font-size: 2rem;
@@ -21,6 +23,7 @@
 }
 
 .botaoVoltar {
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: rgb(74, 74, 180);
   color: white;
