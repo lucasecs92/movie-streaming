@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "../styles/MovieList.module.scss";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
 const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) => {
   const [currentIndex1, setCurrentIndex1] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
+  const startX = useRef(0);
+  const currentTranslate = useRef(0);
+  const prevTranslate = useRef(0);
+  const isDragging = useRef(false);
 
   const nextSlide = (setCurrentIndex, currentIndex) => {
     setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
@@ -16,10 +20,45 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
     setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
   };
 
+  const handleMouseDown = (event) => {
+    startX.current = event.pageX;
+    isDragging.current = true;
+  };
+
+  const handleMouseMove = (event, setCurrentIndex, currentIndex) => {
+    if (isDragging.current) {
+      const currentPosition = event.pageX;
+      const movedBy = currentPosition - startX.current;
+      currentTranslate.current = prevTranslate.current + movedBy;
+      if (movedBy > 100) {
+        prevSlide(setCurrentIndex, currentIndex);
+        isDragging.current = false;
+      } else if (movedBy < -100) {
+        nextSlide(setCurrentIndex, currentIndex);
+        isDragging.current = false;
+      }
+    }
+  };
+
+  const handleMouseUp = () => {
+    prevTranslate.current = currentTranslate.current;
+    isDragging.current = false;
+  };
+
+  const handleDragStart = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <section className={styles.listaContainer}>
       <h3>Lista de Filmes</h3>
-      <section className={styles.carouselContainer}>
+      <section
+        className={styles.carouselContainer}
+        onMouseDown={handleMouseDown}
+        onMouseMove={(event) => handleMouseMove(event, setCurrentIndex1, currentIndex1)}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
         <button onClick={() => prevSlide(setCurrentIndex1, currentIndex1)} className={styles.navButton}>
           <BsChevronLeft />
         </button>
@@ -37,6 +76,7 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
                   src={filme.capa}
                   alt={`Capa do ${filme.titulo}`}
                   onClick={() => handleClick(filme)}
+                  onDragStart={handleDragStart}
                 />
                 <p onClick={() => handleClick(filme)}>
                   {filme.titulo}
@@ -53,7 +93,13 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
       </section>
 
       {/* Nova seção de carouselContainer */}
-      <section className={styles.carouselContainer}>
+      <section
+        className={styles.carouselContainer}
+        onMouseDown={handleMouseDown}
+        onMouseMove={(event) => handleMouseMove(event, setCurrentIndex2, currentIndex2)}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
         <button onClick={() => prevSlide(setCurrentIndex2, currentIndex2)} className={styles.navButton}>
           <BsChevronLeft />
         </button>
@@ -71,6 +117,7 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
                   src={filme.capa}
                   alt={`Capa do ${filme.titulo}`}
                   onClick={() => handleClick(filme)}
+                  onDragStart={handleDragStart}
                 />
                 <p onClick={() => handleClick(filme)}>
                   {filme.titulo}

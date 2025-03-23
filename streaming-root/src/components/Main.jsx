@@ -50,9 +50,11 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
       ) : (
         <>
           {showBanner ? (
-            <section className={styles.banner}>
-              <h2>Bem-vindo ao Cineminha!</h2>
-              <p>Assista aos melhores filmes e séries aqui.</p>
+            <section className={styles.homeContainer}>
+              <section className={styles.banner}>
+                <h2>Bem-vindo(a) ao Cineminha!</h2>
+                <p>Assista aos melhores filmes e séries aqui.</p>
+              </section>
             </section>
           ) : (
             <MovieList 
