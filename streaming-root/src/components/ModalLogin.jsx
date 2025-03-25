@@ -1,6 +1,7 @@
 import styles from "../styles/Modal.module.scss";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
-export default function Modal({ isOpen, onClose, children }) {
+export default function ModalLogin({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
   return (
@@ -10,7 +11,9 @@ export default function Modal({ isOpen, onClose, children }) {
         <p>Digite o endereço de e-mail e a senha da sua conta Cineminha.</p>
       </section>
       <section className={styles.modalContent}>
-        <button className={styles.closeButton} onClick={onClose}>X</button>
+        <span className={styles.closeButton} >
+            <IoIosCloseCircleOutline onClick={onClose}/>
+        </span>
         {children}
       </section>
     </section>

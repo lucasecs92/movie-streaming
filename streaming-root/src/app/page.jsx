@@ -4,7 +4,8 @@ import styles from "../styles/page.module.scss";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import Modal from "../components/Modal";
+import ModalLogin from "../components/ModalLogin";
+import ModalCadastro from "@/components/ModalCadastro";
 import { useState, useCallback } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
@@ -65,7 +66,7 @@ export default function Home() {
         voltarParaLista={voltarParaLista}
       />
       <Footer />
-      <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
+      <ModalLogin isOpen={isLoginModalOpen} onClose={closeLoginModal}>
         {/* <h2 className={styles.heading}>Entrar</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
@@ -86,9 +87,9 @@ export default function Home() {
           <button className={styles.button} type="submit">Entrar</button>
           <a href="#" className={styles.forgotPassword}>Esqueceu a senha?</a>
         </form>
-      </Modal>
-      <Modal isOpen={isCadastroModalOpen} onClose={closeCadastroModal}>
-        <h2>Cadastro</h2>
+      </ModalLogin>
+      <ModalCadastro isOpen={isCadastroModalOpen} onClose={closeCadastroModal}>
+        {/* <h2>Cadastro</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
           <input className={styles.input} type="email" required />
@@ -112,7 +113,7 @@ export default function Home() {
           </section>
           <button className={styles.button} type="submit">Cadastrar</button>
         </form>
-      </Modal>
+      </ModalCadastro>
     </section>
   );
 }
