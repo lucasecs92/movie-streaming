@@ -8,6 +8,7 @@ import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
 import { useState, useCallback } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { IoClose } from "react-icons/io5"; // Importe o ícone IoClose
 
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
@@ -16,6 +17,7 @@ export default function Home() {
   const [isCadastroModalOpen, setIsCadastroModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [email, setEmail] = useState(""); // Estado para controlar o valor do campo de email
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -49,6 +51,14 @@ export default function Home() {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const clearEmail = () => {
+    setEmail("");
+  };
+
   return (
     <section className={styles.containerPage}>
       <Header
@@ -70,7 +80,18 @@ export default function Home() {
         {/* <h2 className={styles.heading}>Entrar</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
-          <input className={styles.input} type="email" required />
+          <section className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {email && (
+              <IoClose className={styles.clearIcon} onClick={clearEmail} />
+            )}
+          </section>
           <label className={styles.label}>Senha</label>
           <section className={styles.passwordWrapper}>
             <input className={styles.input} type={showPassword ? "text" : "password"} required />
@@ -92,7 +113,18 @@ export default function Home() {
         {/* <h2>Cadastro</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
-          <input className={styles.input} type="email" required />
+          <section className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {email && (
+              <IoClose className={styles.clearIcon} onClick={clearEmail} />
+            )}
+          </section>
           <label className={styles.label}>Senha</label>
           <section className={styles.passwordWrapper}>
             <input className={styles.input} type={showPassword ? "text" : "password"} required />

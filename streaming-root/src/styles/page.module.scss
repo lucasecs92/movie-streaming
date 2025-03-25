@@ -35,17 +35,20 @@
   }
 }
 
+.inputWrapper,
 .passwordWrapper {
   position: relative;
 }
 
+.clearIcon,
 .eyeIcon {
   position: absolute;
   right: 18px;
-  top: 45%;
+  top: 46%;
   transform: translateY(-50%);
   cursor: pointer;
   color: #fff;
+  font-size: 1.2rem;
 }
 
 .rememberMe {
