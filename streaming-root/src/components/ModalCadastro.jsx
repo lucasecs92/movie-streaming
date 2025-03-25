@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-export default function ModalCadastro({ isOpen, onClose, children }) {
+export default function ModalCadastro({ isOpen, onClose, onOpenLogin, children }) {
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -24,21 +24,27 @@ export default function ModalCadastro({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
   const handleHomeClick = () => {
-    onClose(); // Feche o modal de login
+    onClose(); // Feche o modal de cadastro
+  };
+
+  const handleLoginClick = () => {
+    onClose(); // Feche o modal de cadastro
+    onOpenLogin(); // Abra o modal de login
   };
 
   return (
     <section className={styles.modalOverlay}>
       <nav className={styles.headerModal}>
         <h1 onClick={handleHomeClick}>Cineminha</h1>
+        <span onClick={handleLoginClick}>Já tem uma conta?</span>
       </nav>
       <section className={styles.modalHeading}>
         <h2>Novo Usuário</h2>
         <p>Tenha acesso a sua conta em segundos.</p>
       </section>
       <section className={styles.modalContent}>
-        <span className={styles.closeButton} >
-            <IoIosCloseCircleOutline onClick={onClose}/>
+        <span className={styles.closeButton}>
+          <IoIosCloseCircleOutline onClick={onClose} />
         </span>
         {children}
       </section>

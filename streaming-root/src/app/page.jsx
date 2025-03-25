@@ -76,7 +76,7 @@ export default function Home() {
         voltarParaLista={voltarParaLista}
       />
       <Footer />
-      <ModalLogin isOpen={isLoginModalOpen} onClose={closeLoginModal}>
+      <ModalLogin isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenCadastro={openCadastroModal}>
         {/* <h2 className={styles.heading}>Entrar</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
@@ -109,7 +109,7 @@ export default function Home() {
           <a href="#" className={styles.forgotPassword}>Esqueceu a senha?</a>
         </form>
       </ModalLogin>
-      <ModalCadastro isOpen={isCadastroModalOpen} onClose={closeCadastroModal}>
+      <ModalCadastro isOpen={isCadastroModalOpen} onClose={closeCadastroModal} onOpenLogin={openLoginModal}>
         {/* <h2>Cadastro</h2> */}
         <form className={styles.form}>
           <label className={styles.label}>Email</label>
