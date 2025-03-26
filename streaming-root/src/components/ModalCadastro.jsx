@@ -1,8 +1,21 @@
 import { useEffect } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
-export default function ModalCadastro({ isOpen, onClose, onOpenLogin, children }) {
+export default function ModalCadastro({
+  isOpen,
+  onClose,
+  onOpenLogin,
+  email,
+  handleEmailChange,
+  clearEmail,
+  showPassword,
+  toggleShowPassword,
+  showConfirmPassword,
+  toggleShowConfirmPassword,
+}) {
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -24,19 +37,19 @@ export default function ModalCadastro({ isOpen, onClose, onOpenLogin, children }
   if (!isOpen) return null;
 
   const handleHomeClick = () => {
-    onClose(); // Feche o modal de cadastro
+    onClose();
   };
 
   const handleLoginClick = () => {
-    onClose(); // Feche o modal de cadastro
-    onOpenLogin(); // Abra o modal de login
+    onClose();
+    onOpenLogin();
   };
 
   return (
     <section className={styles.modalOverlay}>
       <nav className={styles.headerModal}>
         <h1 onClick={handleHomeClick}>Cineminha</h1>
-        <span onClick={handleLoginClick}>Já tem uma conta?</span>
+        <span onClick={handleLoginClick}>Já é usuário?</span>
       </nav>
       <section className={styles.modalHeading}>
         <h2>Novo Usuário</h2>
@@ -46,7 +59,40 @@ export default function ModalCadastro({ isOpen, onClose, onOpenLogin, children }
         <span className={styles.closeButton}>
           <IoIosCloseCircleOutline onClick={onClose} />
         </span>
-        {children}
+        <form className={styles.form}>
+          <label className={styles.label}>Email</label>
+          <section className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {email && (
+              <IoClose className={styles.clearIcon} onClick={clearEmail} />
+            )}
+          </section>
+          <label className={styles.label}>Senha</label>
+          <section className={styles.passwordWrapper}>
+            <input className={styles.input} type={showPassword ? "text" : "password"} required />
+            {showPassword ? (
+              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
+            ) : (
+              <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
+            )}
+          </section>
+          <label className={styles.label}>Confirme a Senha</label>
+          <section className={styles.passwordWrapper}>
+            <input className={styles.input} type={showConfirmPassword ? "text" : "password"} required />
+            {showConfirmPassword ? (
+              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
+            ) : (
+              <LuEye className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
+            )}
+          </section>
+          <button className={styles.button} type="submit">Cadastrar</button>
+        </form>
       </section>
     </section>
   );

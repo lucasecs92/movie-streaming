@@ -1,8 +1,19 @@
 import { useEffect } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
-export default function ModalLogin({ isOpen, onClose, onOpenCadastro, children }) {
+export default function ModalLogin({
+  isOpen,
+  onClose,
+  onOpenCadastro,
+  email,
+  handleEmailChange,
+  clearEmail,
+  showPassword,
+  toggleShowPassword,
+}) {
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -24,12 +35,12 @@ export default function ModalLogin({ isOpen, onClose, onOpenCadastro, children }
   if (!isOpen) return null;
 
   const handleHomeClick = () => {
-    onClose(); // Feche o modal de login
+    onClose();
   };
 
   const handleCadastroClick = () => {
-    onClose(); // Feche o modal de login
-    onOpenCadastro(); // Abra o modal de cadastro
+    onClose();
+    onOpenCadastro();
   };
 
   return (
@@ -46,7 +57,36 @@ export default function ModalLogin({ isOpen, onClose, onOpenCadastro, children }
         <span className={styles.closeButton}>
           <IoIosCloseCircleOutline onClick={onClose} />
         </span>
-        {children}
+        <form className={styles.form}>
+          <label className={styles.label}>Email</label>
+          <section className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {email && (
+              <IoClose className={styles.clearIcon} onClick={clearEmail} />
+            )}
+          </section>
+          <label className={styles.label}>Senha</label>
+          <section className={styles.passwordWrapper}>
+            <input className={styles.input} type={showPassword ? "text" : "password"} required />
+            {showPassword ? (
+              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
+            ) : (
+              <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
+            )}
+          </section>
+          <section className={styles.rememberMe}>
+            <input type="checkbox" id="rememberMe" />
+            <label htmlFor="rememberMe">Lembrar senha</label>
+          </section>
+          <button className={styles.button} type="submit">Entrar</button>
+          <a href="#" className={styles.forgotPassword}>Esqueceu a senha?</a>
+        </form>
       </section>
     </section>
   );

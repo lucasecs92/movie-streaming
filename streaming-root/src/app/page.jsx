@@ -7,8 +7,6 @@ import Footer from "../components/Footer";
 import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
 import { useState, useCallback } from "react";
-import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { IoClose } from "react-icons/io5"; // Importe o ícone IoClose
 
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
@@ -76,76 +74,29 @@ export default function Home() {
         voltarParaLista={voltarParaLista}
       />
       <Footer />
-      <ModalLogin isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenCadastro={openCadastroModal}>
-        {/* <h2 className={styles.heading}>Entrar</h2> */}
-        <form className={styles.form}>
-          <label className={styles.label}>Email</label>
-          <section className={styles.inputWrapper}>
-            <input
-              className={styles.input}
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
-            {email && (
-              <IoClose className={styles.clearIcon} onClick={clearEmail} />
-            )}
-          </section>
-          <label className={styles.label}>Senha</label>
-          <section className={styles.passwordWrapper}>
-            <input className={styles.input} type={showPassword ? "text" : "password"} required />
-            {showPassword ? (
-              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
-            ) : (
-              <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
-            )}
-          </section>
-          <section className={styles.rememberMe}>
-            <input type="checkbox" id="rememberMe" />
-            <label htmlFor="rememberMe">Lembrar senha</label>
-          </section>
-          <button className={styles.button} type="submit">Entrar</button>
-          <a href="#" className={styles.forgotPassword}>Esqueceu a senha?</a>
-        </form>
-      </ModalLogin>
-      <ModalCadastro isOpen={isCadastroModalOpen} onClose={closeCadastroModal} onOpenLogin={openLoginModal}>
-        {/* <h2>Cadastro</h2> */}
-        <form className={styles.form}>
-          <label className={styles.label}>Email</label>
-          <section className={styles.inputWrapper}>
-            <input
-              className={styles.input}
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
-            {email && (
-              <IoClose className={styles.clearIcon} onClick={clearEmail} />
-            )}
-          </section>
-          <label className={styles.label}>Senha</label>
-          <section className={styles.passwordWrapper}>
-            <input className={styles.input} type={showPassword ? "text" : "password"} required />
-            {showPassword ? (
-              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
-            ) : (
-              <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
-            )}
-          </section>
-          <label className={styles.label}>Confirme a Senha</label>
-          <section className={styles.passwordWrapper}>
-            <input className={styles.input} type={showConfirmPassword ? "text" : "password"} required />
-            {showConfirmPassword ? (
-              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
-            ) : (
-              <LuEye className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
-            )}
-          </section>
-          <button className={styles.button} type="submit">Cadastrar</button>
-        </form>
-      </ModalCadastro>
+
+      <ModalLogin
+        isOpen={isLoginModalOpen}
+        onClose={closeLoginModal}
+        onOpenCadastro={openCadastroModal}
+        email={email}
+        handleEmailChange={handleEmailChange}
+        clearEmail={clearEmail}
+        showPassword={showPassword}
+        toggleShowPassword={toggleShowPassword}
+      />
+      <ModalCadastro
+        isOpen={isCadastroModalOpen}
+        onClose={closeCadastroModal}
+        onOpenLogin={openLoginModal}
+        email={email}
+        handleEmailChange={handleEmailChange}
+        clearEmail={clearEmail}
+        showPassword={showPassword}
+        toggleShowPassword={toggleShowPassword}
+        showConfirmPassword={showConfirmPassword}
+        toggleShowConfirmPassword={toggleShowConfirmPassword}
+      />
     </section>
   );
 }
