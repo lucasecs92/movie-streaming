@@ -16,6 +16,7 @@ export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [email, setEmail] = useState(""); // Estado para controlar o valor do campo de email
+  const [showHeaderFooter, setShowHeaderFooter] = useState(true); // Novo estado
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -23,6 +24,7 @@ export default function Home() {
 
   const voltarParaLista = useCallback(() => {
     setFilmeSelecionado(null);
+    setShowHeaderFooter(true); // Mostrar Header e Footer ao voltar
   }, []);
 
   const openLoginModal = () => {
@@ -59,21 +61,24 @@ export default function Home() {
 
   return (
     <section className={styles.containerPage}>
-      <Header
-        onFilmesClick={(shouldShow) => {
-          toggleBanner(shouldShow);
-          if (filmeSelecionado) voltarParaLista();
-        }}
-        onLoginClick={openLoginModal}
-        onCadastroClick={openCadastroModal}
-      />
+      {showHeaderFooter && (
+        <Header
+          onFilmesClick={(shouldShow) => {
+            toggleBanner(shouldShow);
+            if (filmeSelecionado) voltarParaLista();
+          }}
+          onLoginClick={openLoginModal}
+          onCadastroClick={openCadastroModal}
+        />
+      )}
       <Main
         showBanner={showBanner}
         filmeSelecionado={filmeSelecionado}
         setFilmeSelecionado={setFilmeSelecionado}
         voltarParaLista={voltarParaLista}
+        setShowHeaderFooter={setShowHeaderFooter} // Passar controle de visibilidade
       />
-      <Footer />
+      {showHeaderFooter && <Footer />}
 
       <ModalLogin
         isOpen={isLoginModalOpen}

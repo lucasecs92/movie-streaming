@@ -6,14 +6,15 @@ import { filmes } from "../data/filmes";
 import Player from "./Player";
 import MovieList from "./MovieList";
 
-export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista }) {
+export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista, setShowHeaderFooter }) {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
   const handleClick = useCallback((filme) => {
     setFilmeSelecionado(filme);
-  }, [setFilmeSelecionado]);
+    setShowHeaderFooter(false); // Ocultar Header e Footer ao selecionar um filme
+  }, [setFilmeSelecionado, setShowHeaderFooter]);
 
   const nextSlide = useCallback(() => {
     setTransitionEnabled(true);
