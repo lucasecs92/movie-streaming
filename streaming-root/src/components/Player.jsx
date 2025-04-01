@@ -1,11 +1,15 @@
 "use client";
 
 import styles from "../styles/Player.module.scss";
+import { IoChevronBack } from "react-icons/io5";
 
 const Player = ({ filmeSelecionado, voltarParaLista }) => {
   return (
     <section className={styles.playerContainer}>
-      <h2>{filmeSelecionado.titulo}</h2>
+      <span onClick={voltarParaLista} className={styles.botaoWrap}>
+        <IoChevronBack className={styles.iconVoltar} />
+        <h2 className={styles.titulo}>{filmeSelecionado.titulo}</h2>
+      </span>
       <iframe
         className={styles.iframe}
         src={filmeSelecionado.iframeSrc}
@@ -15,9 +19,6 @@ const Player = ({ filmeSelecionado, voltarParaLista }) => {
         mozallowfullscreen="true"
         allowFullScreen
       ></iframe>
-      <button onClick={voltarParaLista} className={styles.botaoVoltar}>
-        Voltar para a lista
-      </button>
     </section>
   );
 };

@@ -11,7 +11,7 @@ export const filmes = [
       titulo: "Nosferatu",
       ano: "(1922)",
       capa: "../../covers/nosferatu-1922.jpg",
-      iframeSrc: "https://archive.org/embed/outro-link",
+      iframeSrc: "https://drive.google.com/file/d/1C0_wMC6QRnemf-d--daeK5WvPVlGrhC8/preview",
     },
     {
       id: 3,
