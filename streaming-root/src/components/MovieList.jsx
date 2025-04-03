@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import styles from "../styles/MovieList.module.scss";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
-const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) => {
+const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleClick }) => {
   const [currentIndex1, setCurrentIndex1] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const startX = useRef(0);
@@ -12,11 +12,11 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
   const prevTranslate = useRef(0);
   const isDragging = useRef(false);
 
-  const nextSlide = (setCurrentIndex, currentIndex) => {
+  const nextSlide = (setCurrentIndex) => {
     setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
   };
 
-  const prevSlide = (setCurrentIndex, currentIndex) => {
+  const prevSlide = (setCurrentIndex) => {
     setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
   };
 
@@ -92,7 +92,7 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
         </button>
       </section>
 
-      {/* Nova seção de carouselContainer */}
+      {/* Nova seção - Segundo carousel */}
       <section
         className={styles.carouselContainer}
         onMouseDown={handleMouseDown}
@@ -111,7 +111,7 @@ const MovieList = ({ filmes, slidesPerView, transitionEnabled, handleClick }) =>
               transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none'
             }}
           >
-            {filmes.map((filme) => (
+            {filmes2.map((filme) => (
               <section key={filme.id} className={styles.capaWrap}>
                 <img
                   src={filme.capa}

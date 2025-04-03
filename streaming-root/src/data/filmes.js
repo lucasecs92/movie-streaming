@@ -83,5 +83,92 @@ export const filmes = [
       capa: "../../covers/the-kid-1921.jpg",
       iframeSrc: "https://archive.org/embed/the-kid_202504",
     },
+];
+
+export const filmes2 = [
+    {
+      id: 1,
+      titulo: "Lágrimas de Aço",
+      ano: "(2012)",
+      capa: "../../covers/tears-of-steel-2012.jpg",
+      iframeSrc: "https://archive.org/embed/tears-of-steel_202504",
+    },
+    {
+      id: 2,
+      titulo: "O Gabinente do Dr. Caligari",
+      ano: "(1920)",
+      capa: "../../covers/gabinete-dr-caligari-1920.jpg",
+      iframeSrc: "https://archive.org/embed/o-gabinete-do-dr.-caligari-1920",
+    },
+    {
+      id: 3,
+      titulo: "Tangerina",
+      ano: "(2007)",
+      capa: "../../covers/tangerine-2015.jpg",
+      iframeSrc: "https://archive.org/embed/tangerina-2015",
+    },
+    {
+      id: 4,
+      titulo: "A Noite dos Mortos-Vivos",
+      ano: "(1968)",
+      capa: "../../covers/night-of-the-living-dead-1968.jpg",
+      iframeSrc: "https://archive.org/embed/a-noite-dos-mortos-vivos-1968-de-george-a.-romero",
+    },
+    {
+      id: 5,
+      titulo: "Mortos que Matam",
+      ano: "(1964)",
+      capa: "../../covers/the-last-man-on-earth-1964.jpg",
+      iframeSrc: "https://archive.org/embed/the-last-man-on-earth-1964_202504",
+    },
+    {
+      id: 6,
+      titulo: "Big Buck Bunny",
+      ano: "(2008)",
+      capa: "../../covers/big-buck-bunny-2008.jpg",
+      iframeSrc: "https://archive.org/embed/big-buck-bunny_20250402",
+    },
+    {
+      id: 7,
+      titulo: "Elefantes Sonham",
+      ano: "(2006)",
+      capa: "../../covers/elephants-dream-2006.jpg",
+      iframeSrc: "https://archive.org/embed/elephants-dream_20250402",
+    },
+    {
+      id: 8,
+      titulo: "Metropolis",
+      ano: "(1927)",
+      capa: "../../covers/metropolis-1927.jpg",
+      iframeSrc: "https://archive.org/embed/metropolis_202504",
+    },
+    {
+      id: 9,
+      titulo: "Sintel",
+      ano: "(2010)",
+      capa: "../../covers/sintel-2010.jpg",
+      iframeSrc: "https://archive.org/embed/sintel-2010",
+    },
+    {
+      id: 10,
+      titulo: "Bancando o Águia",
+      ano: "(1924)",
+      capa: "../../covers/sherlock-jr-1924.jpg",
+      iframeSrc: "https://archive.org/embed/sherlock-jr_202504",
+    },
+    {
+      id: 11,
+      titulo: "O menino da internet",
+      ano: "(2014)",
+      capa: "../../covers/the-internet-own-boy-2014.jpg",
+      iframeSrc: "https://archive.org/embed/the-internets-own-boy",
+    },
+    {
+      id: 12,
+      titulo: "O Garoto",
+      ano: "(1924)",
+      capa: "../../covers/the-kid-1921.jpg",
+      iframeSrc: "https://archive.org/embed/the-kid_202504",
+    },
     // Adicione mais filmes conforme necessário
 ];

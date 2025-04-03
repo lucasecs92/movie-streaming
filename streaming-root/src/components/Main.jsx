@@ -2,7 +2,7 @@
 
 import styles from "../styles/Main.module.scss";
 import { useCallback, useEffect, useState } from "react";
-import { filmes } from "../data/filmes";
+import { filmes, filmes2 } from "../data/filmes";
 import Player from "./Player";
 import MovieList from "./MovieList";
 
@@ -60,6 +60,7 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
           ) : (
             <MovieList 
               filmes={filmes}
+              filmes2={filmes2}
               currentIndex={currentIndex}
               slidesPerView={slidesPerView}
               transitionEnabled={transitionEnabled}
