@@ -2,7 +2,7 @@ import { IoClose, IoMenuSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import styles from "../styles/Header.module.scss";
 
-export default function Header({ onFilmesClick, onLoginClick, onCadastroClick }) {
+export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,7 +27,7 @@ export default function Header({ onFilmesClick, onLoginClick, onCadastroClick })
   return (
     <header className={styles.header}>
       <nav className={styles.navLeft}>
-        <h1 onClick={() => onFilmesClick(true)}>Cineminha</h1> {/* Exibe o banner */}
+        <h1 onClick={() => onFilmesClick(true)}>Cineminha</h1>
         {isMobile ? (
           <>
             {menuOpen ? (
@@ -37,15 +37,9 @@ export default function Header({ onFilmesClick, onLoginClick, onCadastroClick })
             )}
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
-                <li onClick={() => onFilmesClick(true)}> {/* Exibe o banner */}
-                  Home
-                </li>
-                <li onClick={() => onFilmesClick(false)}> {/* Oculta o banner */}
-                  Filmes
-                </li>
-                <li>
-                  Séries
-                </li>
+                <li onClick={() => onFilmesClick(true)}>Home</li>
+                <li onClick={() => onFilmesClick(false)}>Filmes</li>
+                <li onClick={onSeriesClick}>Séries</li>
                 <hr className={styles.divider} />
                 <li className={styles.btnLoginMobile} onClick={onLoginClick}>
                   LOGIN
@@ -55,15 +49,9 @@ export default function Header({ onFilmesClick, onLoginClick, onCadastroClick })
           </>
         ) : (
           <ul className={styles.navLeftUl}>
-            <li onClick={() => onFilmesClick(true)}> {/* Exibe o banner */}
-              Home
-            </li>
-            <li onClick={() => onFilmesClick(false)}> {/* Oculta o banner */}
-              Filmes
-            </li>
-            <li>
-              Séries
-            </li>
+            <li onClick={() => onFilmesClick(true)}>Home</li>
+            <li onClick={() => onFilmesClick(false)}>Filmes</li>
+            <li onClick={onSeriesClick}>Séries</li>
           </ul>
         )}
       </nav>
@@ -71,7 +59,7 @@ export default function Header({ onFilmesClick, onLoginClick, onCadastroClick })
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
           <li className={styles.btnLogin} onClick={onLoginClick}>
-            LOGIN 
+            LOGIN
           </li>
           <li className={styles.btnCadastro} onClick={onCadastroClick}>
             CADASTRO

@@ -17,6 +17,7 @@ export default function Home() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [email, setEmail] = useState(""); // Estado para controlar o valor do campo de email
   const [showHeaderFooter, setShowHeaderFooter] = useState(true); // Novo estado
+  const [isSeries, setIsSeries] = useState(false); // Novo estado para alternar entre filmes e séries
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -65,6 +66,12 @@ export default function Home() {
         <Header
           onFilmesClick={(shouldShow) => {
             toggleBanner(shouldShow);
+            setIsSeries(false); // Alternar para filmes
+            if (filmeSelecionado) voltarParaLista();
+          }}
+          onSeriesClick={() => {
+            setShowBanner(false); // Ocultar o banner ao clicar em séries
+            setIsSeries(true); // Alternar para séries
             if (filmeSelecionado) voltarParaLista();
           }}
           onLoginClick={openLoginModal}
@@ -77,6 +84,7 @@ export default function Home() {
         setFilmeSelecionado={setFilmeSelecionado}
         voltarParaLista={voltarParaLista}
         setShowHeaderFooter={setShowHeaderFooter} // Passar controle de visibilidade
+        isSeries={isSeries} // Passar estado para alternar entre filmes e séries
       />
       {showHeaderFooter && <Footer />}
 

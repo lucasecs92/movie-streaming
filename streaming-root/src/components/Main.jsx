@@ -3,28 +3,20 @@
 import styles from "../styles/Main.module.scss";
 import { useCallback, useEffect, useState } from "react";
 import { filmes, filmes2 } from "../data/filmes";
+import { shows } from "../data/shows";
 import Player from "./Player";
 import MovieList from "./MovieList";
+import ShowsList from "./ShowsList";
 
-export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista, setShowHeaderFooter }) {
+export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista, setShowHeaderFooter, isSeries }) {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
-  const handleClick = useCallback((filme) => {
-    setFilmeSelecionado(filme);
-    setShowHeaderFooter(false); // Ocultar Header e Footer ao selecionar um filme
+  const handleClick = useCallback((item) => {
+    setFilmeSelecionado(item);
+    setShowHeaderFooter(false);
   }, [setFilmeSelecionado, setShowHeaderFooter]);
-
-  const nextSlide = useCallback(() => {
-    setTransitionEnabled(true);
-    setCurrentIndex((prevIndex) => (prevIndex + slidesPerView) % filmes.length);
-  }, [slidesPerView, filmes.length]);
-
-  const prevSlide = useCallback(() => {
-    setTransitionEnabled(true);
-    setCurrentIndex((prevIndex) => (prevIndex - slidesPerView + filmes.length) % filmes.length);
-  }, [slidesPerView, filmes.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,20 +26,17 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
         setSlidesPerView(4);
       }
     };
-  
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
     handleResize();
-  
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <main className={styles.main}>
       {filmeSelecionado ? (
-        <Player 
-          filmeSelecionado={filmeSelecionado} 
-          voltarParaLista={voltarParaLista} 
-        />
+        <Player filmeSelecionado={filmeSelecionado} voltarParaLista={voltarParaLista} />
       ) : (
         <>
           {showBanner ? (
@@ -57,15 +46,22 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
                 <p>Assista aos melhores filmes e séries aqui.</p>
               </section>
             </section>
+          ) : isSeries ? (
+            <ShowsList
+              shows={shows}
+              slidesPerView={slidesPerView}
+              transitionEnabled={transitionEnabled}
+              handleClick={handleClick}
+            />
           ) : (
-            <MovieList 
+            <MovieList
               filmes={filmes}
               filmes2={filmes2}
               currentIndex={currentIndex}
               slidesPerView={slidesPerView}
               transitionEnabled={transitionEnabled}
-              nextSlide={nextSlide}
-              prevSlide={prevSlide}
+              nextSlide={() => setCurrentIndex((prev) => (prev + slidesPerView) % filmes.length)}
+              prevSlide={() => setCurrentIndex((prev) => (prev - slidesPerView + filmes.length) % filmes.length)}
               handleClick={handleClick}
             />
           )}
