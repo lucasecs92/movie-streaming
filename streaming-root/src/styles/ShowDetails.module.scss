@@ -1,0 +1,48 @@
+.showDetails {
+  padding: 20px;
+  text-align: center;
+
+  .backButton {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .capa {
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
+  }
+
+  .temporadas {
+    margin-top: 20px;
+
+    .temporada {
+      margin-bottom: 20px;
+
+      h4 {
+        margin-bottom: 10px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        .episodio {
+          margin-bottom: 5px;
+          cursor: pointer;
+          color: #007bff;
+          text-decoration: underline;
+
+          &:hover {
+            color: #0056b3;
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { shows } from "../data/shows";
 import Player from "./Player";
 import MovieList from "./MovieList";
 import ShowsList from "./ShowsList";
+import ShowDetails from "./ShowDetails";
 
 export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, voltarParaLista, setShowHeaderFooter, isSeries }) {
   const [slidesPerView, setSlidesPerView] = useState(4);
@@ -36,7 +37,18 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
   return (
     <main className={styles.main}>
       {filmeSelecionado ? (
-        <Player filmeSelecionado={filmeSelecionado} voltarParaLista={voltarParaLista} />
+        filmeSelecionado.temporadas ? ( // Verifica se é um show
+          <ShowDetails
+            show={filmeSelecionado}
+            voltarParaLista={voltarParaLista}
+            toggleBanner={setShowHeaderFooter}
+            setIsSeries={setShowHeaderFooter}
+            setShowBanner={setShowHeaderFooter}
+            filmeSelecionado={filmeSelecionado}
+          />
+        ) : (
+          <Player filmeSelecionado={filmeSelecionado} voltarParaLista={voltarParaLista} />
+        )
       ) : (
         <>
           {showBanner ? (
