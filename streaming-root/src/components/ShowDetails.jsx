@@ -3,17 +3,10 @@
 import { useState } from "react";
 import styles from "../styles/ShowDetails.module.scss";
 import Player from "./Player";
-import Header from "./Header";
 
 const ShowDetails = ({
   show,
   voltarParaLista,
-  toggleBanner,
-  setIsSeries,
-  setShowBanner,
-  filmeSelecionado,
-  openLoginModal,
-  openCadastroModal,
 }) => {
   const [episodioSelecionado, setEpisodioSelecionado] = useState(null);
 
@@ -33,20 +26,6 @@ const ShowDetails = ({
         />
       ) : (
         <section className={styles.showDetails}>
-          <Header
-            onFilmesClick={(shouldShow) => {
-              toggleBanner(shouldShow);
-              setIsSeries(false);
-              if (filmeSelecionado) voltarParaLista();
-            }}
-            onSeriesClick={() => {
-              setShowBanner(false);
-              setIsSeries(true);
-              if (filmeSelecionado) voltarParaLista();
-            }}
-            onLoginClick={openLoginModal}
-            onCadastroClick={openCadastroModal}
-          />
           <button onClick={voltarParaLista} className={styles.backButton}>
             Voltar
           </button>
