@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useRef } from "react";
 import styles from "../styles/MovieList.module.scss";
+import { useState, useRef } from "react";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import Player from "./Player";
 
-const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleClick }) => {
+const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, setShowHeaderFooter }) => {
   const [currentIndex1, setCurrentIndex1] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
+  const [filmeSelecionado, setFilmeSelecionado] = useState(null); // Estado para o filme selecionado
   const startX = useRef(0);
   const currentTranslate = useRef(0);
   const prevTranslate = useRef(0);
@@ -49,6 +51,25 @@ const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleCl
     event.preventDefault();
   };
 
+  const handleFilmeClick = (filme) => {
+    setFilmeSelecionado(filme); // Define o filme selecionado
+    setShowHeaderFooter(false); // Oculta o Header e o Footer
+  };
+
+  const voltarParaLista = () => {
+    setFilmeSelecionado(null); // Limpa o filme selecionado
+    setShowHeaderFooter(true); // Mostra o Header e o Footer
+  };
+
+  if (filmeSelecionado) {
+    return (
+      <Player
+        filmeSelecionado={filmeSelecionado}
+        voltarParaLista={voltarParaLista}
+      />
+    );
+  }
+
   return (
     <section className={styles.listaContainer}>
       <h3>Lista de Filmes</h3>
@@ -67,7 +88,7 @@ const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleCl
             className={styles.slideWrapper}
             style={{
               transform: `translateX(-${currentIndex1 * (100 / slidesPerView)}%)`,
-              transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none'
+              transition: transitionEnabled ? "transform 0.5s ease-in-out" : "none",
             }}
           >
             {filmes.map((filme) => (
@@ -75,10 +96,10 @@ const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleCl
                 <img
                   src={filme.capa}
                   alt={`Capa do ${filme.titulo}`}
-                  onClick={() => handleClick(filme)}
+                  onClick={() => handleFilmeClick(filme)}
                   onDragStart={handleDragStart}
                 />
-                <p onClick={() => handleClick(filme)}>
+                <p onClick={() => handleFilmeClick(filme)}>
                   {filme.titulo}
                   <br />
                   {filme.ano}
@@ -108,7 +129,7 @@ const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleCl
             className={styles.slideWrapper}
             style={{
               transform: `translateX(-${currentIndex2 * (100 / slidesPerView)}%)`,
-              transition: transitionEnabled ? 'transform 0.5s ease-in-out' : 'none'
+              transition: transitionEnabled ? "transform 0.5s ease-in-out" : "none",
             }}
           >
             {filmes2.map((filme) => (
@@ -116,10 +137,10 @@ const MovieList = ({ filmes, filmes2, slidesPerView, transitionEnabled, handleCl
                 <img
                   src={filme.capa}
                   alt={`Capa do ${filme.titulo}`}
-                  onClick={() => handleClick(filme)}
+                  onClick={() => handleFilmeClick(filme)}
                   onDragStart={handleDragStart}
                 />
-                <p onClick={() => handleClick(filme)}>
+                <p onClick={() => handleFilmeClick(filme)}>
                   {filme.titulo}
                   <br />
                   {filme.ano}

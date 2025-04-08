@@ -1,18 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import styles from "../styles/ShowDetails.module.scss";
+import { useState, useEffect } from "react";
 import Player from "./Player";
 
 const ShowDetails = ({
   show,
   voltarParaLista,
+  setShowHeaderFooter, // Adicionado para controlar Header e Footer
 }) => {
   const [episodioSelecionado, setEpisodioSelecionado] = useState(null);
 
   const voltarParaDetalhes = () => {
     setEpisodioSelecionado(null);
+    setShowHeaderFooter(true); // Mostrar Header e Footer ao voltar
   };
+
+  useEffect(() => {
+    if (episodioSelecionado) {
+      setShowHeaderFooter(false); // Ocultar Header e Footer ao exibir o Player
+    }
+  }, [episodioSelecionado, setShowHeaderFooter]);
 
   return (
     <section>
