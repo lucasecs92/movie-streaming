@@ -33,19 +33,21 @@ const ShowDetails = ({
           voltarParaLista={voltarParaDetalhes}
         />
       ) : (
-        <section className={styles.showDetails}>
-          <button onClick={voltarParaLista} className={styles.backButton}>
-            Voltar
-          </button>
-          <img src={show.capa} alt={`Capa de ${show.titulo}`} className={styles.capa} />
-          <h2>{show.titulo}</h2>
-          <p><strong>Ano:</strong> {show.ano}</p>
-          <p><strong>Sinopse:</strong> {show.sinopse || "Sinopse não disponível."}</p>
+        <section className={styles.showDetailsContainer}>
+          <section className={styles.showDetailsWrapper}>
+            <img src={show.capa} alt={`Capa de ${show.titulo}`} className={styles.capa} />
+            <section className={styles.description}>
+              <section className={styles.descriptionWrapper}>
+                <h2>{show.titulo}</h2>
+                <p>{show.ano}</p>
+              </section>
+              <p>{show.sinopse || "Sinopse não disponível."}</p>
+            </section>
+          </section>
           <section className={styles.temporadas}>
-            <h3>Temporadas</h3>
             {show.temporadas ? (
               show.temporadas.map((temporada, index) => (
-                <div key={index} className={styles.temporada}>
+                <section key={index} className={styles.temporada}>
                   <h4>{temporada.nome}</h4>
                   <ul>
                     {temporada.episodios.map((episodio, idx) => (
@@ -58,7 +60,7 @@ const ShowDetails = ({
                       </li>
                     ))}
                   </ul>
-                </div>
+                </section>
               ))
             ) : (
               <p>Informações de temporadas não disponíveis.</p>

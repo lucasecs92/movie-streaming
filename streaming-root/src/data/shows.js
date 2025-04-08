@@ -2,9 +2,9 @@ export const shows = [
   {
     id: 1,
     titulo: "The Guild",
-    ano: "(2007)",
+    ano: "2007",
     capa: "../../covers/the-guild-2007.jpg",
-    sinopse: "Uma série sobre um grupo de jogadores de MMORPG e suas aventuras na vida real.",
+    sinopse: "Fantasia e realidade colidem quando um grupo surpreendentemente diverso de viciados em videogames online luta para equilibrar o jogo com relacionamentos pessoais.",
     temporadas: [
       {
         nome: "Temporada 1",
