@@ -7,18 +7,19 @@ import Player from "./Player";
 const ShowDetails = ({
   show,
   voltarParaLista,
-  setShowHeaderFooter, // Adicionado para controlar Header e Footer
+  setShowHeaderFooter,
 }) => {
   const [episodioSelecionado, setEpisodioSelecionado] = useState(null);
+  const [temporadaSelecionada, setTemporadaSelecionada] = useState(null);
 
   const voltarParaDetalhes = () => {
     setEpisodioSelecionado(null);
-    setShowHeaderFooter(true); // Mostrar Header e Footer ao voltar
+    setShowHeaderFooter(true);
   };
 
   useEffect(() => {
     if (episodioSelecionado) {
-      setShowHeaderFooter(false); // Ocultar Header e Footer ao exibir o Player
+      setShowHeaderFooter(false);
     }
   }, [episodioSelecionado, setShowHeaderFooter]);
 
@@ -46,11 +47,26 @@ const ShowDetails = ({
           </section>
           <section className={styles.temporadas}>
             {show.temporadas ? (
-              show.temporadas.map((temporada, index) => (
-                <section key={index} className={styles.temporada}>
-                  <h4>{temporada.nome}</h4>
-                  <ul>
-                    {temporada.episodios.map((episodio, idx) => (
+              <>
+                <select
+                  onChange={(e) =>
+                    setTemporadaSelecionada(show.temporadas[e.target.value])
+                  }
+                  defaultValue=""
+                  className={styles.temporadaSelect}
+                >
+                  <option value="" disabled>
+                    Selecione uma temporada
+                  </option>
+                  {show.temporadas.map((temporada, index) => (
+                    <option key={index} value={index}>
+                      {temporada.nome}
+                    </option>
+                  ))}
+                </select>
+                {temporadaSelecionada && (
+                  <ul className={styles.episodiosLista}>
+                    {temporadaSelecionada.episodios.map((episodio, idx) => (
                       <li
                         key={idx}
                         onClick={() => setEpisodioSelecionado(episodio)}
@@ -60,8 +76,8 @@ const ShowDetails = ({
                       </li>
                     ))}
                   </ul>
-                </section>
-              ))
+                )}
+              </>
             ) : (
               <p>Informações de temporadas não disponíveis.</p>
             )}
