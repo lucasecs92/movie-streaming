@@ -28,7 +28,7 @@ const ShowDetails = ({
       {episodioSelecionado ? (
         <Player
           filmeSelecionado={{
-            titulo: `${show.titulo} - ${episodioSelecionado.nome}`,
+            titulo: `${episodioSelecionado.descricao}`,
             iframeSrc: episodioSelecionado.iframeSrc,
           }}
           voltarParaLista={voltarParaDetalhes}
