@@ -13,8 +13,6 @@ export default function ModalCadastro({
   clearEmail,
   showPassword,
   toggleShowPassword,
-  showConfirmPassword,
-  toggleShowConfirmPassword,
 }) {
   useEffect(() => {
     const handleEsc = (event) => {
@@ -60,6 +58,11 @@ export default function ModalCadastro({
           <IoIosCloseCircleOutline onClick={onClose} />
         </span>
         <form className={styles.form}>
+          <label className={styles.label}>Nome</label>
+          <section className={styles.inputWrapper}>
+            <input className={styles.input} type="text" required />
+          </section>
+          
           <label className={styles.label}>Email</label>
           <section className={styles.inputWrapper}>
             <input
@@ -73,22 +76,18 @@ export default function ModalCadastro({
               <IoClose className={styles.clearIcon} onClick={clearEmail} />
             )}
           </section>
+
           <label className={styles.label}>Senha</label>
           <section className={styles.passwordWrapper}>
-            <input className={styles.input} type={showPassword ? "text" : "password"} required />
+            <input
+              className={styles.input}
+              type={showPassword ? "text" : "password"}
+              required
+            />
             {showPassword ? (
               <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
             ) : (
               <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
-            )}
-          </section>
-          <label className={styles.label}>Confirme a Senha</label>
-          <section className={styles.passwordWrapper}>
-            <input className={styles.input} type={showConfirmPassword ? "text" : "password"} required />
-            {showConfirmPassword ? (
-              <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
-            ) : (
-              <LuEye className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />
             )}
           </section>
           <button className={styles.button} type="submit">Cadastrar</button>
