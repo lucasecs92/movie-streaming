@@ -1,34 +1,32 @@
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #151b23f3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
   gap: 3rem;
+  z-index: 1000;
   backdrop-filter: blur(10px);
+  overflow-y: auto;
+  inset: 0;
 }
 
 .headerModal {
   display: flex;
-  align-items: center; 
-  justify-content: space-between; 
-  padding: 1rem 2rem; 
-  
-  position: fixed;    
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+
+  position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
 
   h1 {
     margin: 0;
-    color: #fff; 
-    font-size: 1.8rem; 
+    color: #fff;
+    font-size: 1.8rem;
     cursor: pointer;
     padding-left: 20px;
   }
@@ -48,6 +46,7 @@
 }
 
 .modalHeading {
+  padding-top: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,13 +77,12 @@
 }
 
 .closeButton {
-
   svg {
     position: absolute;
     top: -14px;
     right: -14px;
     border: none;
-    font-size: 30px;    
+    font-size: 30px;
     color: #ccc;
     cursor: pointer;
   }
@@ -111,11 +109,11 @@
   box-sizing: border-box;
   background-color: transparent;
   color: #ccc;
-  
+
   &:focus {
     background-color: #151b23f3;
-    border: 1px solid #FE4F2D;
-    box-shadow: 0 0 0 1.5px #FE4F2D;
+    border: 1px solid #fe4f2d;
+    box-shadow: 0 0 0 1.5px #fe4f2d;
     outline: none;
   }
 }
@@ -136,7 +134,13 @@
   font-size: 1.2rem;
 }
 
-.rememberMe {
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.remember {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -146,6 +150,19 @@
     color: #fff;
     font-weight: bold;
   }
+}
+
+.forgot {
+  margin-top: 10px;
+  color: #fe4f2d;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.forgot:hover {
+  text-decoration: underline;
 }
 
 .button {
@@ -161,23 +178,57 @@
   transition: background-color 0.3s ease;
 }
 
+.spanOr {
+  margin: 20px 0;
+  color: #fff;
+  text-align: center;
+  font-size: 0.8em;
+}
+
 .button:hover {
   background-color: #fff;
 }
 
-.forgotPassword {
-  margin-top: 10px;
-  color: #FE4F2D;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: bold;
-}
+.socialLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 
-.forgotPassword:hover {
-  text-decoration: underline;
-}
+  .googleButton,
+  .githubButton {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 8px;
+    width: 50%;
+    border: none;
+    border-radius: 4px;
+  }
 
+  .googleButton {
+    background-color: #fff;
+
+    &:hover {
+      background-color: #ffffffe3;
+    }
+  }
+
+  .githubButton {
+    background-color: black;
+    color: #fff;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.651);
+    }
+  }
+
+  .socialIcon {
+    width: 30px;
+    height: 30px;
+  }
+}
 
 @media (max-width: 532px) {
   .headerModal {

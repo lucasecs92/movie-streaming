@@ -3,6 +3,9 @@ import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
+import { IoLogoGithub } from "react-icons/io5";
+import useModalScrollLock from "../hooks/useModalScrollLock";
 
 export default function ModalLogin({
   isOpen,
@@ -14,6 +17,8 @@ export default function ModalLogin({
   showPassword,
   toggleShowPassword,
 }) {
+  useModalScrollLock(isOpen);
+
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -23,8 +28,6 @@ export default function ModalLogin({
 
     if (isOpen) {
       window.addEventListener("keydown", handleEsc);
-    } else {
-      window.removeEventListener("keydown", handleEsc);
     }
 
     return () => {
@@ -43,16 +46,36 @@ export default function ModalLogin({
     onOpenCadastro();
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Error with Google login:", error);
+    }
+  };
+
+  const handleGitHubLogin = async () => {
+    try {
+      const provider = new GitHubAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Error with GitHub login:", error);
+    }
+  };
+
   return (
     <section className={styles.modalOverlay}>
       <nav className={styles.headerModal}>
         <h1 onClick={handleHomeClick}>Cineminha</h1>
         <span onClick={handleCadastroClick}>Cadastre-se agora</span>
       </nav>
+
       <section className={styles.modalHeading}>
         <h2>Entrar</h2>
         <p>Digite o endereço de e-mail e a senha da sua conta Cineminha.</p>
       </section>
+
       <section className={styles.modalContent}>
         <span className={styles.closeButton}>
           <IoIosCloseCircleOutline onClick={onClose} />
@@ -80,12 +103,29 @@ export default function ModalLogin({
               <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
             )}
           </section>
-          <section className={styles.rememberMe}>
-            <input type="checkbox" id="rememberMe" />
-            <label htmlFor="rememberMe">Lembrar senha</label>
+
+          <section className={styles.options}>
+            <section className={styles.remember}>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Lembrar senha</label>
+            </section>
+            <a href="#" className={styles.forgot}>Esqueceu a senha?</a>
           </section>
+
           <button className={styles.button} type="submit">Entrar</button>
-          <a href="#" className={styles.forgotPassword}>Esqueceu a senha?</a>
+
+          <span className={styles.spanOr}>Ou</span>
+
+          <section className={styles.socialLogin}>
+            <button onClick={handleGoogleLogin} className={styles.googleButton}>
+              <FcGoogle className={styles.socialIcon} />
+              Continue com Google
+            </button>
+            <button onClick={handleGitHubLogin} className={styles.githubButton}>
+              <IoLogoGithub className={styles.socialIcon} />
+              Continue com GitHub
+            </button>
+          </section>
         </form>
       </section>
     </section>

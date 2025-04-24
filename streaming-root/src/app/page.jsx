@@ -8,6 +8,8 @@ import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
 import { useState, useCallback } from "react";
 
+import useModalScrollLock from "../hooks/useModalScrollLock";
+
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
   const [filmeSelecionado, setFilmeSelecionado] = useState(null);
@@ -18,6 +20,8 @@ export default function Home() {
   const [email, setEmail] = useState(""); // Estado para controlar o valor do campo de email
   const [showHeaderFooter, setShowHeaderFooter] = useState(true); // Novo estado
   const [isSeries, setIsSeries] = useState(false); // Novo estado para alternar entre filmes e séries
+
+  useModalScrollLock(isLoginModalOpen || isCadastroModalOpen);
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);

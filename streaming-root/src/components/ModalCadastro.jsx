@@ -3,6 +3,9 @@ import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
+import { IoLogoGithub } from "react-icons/io5";
+import useModalScrollLock from "../hooks/useModalScrollLock";
 
 export default function ModalCadastro({
   isOpen,
@@ -14,6 +17,8 @@ export default function ModalCadastro({
   showPassword,
   toggleShowPassword,
 }) {
+  useModalScrollLock(isOpen);
+
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -23,8 +28,6 @@ export default function ModalCadastro({
 
     if (isOpen) {
       window.addEventListener("keydown", handleEsc);
-    } else {
-      window.removeEventListener("keydown", handleEsc);
     }
 
     return () => {
@@ -62,7 +65,7 @@ export default function ModalCadastro({
           <section className={styles.inputWrapper}>
             <input className={styles.input} type="text" required />
           </section>
-          
+
           <label className={styles.label}>Email</label>
           <section className={styles.inputWrapper}>
             <input
@@ -91,6 +94,19 @@ export default function ModalCadastro({
             )}
           </section>
           <button className={styles.button} type="submit">Cadastrar</button>
+
+          <span className={styles.spanOr}>Ou</span>
+
+          <section className={styles.socialLogin}>
+            <button className={styles.googleButton}>
+              <FcGoogle className={styles.socialIcon} />
+              Cadastrar com Google
+            </button>
+            <button className={styles.githubButton}>
+              <IoLogoGithub className={styles.socialIcon} />
+              Cadastrar com GitHub
+            </button>
+          </section>
         </form>
       </section>
     </section>
