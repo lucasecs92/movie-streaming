@@ -10,6 +10,7 @@
   backdrop-filter: blur(10px);
   overflow-y: auto;
   inset: 0;
+  padding-top: 300px;
 }
 
 .headerModal {
@@ -46,7 +47,8 @@
 }
 
 .modalHeading {
-  padding-top: 180px;
+  // margin-top: 180px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,6 +76,7 @@
   position: relative;
   width: 90%;
   max-width: 550px;
+  margin-bottom: 100px;
 }
 
 .closeButton {
@@ -233,5 +236,11 @@
 @media (max-width: 532px) {
   .headerModal {
     padding: 1rem 0;
+  }
+
+  .modalHeading {
+    margin-top: 100px; 
+    padding: 0 1rem;
+    box-sizing: border-box;
   }
 }
