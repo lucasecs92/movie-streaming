@@ -5,7 +5,6 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io5";
-import useModalScrollLock from "../hooks/useModalScrollLock";
 
 export default function ModalCadastro({
   isOpen,
@@ -17,7 +16,6 @@ export default function ModalCadastro({
   showPassword,
   toggleShowPassword,
 }) {
-  useModalScrollLock(isOpen);
 
   useEffect(() => {
     const handleEsc = (event) => {

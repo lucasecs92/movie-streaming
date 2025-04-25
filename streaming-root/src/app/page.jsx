@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
 import { useState, useCallback } from "react";
-
 import useModalScrollLock from "../hooks/useModalScrollLock";
 
 export default function Home() {
