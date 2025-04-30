@@ -6,8 +6,10 @@ import Main from "../components/Main";
 import Footer from "../components/Footer";
 import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
+import { auth } from '../../lib/firebase'; // Import auth
+import { signOut } from "firebase/auth";
 
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
@@ -16,11 +18,24 @@ export default function Home() {
   const [isCadastroModalOpen, setIsCadastroModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [email, setEmail] = useState(""); // Estado para controlar o valor do campo de email
-  const [showHeaderFooter, setShowHeaderFooter] = useState(true); // Novo estado
-  const [isSeries, setIsSeries] = useState(false); // Novo estado para alternar entre filmes e séries
+  const [email, setEmail] = useState("");
+  const [showHeaderFooter, setShowHeaderFooter] = useState(true);
+  const [isSeries, setIsSeries] = useState(false);
+  const [user, setUser] = useState(null); // Estado para o usuário logado
 
   useModalScrollLock(isLoginModalOpen || isCadastroModalOpen);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(authUser => { // Ouvinte de autenticação
+      if (authUser) {
+        setUser(authUser); // Define o usuário se estiver logado
+      } else {
+        setUser(null);  // Define como null se estiver deslogado
+      }
+    });
+
+    return () => unsubscribe(); // Limpa o ouvinte ao desmontar o componente
+  }, []);
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -28,7 +43,7 @@ export default function Home() {
 
   const voltarParaLista = useCallback(() => {
     setFilmeSelecionado(null);
-    setShowHeaderFooter(true); // Mostrar Header e Footer ao voltar
+    setShowHeaderFooter(true);
   }, []);
 
   const openLoginModal = () => {
@@ -63,22 +78,32 @@ export default function Home() {
     setEmail("");
   };
 
+  const handleLogout = async () => {  // Função de logout
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <section className={styles.containerPage}>
       {showHeaderFooter && (
         <Header
           onFilmesClick={(shouldShow) => {
             toggleBanner(shouldShow);
-            setIsSeries(false); // Alternar para filmes
+            setIsSeries(false);
             if (filmeSelecionado) voltarParaLista();
           }}
           onSeriesClick={() => {
-            setShowBanner(false); // Ocultar o banner ao clicar em séries
-            setIsSeries(true); // Alternar para séries
+            setShowBanner(false);
+            setIsSeries(true);
             if (filmeSelecionado) voltarParaLista();
           }}
           onLoginClick={openLoginModal}
           onCadastroClick={openCadastroModal}
+          onLogoutClick={handleLogout} // Passa a função de logout
+          user={user} // Passa o estado do usuário
         />
       )}
       <Main
@@ -86,8 +111,10 @@ export default function Home() {
         filmeSelecionado={filmeSelecionado}
         setFilmeSelecionado={setFilmeSelecionado}
         voltarParaLista={voltarParaLista}
-        setShowHeaderFooter={setShowHeaderFooter} // Passar controle de visibilidade
-        isSeries={isSeries} // Passar estado para alternar entre filmes e séries
+        setShowHeaderFooter={setShowHeaderFooter}
+        isSeries={isSeries}
+        onLoginClick={openLoginModal} // Passa a função para o botão "Começar"
+        user={user} // Passa o estado do usuário
       />
       {showHeaderFooter && <Footer />}
 

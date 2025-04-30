@@ -1,8 +1,9 @@
+// Header.jsx
 import { IoClose, IoMenuSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import styles from "../styles/Header.module.scss";
 
-export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
+export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick, onLogoutClick, user }) { // Adicione onLogoutClick e user
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -10,12 +11,12 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 820);
       if (window.innerWidth > 820) {
-        setMenuOpen(false); // Fecha o menu se a tela for redimensionada para maior que 820px
+        setMenuOpen(false);
       }
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Verifica o tamanho da tela na montagem do componente
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -37,9 +38,9 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
             )}
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
-                <li onClick={() => onFilmesClick(true)}>Home</li>
-                <li onClick={() => onFilmesClick(false)}>Filmes</li>
-                <li onClick={onSeriesClick}>Séries</li>
+                {user && <li onClick={() => onFilmesClick(true)}>Home</li>} {/* Mostrar apenas se logado */}
+                {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>} {/* Mostrar apenas se logado */}
+                {user && <li onClick={onSeriesClick}>Séries</li>} {/* Mostrar apenas se logado */}
                 <hr className={styles.divider} />
                 <li className={styles.btnLoginMobile} onClick={onLoginClick}>
                   LOGIN
@@ -49,21 +50,32 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
           </>
         ) : (
           <ul className={styles.navLeftUl}>
-            <li onClick={() => onFilmesClick(true)}>Home</li>
-            <li onClick={() => onFilmesClick(false)}>Filmes</li>
-            <li onClick={onSeriesClick}>Séries</li>
+            {user && <li onClick={() => onFilmesClick(true)}>Home</li>} {/* Mostrar apenas se logado */}
+            {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>} {/* Mostrar apenas se logado */}
+            {user && <li onClick={onSeriesClick}>Séries</li>} {/* Mostrar apenas se logado */}
           </ul>
         )}
       </nav>
 
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
-          <li className={styles.btnLogin} onClick={onLoginClick}>
-            LOGIN
-          </li>
-          <li className={styles.btnCadastro} onClick={onCadastroClick}>
-            CADASTRO
-          </li>
+          {user ? (
+            <>
+              <li className={styles.userName}>Olá, {user.email}</li>
+              <li className={styles.btnLogout} onClick={onLogoutClick}> {/* Botão de Logout */}
+                LOGOUT
+              </li>
+            </>
+          ) : (
+            <>
+              <li className={styles.btnLogin} onClick={onLoginClick}>
+                LOGIN
+              </li>
+              <li className={styles.btnCadastro} onClick={onCadastroClick}>
+                CADASTRO
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>

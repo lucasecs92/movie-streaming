@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io5";
+import { auth, googleProvider, githubProvider } from '../../lib/firebase';  // Import auth and providers
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"; // Import Firebase Auth methods
 
 export default function ModalCadastro({
   isOpen,
@@ -16,6 +18,8 @@ export default function ModalCadastro({
   showPassword,
   toggleShowPassword,
 }) {
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -44,6 +48,37 @@ export default function ModalCadastro({
     onOpenLogin();
   };
 
+  const handleCadastro = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log('User registered:', user);
+      onClose();
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+      alert(`Registration Failed: ${error.message}`);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      onClose();
+    } catch (error) {
+      console.error("Error with Google signup:", error);
+    }
+  };
+
+  const handleGitHubSignUp = async () => {
+    try {
+      await signInWithPopup(auth, githubProvider);
+      onClose();
+    } catch (error) {
+      console.error("Error with GitHub signup:", error);
+    }
+  };
+
   return (
     <section className={styles.modalOverlay}>
       <nav className={styles.headerModal}>
@@ -61,10 +96,10 @@ export default function ModalCadastro({
           <span className={styles.closeButton}>
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleCadastro}>
             <label className={styles.label}>Nome</label>
             <section className={styles.inputWrapper}>
-              <input className={styles.input} type="text" required />
+              <input className={styles.input} type="text" value={name} onChange={(e) => setName(e.target.value)} required />
             </section>
             <label className={styles.label}>Email</label>
             <section className={styles.inputWrapper}>
@@ -84,6 +119,8 @@ export default function ModalCadastro({
               <input
                 className={styles.input}
                 type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               {showPassword ? (
@@ -95,11 +132,11 @@ export default function ModalCadastro({
             <button className={styles.button} type="submit">Cadastrar</button>
             <span className={styles.spanOr}>Ou</span>
             <section className={styles.socialLogin}>
-              <button className={styles.googleButton}>
+              <button type="button" className={styles.googleButton} onClick={handleGoogleSignUp}>
                 <FcGoogle className={styles.socialIcon} />
                 Cadastrar com Google
               </button>
-              <button className={styles.githubButton}>
+              <button type="button" className={styles.githubButton} onClick={handleGitHubSignUp}>
                 <IoLogoGithub className={styles.socialIcon} />
                 Cadastrar com GitHub
               </button>

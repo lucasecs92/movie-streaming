@@ -1,155 +1,173 @@
 .header {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 0.4rem 1rem; 
-    background-color: #151b23b6;
-    
-    position: fixed;    
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1rem;
+  background-color: #151b23b6;
+
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
 }
 
 .navLeft {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    h1 {
-        margin: 0;
-        color: #fff; 
-        font-size: 1.8rem; 
-    }
+  h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.8rem;
+  }
 }
 
 .navLeftUl {
-    display: flex;
-    gap: 2rem;
-    list-style-type: none;
-    margin: 0;
+  display: flex;
+  gap: 2rem;
+  list-style-type: none;
+  margin: 0;
 
-    li {
-        text-decoration: none;
-        font-weight: bold;
-        color: #ccc;
-        cursor: pointer;
+  li {
+    text-decoration: none;
+    font-weight: bold;
+    color: #ccc;
+    cursor: pointer;
 
-        &:hover {
-            text-decoration: underline;
-            text-underline-offset: 0.3em;
-            text-decoration-thickness: 2px;
-        }
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+      text-decoration-thickness: 2px;
     }
+  }
 }
 
 .divider {
-    width: 100%;
-    color: #c50303;
+  width: 100%;
+  color: #c50303;
 }
 
 .navLeftUlMobile {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    list-style-type: none;
-    position: absolute;
-    top: 7vh; 
-    left: 0;
-    background-color: #151b23b6;
-    width: 40%;
-    margin: 0;
-    padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style-type: none;
+  position: absolute;
+  top: 7vh;
+  left: 0;
+  background-color: #151b23b6;
+  width: 40%;
+  margin: 0;
+  padding: 1rem 2rem;
 
-    li {
-        text-decoration: none;
-        font-weight: bold;
-        color: #ccc;
-        cursor: pointer;
+  li {
+    text-decoration: none;
+    font-weight: bold;
+    color: #ccc;
+    cursor: pointer;
 
-        &:hover {
-            text-decoration: underline;
-            text-underline-offset: 0.3em;
-            text-decoration-thickness: 2px;
-        }
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+      text-decoration-thickness: 2px;
     }
+  }
 }
 
 .navRight {
-    display: flex;
-    gap: 0.3rem;
-    list-style-type: none;
-    align-items: center;
+  display: flex;
+  gap: 0.3rem;
+  list-style-type: none;
+  align-items: center;
 }
 
 .navRightUl {
-    display: flex;
-    list-style-type: none;
-    gap: 0.6rem;
-    margin: 0;
+  display: flex;
+  list-style-type: none;
+  gap: 0.6rem;
+  margin: 0;
 }
 
-.btnCadastro, 
+.userName {
+  color: white;
+  margin-right: 20px;
+}
+
+.btnLogout {
+  background: none;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+}
+
+.btnCadastro,
 .btnLogin {
-    text-decoration: none;
-    color: #ccc;
-    padding: 9px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: bold;
+  text-decoration: none;
+  color: #ccc;
+  padding: 9px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 .btnLogin {
-    &:hover {
-        background-color: #ffffff17;
-    }
+  &:hover {
+    background-color: #ffffff17;
+  }
 }
 
 .btnCadastro {
-    background-color: #FE4F2D;
+  background-color: #fe4f2d;
 
-    &:hover {
-       background-color: #fe502dbe; 
-       outline: 2px solid #fe502dbe;
-    }
+  &:hover {
+    background-color: #fe502dbe;
+    outline: 2px solid #fe502dbe;
+  }
 }
 
 .menuIcon {
-    font-size: 2rem;
-    color: #fff;
-    cursor: pointer;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
 }
 
 @media (max-width: 820px) {
-    .navLeft {
-        flex-direction: row-reverse;
-        gap: 1rem;
-    }
-    .btnLoginMobile, 
-    .divider {
-        display: none;
-    }
+  .navLeft {
+    flex-direction: row-reverse;
+    gap: 1rem;
+  }
+  .btnLoginMobile,
+  .divider {
+    display: none;
+  }
 }
 
 @media (max-width: 592px) {
-    .btnLogin {
-        display: none;
-    }
+  .btnLogin {
+    display: none;
+  }
 
-    .btnLoginMobile, 
-    .divider {
-        display: block;
-    }
+  .btnLoginMobile,
+  .divider {
+    display: block;
+  }
 }
 
 @media (max-width: 430px) {
-    .header {
-        padding: 0.6rem 1rem 0 1rem;
+  .header {
+    padding: 0.6rem 1rem 0 1rem;
+  }
+  .navLeft {
+    h1 {
+      font-size: 1.4rem;
     }
-    .navLeft {
-        h1 {
-            font-size: 1.4rem;
-        }
-    }
+  }
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "../styles/Main.module.scss";
 import { useCallback, useEffect, useState } from "react";
 import { filmes, filmes2 } from "../data/filmes";
@@ -8,7 +6,7 @@ import MovieList from "./MovieList";
 import ShowsList from "./ShowsList";
 import ShowDetails from "./ShowDetails";
 
-export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, setShowHeaderFooter, isSeries }) {
+export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, setShowHeaderFooter, isSeries, onLoginClick, user }) { // Adicione onLoginClick e user como props
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [transitionEnabled] = useState(true);
 
@@ -37,7 +35,7 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
         <ShowDetails
           show={filmeSelecionado}
           voltarParaLista={() => setFilmeSelecionado(null)}
-          setShowHeaderFooter={setShowHeaderFooter} // Passar controle de Header e Footer
+          setShowHeaderFooter={setShowHeaderFooter}
         />
       ) : (
         <>
@@ -46,6 +44,11 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
               <section className={styles.banner}>
                 <h2>Bem-vindo(a) ao Cineminha!</h2>
                 <p>Assista aos melhores filmes e séries aqui.</p>
+                {!user && ( // Renderiza o botão apenas se o usuário não estiver logado
+                  <button className={styles.startButton} onClick={onLoginClick}>
+                    Começar
+                  </button>
+                )}
               </section>
             </section>
           ) : isSeries ? (
@@ -61,7 +64,7 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
               filmes2={filmes2}
               slidesPerView={slidesPerView}
               transitionEnabled={transitionEnabled}
-              setShowHeaderFooter={setShowHeaderFooter} // Passar controle de Header e Footer
+              setShowHeaderFooter={setShowHeaderFooter}
             />
           )}
         </>

@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io5";
+import { auth, googleProvider, githubProvider } from '../../lib/firebase';  // Import auth and providers
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"; // Import Firebase Auth methods
 
 export default function ModalLogin({
   isOpen,
@@ -16,6 +18,7 @@ export default function ModalLogin({
   showPassword,
   toggleShowPassword,
 }) {
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -44,10 +47,21 @@ export default function ModalLogin({
     onOpenCadastro();
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      onClose();
+    } catch (error) {
+      console.error('Error logging in:', error.message);
+      alert(`Login Failed: ${error.message}`);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, googleProvider);
+      onClose();
     } catch (error) {
       console.error("Error with Google login:", error);
     }
@@ -55,8 +69,8 @@ export default function ModalLogin({
 
   const handleGitHubLogin = async () => {
     try {
-      const provider = new GitHubAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, githubProvider);
+      onClose();
     } catch (error) {
       console.error("Error with GitHub login:", error);
     }
@@ -79,7 +93,7 @@ export default function ModalLogin({
           <span className={styles.closeButton}>
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleLogin}>
             <label className={styles.label}>Email</label>
             <section className={styles.inputWrapper}>
               <input
@@ -95,7 +109,7 @@ export default function ModalLogin({
             </section>
             <label className={styles.label}>Senha</label>
             <section className={styles.passwordWrapper}>
-              <input className={styles.input} type={showPassword ? "text" : "password"} required />
+              <input className={styles.input} type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
               {showPassword ? (
                 <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
               ) : (
@@ -112,11 +126,11 @@ export default function ModalLogin({
             <button className={styles.button} type="submit">Entrar</button>
             <span className={styles.spanOr}>Ou</span>
             <section className={styles.socialLogin}>
-              <button onClick={handleGoogleLogin} className={styles.googleButton}>
+              <button type="button" onClick={handleGoogleLogin} className={styles.googleButton}>
                 <FcGoogle className={styles.socialIcon} />
                 Continue com Google
               </button>
-              <button onClick={handleGitHubLogin} className={styles.githubButton}>
+              <button type="button" onClick={handleGitHubLogin} className={styles.githubButton}>
                 <IoLogoGithub className={styles.socialIcon} />
                 Continue com GitHub
               </button>
