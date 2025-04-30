@@ -92,18 +92,47 @@
 .userName {
   color: white;
   margin-right: 20px;
+  cursor: pointer;
+  position: relative;
+
+  .userNameWrap {
+    &:hover {
+        color: #ccc;
+    }
+  }
 }
 
-.btnLogout {
-  background: none;
-  color: white;
-  border: 1px solid white;
-  padding: 8px 16px;
-  cursor: pointer;
+.userMenu {
+  position: absolute;
+  top: 45px; /* Posiciona abaixo do nome do usuário */
+  right: 0;
+  background-color: #333;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Garante que o menu esteja na frente de outros elementos */
+  width: 100%;
+  display: flex;
 
-  &:hover {
-    background-color: white;
-    color: black;
+  svg {
+    font-size: 1.5em;
+  }
+
+  .btnLogout {
+    cursor: pointer;
+    padding: 8px 15px;
+    color: white;
+    white-space: nowrap; /* Impede quebras de linha */
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: #555;
+    }
   }
 }
 

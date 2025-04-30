@@ -1,11 +1,20 @@
-// Header.jsx
 import { IoClose, IoMenuSharp } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Import useRef
 import styles from "../styles/Header.module.scss";
+import { CiLogout } from "react-icons/ci";
 
-export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick, onLogoutClick, user }) { // Adicione onLogoutClick e user
+export default function Header({
+  onFilmesClick,
+  onSeriesClick,
+  onLoginClick,
+  onCadastroClick,
+  onLogoutClick,
+  user,
+}) {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false); // Novo estado para o menu do usuário
+  const userMenuRef = useRef(null); // Referência para o menu do usuário
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,8 +30,23 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const toggleUserMenu = () => {
+    setUserMenuOpen(!userMenuOpen);
   };
 
   return (
@@ -38,9 +62,9 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
             )}
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
-                {user && <li onClick={() => onFilmesClick(true)}>Home</li>} {/* Mostrar apenas se logado */}
-                {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>} {/* Mostrar apenas se logado */}
-                {user && <li onClick={onSeriesClick}>Séries</li>} {/* Mostrar apenas se logado */}
+                {user && <li onClick={() => onFilmesClick(true)}>Home</li>}
+                {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>}
+                {user && <li onClick={onSeriesClick}>Séries</li>}
                 <hr className={styles.divider} />
                 <li className={styles.btnLoginMobile} onClick={onLoginClick}>
                   LOGIN
@@ -50,9 +74,9 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
           </>
         ) : (
           <ul className={styles.navLeftUl}>
-            {user && <li onClick={() => onFilmesClick(true)}>Home</li>} {/* Mostrar apenas se logado */}
-            {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>} {/* Mostrar apenas se logado */}
-            {user && <li onClick={onSeriesClick}>Séries</li>} {/* Mostrar apenas se logado */}
+            {user && <li onClick={() => onFilmesClick(true)}>Home</li>}
+            {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>}
+            {user && <li onClick={onSeriesClick}>Séries</li>}
           </ul>
         )}
       </nav>
@@ -60,12 +84,20 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
           {user ? (
-            <>
-              <li className={styles.userName}>Olá, {user.email}</li>
-              <li className={styles.btnLogout} onClick={onLogoutClick}> {/* Botão de Logout */}
-                LOGOUT
+            <li className={styles.userName} onClick={toggleUserMenu}>
+              <li className={styles.userNameWrap}>
+                Olá, {user.email}
               </li>
-            </>
+
+              {userMenuOpen && (
+                <ul className={styles.userMenu} ref={userMenuRef}>
+                  <li className={styles.btnLogout} onClick={onLogoutClick}>
+                    <CiLogout />
+                    Sair
+                  </li>
+                </ul>
+              )}
+            </li>
           ) : (
             <>
               <li className={styles.btnLogin} onClick={onLoginClick}>
