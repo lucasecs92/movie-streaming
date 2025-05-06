@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import { IoLogoGithub } from "react-icons/io5";
-import { auth, googleProvider, githubProvider } from '../../lib/firebase';  // Import auth and providers
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"; // Import Firebase Auth methods
+import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
+import { useRouter } from 'next/navigation'; // Importe o hook useRouter do Next.js
 
 export default function ModalCadastro({
   isOpen,
@@ -18,8 +17,10 @@ export default function ModalCadastro({
   showPassword,
   toggleShowPassword,
 }) {
-  const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter(); // Inicialize o router
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -50,32 +51,50 @@ export default function ModalCadastro({
 
   const handleCadastro = async (e) => {
     e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log('User registered:', user);
+    setError(null);
+
+    if (!email || !password || !name) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: name,
+        },
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      window.alert("Cadastro realizado com sucesso!", data);
       onClose();
-    } catch (error) {
-      console.error('Error registering user:', error.message);
-      alert(`Registration Failed: ${error.message}`);
+      // Redirecione o usuário para a página inicial após o cadastro
+      router.push('/');
     }
   };
 
   const handleGoogleSignUp = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      onClose();
-    } catch (error) {
-      console.error("Error with Google signup:", error);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+
+    if (error) {
+      console.error("Erro ao cadastrar com o Google", error);
     }
   };
 
   const handleGitHubSignUp = async () => {
-    try {
-      await signInWithPopup(auth, githubProvider);
-      onClose();
-    } catch (error) {
-      console.error("Error with GitHub signup:", error);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    });
+
+    if (error) {
+      console.error("Erro ao cadastrar com o Github", error);
     }
   };
 
@@ -96,6 +115,9 @@ export default function ModalCadastro({
           <span className={styles.closeButton}>
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
+
+          {error && <p className={styles.error}>{error}</p>}
+
           <form className={styles.form} onSubmit={handleCadastro}>
             <label className={styles.label}>Nome</label>
             <section className={styles.inputWrapper}>

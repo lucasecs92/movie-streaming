@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import { IoLogoGithub } from "react-icons/io5";
-import { auth, googleProvider, githubProvider } from '../../lib/firebase';  // Import auth and providers
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"; // Import Firebase Auth methods
+import supabase from '../../lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 export default function ModalLogin({
   isOpen,
@@ -19,6 +18,8 @@ export default function ModalLogin({
   toggleShowPassword,
 }) {
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -49,30 +50,45 @@ export default function ModalLogin({
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
+    setError(null);
+
+    if (!email || !password) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      window.alert("Login realizado com sucesso!", data);
       onClose();
-    } catch (error) {
-      console.error('Error logging in:', error.message);
-      alert(`Login Failed: ${error.message}`);
+      // Redirecione o usuário para a página inicial após o login
+      router.push('/');
     }
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      onClose();
-    } catch (error) {
-      console.error("Error with Google login:", error);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+
+    if (error) {
+      console.error("Erro ao logar com o Google", error);
     }
   };
 
   const handleGitHubLogin = async () => {
-    try {
-      await signInWithPopup(auth, githubProvider);
-      onClose();
-    } catch (error) {
-      console.error("Error with GitHub login:", error);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    });
+
+    if (error) {
+      console.error("Erro ao logar com o Github", error);
     }
   };
 
@@ -93,6 +109,9 @@ export default function ModalLogin({
           <span className={styles.closeButton}>
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
+
+          {error && <p className={styles.error}>{error}</p>}
+
           <form className={styles.form} onSubmit={handleLogin}>
             <label className={styles.label}>Email</label>
             <section className={styles.inputWrapper}>
@@ -109,7 +128,13 @@ export default function ModalLogin({
             </section>
             <label className={styles.label}>Senha</label>
             <section className={styles.passwordWrapper}>
-              <input className={styles.input} type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <input
+                className={styles.input}
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
               {showPassword ? (
                 <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
               ) : (
@@ -126,11 +151,11 @@ export default function ModalLogin({
             <button className={styles.button} type="submit">Entrar</button>
             <span className={styles.spanOr}>Ou</span>
             <section className={styles.socialLogin}>
-              <button type="button" onClick={handleGoogleLogin} className={styles.googleButton}>
+              <button type="button" className={styles.googleButton} onClick={handleGoogleLogin}>
                 <FcGoogle className={styles.socialIcon} />
                 Continue com Google
               </button>
-              <button type="button" onClick={handleGitHubLogin} className={styles.githubButton}>
+              <button type="button" className={styles.githubButton} onClick={handleGitHubLogin}>
                 <IoLogoGithub className={styles.socialIcon} />
                 Continue com GitHub
               </button>

@@ -1,20 +1,13 @@
 import { IoClose, IoMenuSharp } from "react-icons/io5";
-import { useState, useEffect, useRef } from "react"; // Import useRef
+import { useState, useEffect } from "react";
 import styles from "../styles/Header.module.scss";
-import { CiLogout } from "react-icons/ci";
+import supabase from '../../lib/supabaseClient';
 
-export default function Header({
-  onFilmesClick,
-  onSeriesClick,
-  onLoginClick,
-  onCadastroClick,
-  onLogoutClick,
-  user,
-}) {
+export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false); // Novo estado para o menu do usuário
-  const userMenuRef = useRef(null); // Referência para o menu do usuário
+  const [session, setSession] = useState(null);
+  const [userName, setUserName] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,22 +24,36 @@ export default function Header({
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setUserMenuOpen(false);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        setUserName(session.user.user_metadata.full_name || session.user.email);
+      } else {
+        setUserName(null);
       }
-    };
+    });
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        setUserName(session.user.user_metadata.full_name || session.user.email);
+      } else {
+        setUserName(null);
+      }
+    });
   }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const toggleUserMenu = () => {
-    setUserMenuOpen(!userMenuOpen);
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Erro ao deslogar:", error);
+    } else {
+      console.log("Deslogado com sucesso");
+    }
   };
 
   return (
@@ -62,42 +69,50 @@ export default function Header({
             )}
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
-                {user && <li onClick={() => onFilmesClick(true)}>Home</li>}
-                {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>}
-                {user && <li onClick={onSeriesClick}>Séries</li>}
+                {session ? (
+                  <>
+                    <li onClick={() => onFilmesClick(true)}>Home</li>
+                    <li onClick={() => onFilmesClick(false)}>Filmes</li>
+                    <li onClick={onSeriesClick}>Séries</li>
+                  </>
+                ) : null}
                 <hr className={styles.divider} />
-                <li className={styles.btnLoginMobile} onClick={onLoginClick}>
-                  LOGIN
-                </li>
+                {session ? (
+                  <li className={styles.btnLoginMobile} onClick={handleLogout}>
+                    LOGOUT
+                  </li>
+                ) : (
+                  <li className={styles.btnLoginMobile} onClick={onLoginClick}>
+                    LOGIN
+                  </li>
+                )}
               </ul>
             )}
           </>
         ) : (
           <ul className={styles.navLeftUl}>
-            {user && <li onClick={() => onFilmesClick(true)}>Home</li>}
-            {user && <li onClick={() => onFilmesClick(false)}>Filmes</li>}
-            {user && <li onClick={onSeriesClick}>Séries</li>}
+            {session ? (
+              <>
+                <li onClick={() => onFilmesClick(true)}>Home</li>
+                <li onClick={() => onFilmesClick(false)}>Filmes</li>
+                <li onClick={onSeriesClick}>Séries</li>
+              </>
+            ) : null}
           </ul>
         )}
       </nav>
 
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
-          {user ? (
-            <li className={styles.userName} onClick={toggleUserMenu}>
-              <li className={styles.userNameWrap}>
-                Olá, {user.email}
+          {session ? (
+            <>
+              <li className={styles.userName}>
+                Olá, {userName}!
               </li>
-
-              {userMenuOpen && (
-                <ul className={styles.userMenu} ref={userMenuRef}>
-                  <li className={styles.btnLogout} onClick={onLogoutClick}>
-                    <CiLogout />
-                    Sair
-                  </li>
-                </ul>
-              )}
-            </li>
+              <li className={styles.btnLogout} onClick={handleLogout}>
+                LOGOUT
+              </li>
+            </>
           ) : (
             <>
               <li className={styles.btnLogin} onClick={onLoginClick}>
