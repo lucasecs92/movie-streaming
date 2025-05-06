@@ -1,5 +1,6 @@
 import { IoClose, IoMenuSharp } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { MdLogout } from "react-icons/md";
+import { useState, useEffect, useRef } from "react"; 
 import styles from "../styles/Header.module.scss";
 import supabase from '../../lib/supabaseClient';
 
@@ -8,6 +9,8 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
   const [menuOpen, setMenuOpen] = useState(false);
   const [session, setSession] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
+  const dropdownRef = useRef(null); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,6 +44,22 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
         setUserName(null);
       }
     });
+
+    // Função para fechar o dropdown ao clicar fora
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    // Adiciona o listener ao montar o componente
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Remove o listener ao desmontar o componente
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+
   }, []);
 
   const toggleMenu = () => {
@@ -54,6 +73,10 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     } else {
       console.log("Deslogado com sucesso");
     }
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -105,14 +128,19 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
           {session ? (
-            <>
-              <li className={styles.userName}>
+            <li className={styles.userSection} ref={dropdownRef}>
+              <section className={styles.userName} onClick={toggleDropdown}>
                 Olá, {userName}!
-              </li>
-              <li className={styles.btnLogout} onClick={handleLogout}>
-                LOGOUT
-              </li>
-            </>
+              </section>
+              {isDropdownOpen && (
+                <section className={styles.dropdownMenu} onClick={handleLogout}>
+                  <MdLogout />
+                  <section className={styles.btnLogout} >
+                    SAIR
+                  </section>
+                </section>
+              )}
+            </li>
           ) : (
             <>
               <li className={styles.btnLogin} onClick={onLoginClick}>

@@ -86,52 +86,55 @@
   list-style-type: none;
   gap: 0.6rem;
   margin: 0;
-  align-items: center;
-}
+  // align-items: center;
 
-.userName {
-  color: white;
-  margin-right: 20px;
-  cursor: pointer;
-  position: relative;
-
-  .userNameWrap {
-    &:hover {
-        color: #ccc;
-    }
-  }
-}
-
-.userMenu {
-  position: absolute;
-  top: 45px; /* Posiciona abaixo do nome do usuário */
-  right: 0;
-  background-color: #333;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* Garante que o menu esteja na frente de outros elementos */
-  width: 100%;
-  display: flex;
-
-  svg {
-    font-size: 1.5em;
-  }
-
-  .btnLogout {
-    cursor: pointer;
-    padding: 8px 15px;
-    color: white;
-    white-space: nowrap; /* Impede quebras de linha */
-    width: 100%;
+  .userSection {
+    position: relative;
     display: flex;
-    gap: 10px;
-    border-radius: 5px;
+    align-items: center;
 
-    &:hover {
-      background-color: #555;
+    .userName {
+      color: #ccc;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 9px 25px;
+      border-radius: 5px;
+
+      &:hover {
+        color: #fe4f2d;
+      }
+    }
+
+    .dropdownMenu {
+      position: absolute;
+      top: 55px;
+      right: 0;
+      background-color: #555555d2;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0px 10px;
+      cursor: pointer;
+      color: #ccc;
+
+      svg {
+        font-size: 1.5em;
+      }
+
+      &:hover {
+        background-color: #151b23b6;
+      }
+    }
+
+    .btnLogout {
+      padding: 8px 15px;
+      white-space: nowrap; /* Impede quebras de linha */
+      display: flex;
+      gap: 10px;
+      border-radius: 5px;
     }
   }
 }
