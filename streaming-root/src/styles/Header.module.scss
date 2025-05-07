@@ -42,15 +42,11 @@
   }
 }
 
-.divider {
-  width: 100%;
-  color: #c50303;
-}
+
 
 .navLeftUlMobile {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   list-style-type: none;
   position: absolute;
   top: 7vh;
@@ -58,18 +54,30 @@
   background-color: #151b23b6;
   width: 40%;
   margin: 0;
-  padding: 1rem 2rem;
+  padding: 0;
 
   li {
     text-decoration: none;
     font-weight: bold;
     color: #ccc;
     cursor: pointer;
+    padding: 1rem 2rem;
 
     &:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.3em;
-      text-decoration-thickness: 2px;
+      background-color: #555555d2;
+    }
+  }
+
+  .divider {
+    width: 100%;
+  }
+
+  .btnLoginMobile {
+    display: flex;
+    gap: 0.8rem;
+
+    svg {
+      font-size: 1.5rem;
     }
   }
 }
@@ -109,7 +117,7 @@
       position: absolute;
       top: 55px;
       right: 0;
-      background-color: #555555d2;
+      background-color: #151b23b6;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       z-index: 1000;
@@ -125,7 +133,7 @@
       }
 
       &:hover {
-        background-color: #151b23b6;
+        background-color: #555555d2;
       }
     }
 
@@ -177,10 +185,6 @@
     flex-direction: row-reverse;
     gap: 1rem;
   }
-  .btnLoginMobile,
-  .divider {
-    display: none;
-  }
 }
 
 @media (max-width: 592px) {
@@ -188,9 +192,8 @@
     display: none;
   }
 
-  .btnLoginMobile,
-  .divider {
-    display: block;
+  .userName {
+    font-size: 0.8em;
   }
 }
 

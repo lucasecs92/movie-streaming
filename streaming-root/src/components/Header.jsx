@@ -102,7 +102,8 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
                 <hr className={styles.divider} />
                 {session ? (
                   <li className={styles.btnLoginMobile} onClick={handleLogout}>
-                    LOGOUT
+                    <MdLogout />
+                    Sair
                   </li>
                 ) : (
                   <li className={styles.btnLoginMobile} onClick={onLoginClick}>
@@ -130,13 +131,13 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
           {session ? (
             <li className={styles.userSection} ref={dropdownRef}>
               <section className={styles.userName} onClick={toggleDropdown}>
-                Olá, {userName}!
+                {userName}!
               </section>
               {isDropdownOpen && (
                 <section className={styles.dropdownMenu} onClick={handleLogout}>
                   <MdLogout />
                   <section className={styles.btnLogout} >
-                    SAIR
+                    Sair
                   </section>
                 </section>
               )}
