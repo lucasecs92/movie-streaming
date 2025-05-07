@@ -24,7 +24,6 @@
 
 .navLeftUl {
   display: flex;
-  gap: 2rem;
   list-style-type: none;
   margin: 0;
 
@@ -33,16 +32,14 @@
     font-weight: bold;
     color: #ccc;
     cursor: pointer;
+    padding: 9px 25px;
+    border-radius: 8px;
 
     &:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.3em;
-      text-decoration-thickness: 2px;
+      background-color: #ffffff17;
     }
   }
 }
-
-
 
 .navLeftUlMobile {
   display: flex;
@@ -62,6 +59,12 @@
     color: #ccc;
     cursor: pointer;
     padding: 1rem 2rem;
+    display: flex;
+    gap: 0.8rem;
+
+    svg {
+      font-size: 1.5rem;
+    }
 
     &:hover {
       background-color: #555555d2;

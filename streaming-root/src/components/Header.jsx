@@ -1,5 +1,5 @@
 import { IoClose, IoMenuSharp } from "react-icons/io5";
-import { MdLogout } from "react-icons/md";
+import { MdOutlineHome, MdOutlineLocalMovies, MdLiveTv, MdLogout } from "react-icons/md";
 import { useState, useEffect, useRef } from "react"; 
 import styles from "../styles/Header.module.scss";
 import supabase from '../../lib/supabaseClient';
@@ -94,9 +94,18 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
               <ul className={styles.navLeftUlMobile}>
                 {session ? (
                   <>
-                    <li onClick={() => onFilmesClick(true)}>Home</li>
-                    <li onClick={() => onFilmesClick(false)}>Filmes</li>
-                    <li onClick={onSeriesClick}>Séries</li>
+                    <li onClick={() => onFilmesClick(true)}>
+                      <MdOutlineHome />
+                      Home
+                    </li>
+                    <li onClick={() => onFilmesClick(false)}>
+                      <MdOutlineLocalMovies />
+                      Filmes
+                    </li>
+                    <li onClick={onSeriesClick}>
+                      <MdLiveTv />
+                      Séries
+                    </li>
                   </>
                 ) : null}
                 <hr className={styles.divider} />
