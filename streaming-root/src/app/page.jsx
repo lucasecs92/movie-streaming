@@ -6,10 +6,8 @@ import Main from "../components/Main";
 import Footer from "../components/Footer";
 import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback} from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
-import { auth } from '../../lib/firebase'; // Import auth
-import { signOut } from "firebase/auth";
 
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
@@ -21,21 +19,8 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [showHeaderFooter, setShowHeaderFooter] = useState(true);
   const [isSeries, setIsSeries] = useState(false);
-  const [user, setUser] = useState(null); // Estado para o usuário logado
 
   useModalScrollLock(isLoginModalOpen || isCadastroModalOpen);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(authUser => { // Ouvinte de autenticação
-      if (authUser) {
-        setUser(authUser); // Define o usuário se estiver logado
-      } else {
-        setUser(null);  // Define como null se estiver deslogado
-      }
-    });
-
-    return () => unsubscribe(); // Limpa o ouvinte ao desmontar o componente
-  }, []);
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -78,14 +63,6 @@ export default function Home() {
     setEmail("");
   };
 
-  const handleLogout = async () => {  // Função de logout
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
-
   return (
     <section className={styles.containerPage}>
       {showHeaderFooter && (
@@ -102,8 +79,6 @@ export default function Home() {
           }}
           onLoginClick={openLoginModal}
           onCadastroClick={openCadastroModal}
-          onLogoutClick={handleLogout} // Passa a função de logout
-          user={user} // Passa o estado do usuário
         />
       )}
       <Main
@@ -114,7 +89,6 @@ export default function Home() {
         setShowHeaderFooter={setShowHeaderFooter}
         isSeries={isSeries}
         onLoginClick={openLoginModal} // Passa a função para o botão "Começar"
-        user={user} // Passa o estado do usuário
       />
       {showHeaderFooter && <Footer />}
 
