@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
+import supabase from '../../lib/supabaseClient';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import supabase from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 export default function ModalLogin({
@@ -110,7 +111,12 @@ export default function ModalLogin({
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
 
-          {error && <p className={styles.error}>{error}</p>}
+          {error && 
+            <p className={styles.error}>
+              <HiOutlineExclamationCircle />
+              O endereço de e-mail ou a senha não estão corretos.
+            </p>
+          }
 
           <form className={styles.form} onSubmit={handleLogin}>
             <label className={styles.label}>Email</label>

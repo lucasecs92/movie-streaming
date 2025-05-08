@@ -95,6 +95,22 @@
   }
 }
 
+.error {
+  padding: 0.8em;
+  background-color: #40282c;
+  color: #f76a62;
+  border-radius: 5px;
+  font-size: 0.8em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  svg {
+    font-size: 1.8em;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
