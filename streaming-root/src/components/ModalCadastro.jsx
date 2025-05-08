@@ -4,6 +4,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
 import { useRouter } from 'next/navigation'; // Importe o hook useRouter do Next.js
 
@@ -116,7 +117,12 @@ export default function ModalCadastro({
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
 
-          {error && <p className={styles.error}>{error}</p>}
+          {error && 
+            <p className={styles.error}>
+              <HiOutlineExclamationCircle />
+              {error}
+            </p>
+          }
 
           <form className={styles.form} onSubmit={handleCadastro}>
             <label className={styles.label}>Nome</label>
