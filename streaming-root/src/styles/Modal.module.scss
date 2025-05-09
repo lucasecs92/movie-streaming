@@ -157,25 +157,12 @@
   font-size: 1.2rem;
 }
 
-.remember {
-  display: flex;
-  gap: 5px;
-  margin: 5px 0;
-  font-size: 0.9em;
-  
-  label {
-    color: #fff;
-    font-weight: bold;
-  }
-}
-
 .forgot {
   margin-top: 15px;
   color: #fe4f2d;
-  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.850em;
   font-weight: bold;
 }
 
@@ -189,7 +176,7 @@
   background-color: #ccc;
   color: #202020;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -222,7 +209,7 @@
     padding: 8px;
     width: 50%;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
   .googleButton {
