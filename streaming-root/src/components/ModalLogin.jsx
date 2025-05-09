@@ -147,12 +147,9 @@ export default function ModalLogin({
                 <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
               )}
             </section>
-            <section className={styles.options}>
-              <section className={styles.remember}>
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">Lembrar senha</label>
-              </section>
-              <a href="#" className={styles.forgot}>Esqueceu a senha?</a>
+            <section className={styles.remember}>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Lembrar senha</label>
             </section>
             <button className={styles.button} type="submit">Entrar</button>
             <span className={styles.spanOr}>Ou</span>
@@ -166,6 +163,7 @@ export default function ModalLogin({
                 Continue com GitHub
               </button>
             </section>
+            <a href="#" className={styles.forgot}>Esqueceu a senha?</a>
           </form>
         </section>
       </section>

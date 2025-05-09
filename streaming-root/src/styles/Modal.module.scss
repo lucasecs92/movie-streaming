@@ -157,15 +157,8 @@
   font-size: 1.2rem;
 }
 
-.options {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
 .remember {
   display: flex;
-  align-items: center;
   gap: 5px;
   margin: 5px 0;
   font-size: 0.9em;
@@ -177,7 +170,7 @@
 }
 
 .forgot {
-  margin-top: 10px;
+  margin-top: 15px;
   color: #fe4f2d;
   text-align: center;
   text-decoration: none;
