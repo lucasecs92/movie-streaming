@@ -148,7 +148,7 @@ export default function ModalLogin({
               )}
             </section>
             
-            <a href="#" className={styles.forgot}>Esqueceu a senha?</a>
+            <p className={styles.forgot}>Esqueceu a senha?</p>
 
             <button className={styles.button} type="submit">Entrar</button>
             <span className={styles.spanOr}>Ou</span>
