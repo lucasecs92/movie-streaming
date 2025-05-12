@@ -17,6 +17,7 @@ export default function ModalLogin({
   clearEmail,
   showPassword,
   toggleShowPassword,
+  onForgotPasswordClick,
 }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -148,7 +149,7 @@ export default function ModalLogin({
               )}
             </section>
             
-            <p className={styles.forgot}>Esqueceu a senha?</p>
+            <p className={styles.forgot} onClick={onForgotPasswordClick}>Esqueceu a senha?</p>
 
             <button className={styles.button} type="submit">Entrar</button>
             <span className={styles.spanOr}>Ou</span>

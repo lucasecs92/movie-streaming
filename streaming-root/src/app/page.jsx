@@ -6,8 +6,12 @@ import Main from "../components/Main";
 import Footer from "../components/Footer";
 import ModalLogin from "../components/ModalLogin";
 import ModalCadastro from "@/components/ModalCadastro";
-import { useState, useCallback} from "react";
+import { useState, useCallback, useEffect } from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
+import ModalForgotPassword from "../components/ModalForgotPassword";
+import ModalResetPasswordForm from "../components/ModalResetPasswordForm";
+import { useSearchParams, useRouter } from 'next/navigation'; // Importe useSearchParams e useRouter
+import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
 
 export default function Home() {
   const [showBanner, setShowBanner] = useState(true);
@@ -19,8 +23,22 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [showHeaderFooter, setShowHeaderFooter] = useState(true);
   const [isSeries, setIsSeries] = useState(false);
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [isResetPasswordFormModalOpen, setIsResetPasswordFormModalOpen] = useState(false);
+  const [resetToken, setResetToken] = useState(null); // To store a token sent to the user's email
+  const searchParams = useSearchParams();  // Hook para acessar os parâmetros da URL
+  const router = useRouter();
 
-  useModalScrollLock(isLoginModalOpen || isCadastroModalOpen);
+  useModalScrollLock(isLoginModalOpen || isCadastroModalOpen || isResetPasswordFormModalOpen);
+
+  useEffect(() => {
+    const urlToken = searchParams.get('token');
+    if (urlToken) {
+      setResetToken(urlToken);
+      openResetPasswordFormModal();
+    }
+  }, [searchParams]);
+
 
   const toggleBanner = useCallback((shouldShowBanner) => {
     setShowBanner(shouldShowBanner);
@@ -63,6 +81,48 @@ export default function Home() {
     setEmail("");
   };
 
+  const openForgotPasswordModal = () => {
+    setIsLoginModalOpen(false);
+    setIsForgotPasswordModalOpen(true);
+  };
+
+  const closeForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(false);
+  };
+
+  const openResetPasswordFormModal = () => {
+    setIsResetPasswordFormModalOpen(true);
+  };
+
+  const closeResetPasswordFormModal = () => {
+    setIsResetPasswordFormModalOpen(false);
+  };
+
+  const handleForgotPasswordSubmit = async (email) => {
+    console.log("E-mail de redefinição solicitado para:", email);
+
+    // Removido o código de token simulado
+  };
+
+  const handleResetPassword = async (newPassword) => {
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        alert("Erro ao redefinir a senha: " + error.message);
+      } else {
+        alert("Senha redefinida com sucesso!");
+        closeResetPasswordFormModal();
+        router.push('/login'); // Redirecione para a página de login
+      }
+    } catch (err) {
+      console.error("Erro ao redefinir a senha", err);
+      alert("Ocorreu um erro ao redefinir a senha.");
+    }
+  };
+
   return (
     <section className={styles.containerPage}>
       {showHeaderFooter && (
@@ -101,6 +161,19 @@ export default function Home() {
         clearEmail={clearEmail}
         showPassword={showPassword}
         toggleShowPassword={toggleShowPassword}
+        onForgotPasswordClick={openForgotPasswordModal}
+      />
+      <ModalForgotPassword
+        isOpen={isForgotPasswordModalOpen}
+        onClose={closeForgotPasswordModal}
+        email={email}
+        handleEmailChange={handleEmailChange}
+        clearEmail={clearEmail}
+      />
+      <ModalResetPasswordForm
+        isOpen={isResetPasswordFormModalOpen}
+        onClose={closeResetPasswordFormModal}
+        onPasswordSubmit={handleResetPassword}
       />
       <ModalCadastro
         isOpen={isCadastroModalOpen}
