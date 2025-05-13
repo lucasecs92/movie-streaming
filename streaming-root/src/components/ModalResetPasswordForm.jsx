@@ -1,4 +1,3 @@
-// ModalResetPasswordForm.jsx
 import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -52,7 +51,8 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
         }
 
         try {
-            await onPasswordSubmit(password); // Chama a função passada pelo pai (page.jsx)
+            // Modifique esta parte para incluir o token, se necessário para o seu backend
+            await onPasswordSubmit(password, token);
         } catch (err) {
             setError("Ocorreu um erro ao redefinir a senha.");
             console.error(err);

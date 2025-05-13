@@ -12,6 +12,7 @@ export default function ModalForgotPassword({
     email,
     handleEmailChange,
     clearEmail,
+    onResetPassword,
 }) {
     const [loading, setLoading] = useState(false); // Estado para controlar o loading
     const [error, setError] = useState(null);
@@ -37,21 +38,22 @@ export default function ModalForgotPassword({
 
     if (!isOpen) return null;
 
-    const handleForgotPasswordSubmit = async (e) => {
+    const handleForgotPasswordSubmit = async (e) => { // Volte a usar async
         e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: `${window.location.origin}/`, // Redireciona para a home após o envio do email
+                redirectTo: `${window.location.origin}/`, // Use o redirectTo do Supabase
             });
 
             if (error) {
                 setError(error.message);
             } else {
                 alert("Um link de recuperação de senha foi enviado para o seu e-mail!");
-                router.push('/'); // Redireciona para a home
+                onResetPassword(email); // Chame onResetPassword para abrir o próximo modal
+                onClose(); // Feche este modal
             }
         } catch (err) {
             setError("Ocorreu um erro ao solicitar a redefinição de senha.");
@@ -60,7 +62,6 @@ export default function ModalForgotPassword({
             setLoading(false);
         }
     };
-
 
     return (
         <section className={styles.modalOverlay}>

@@ -26,6 +26,7 @@ export default function Home() {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isResetPasswordFormModalOpen, setIsResetPasswordFormModalOpen] = useState(false);
   const [resetToken, setResetToken] = useState(null); // To store a token sent to the user's email
+  const [resetEmail, setResetEmail] = useState("");
   const searchParams = useSearchParams();  // Hook para acessar os parâmetros da URL
   const router = useRouter();
 
@@ -100,8 +101,15 @@ export default function Home() {
 
   const handleForgotPasswordSubmit = async (email) => {
     console.log("E-mail de redefinição solicitado para:", email);
+    setIsForgotPasswordModalOpen(false); // Feche o ModalForgotPassword
+    setEmail(email); // Defina o email
+    openResetPasswordFormModal();
+  };
 
-    // Removido o código de token simulado
+  const handleResetPasswordRequest = (email) => {
+    setResetEmail(email); // Armazena o email
+    setIsForgotPasswordModalOpen(false);
+    setIsResetPasswordFormModalOpen(true); // Abre o modal de redefinição
   };
 
   const handleResetPassword = async (newPassword) => {
@@ -115,7 +123,7 @@ export default function Home() {
       } else {
         alert("Senha redefinida com sucesso!");
         closeResetPasswordFormModal();
-        router.push('/login'); // Redirecione para a página de login
+        router.push('/login');
       }
     } catch (err) {
       console.error("Erro ao redefinir a senha", err);
@@ -162,6 +170,7 @@ export default function Home() {
         showPassword={showPassword}
         toggleShowPassword={toggleShowPassword}
         onForgotPasswordClick={openForgotPasswordModal}
+        onResetPassword={handleForgotPasswordSubmit}
       />
       <ModalForgotPassword
         isOpen={isForgotPasswordModalOpen}
@@ -169,11 +178,13 @@ export default function Home() {
         email={email}
         handleEmailChange={handleEmailChange}
         clearEmail={clearEmail}
+        onResetPassword={handleResetPasswordRequest}
       />
       <ModalResetPasswordForm
         isOpen={isResetPasswordFormModalOpen}
         onClose={closeResetPasswordFormModal}
         onPasswordSubmit={handleResetPassword}
+        //token={resetToken}
       />
       <ModalCadastro
         isOpen={isCadastroModalOpen}
