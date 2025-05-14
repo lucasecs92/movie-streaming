@@ -1,4 +1,5 @@
 .modalOverlay {
+  width: 100vw;
   position: fixed;
   background-color: #151b23f3;
   display: flex;
@@ -110,6 +111,16 @@
   svg {
     font-size: 1.8em;
   }
+}
+
+.success {
+  padding: 15px;
+  margin: 25px 0 0 0;
+  font-size: 0.9em;
+  font-weight: 600;
+  background-color: #dff0d8;
+  color: #549270;
+  border-radius: 5px;
 }
 
 .form {
@@ -233,6 +244,18 @@
   .socialIcon {
     width: 30px;
     height: 30px;
+  }
+}
+
+@media (max-width: 1015px) {
+  .modalOverlay {
+    padding: 300px 5rem 0 5rem;
+  }
+}
+
+@media (max-width: 725px) {
+  .modalOverlay {
+    padding: 300px 0rem 0 0rem;
   }
 }
 

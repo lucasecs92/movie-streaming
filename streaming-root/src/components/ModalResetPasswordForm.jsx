@@ -19,6 +19,13 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
         };
 
         if (isOpen) {
+            // Reset form state when modal opens
+            setPassword("");
+            setConfirmPassword("");
+            setShowPassword(false);
+            setShowConfirmPassword(false);
+            setError(null);
+            setLoading(false);
             window.addEventListener("keydown", handleEsc);
         } else {
             window.removeEventListener("keydown", handleEsc);
@@ -39,25 +46,40 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    const handleResetPassword = async (e) => {
+    const handleResetPasswordSubmit = async (e) => { // Renamed to avoid conflict if onPasswordSubmit was also named this
         e.preventDefault();
         setLoading(true);
         setError(null);
 
+        if (!password) {
+            setError("O campo Nova Senha é obrigatório.");
+            setLoading(false);
+            return;
+        }
         if (password !== confirmPassword) {
             setError("As senhas não coincidem.");
             setLoading(false);
             return;
         }
+        if (password.length < 6) { // Example: Enforce minimum password length
+            setError("A senha deve ter pelo menos 6 caracteres.");
+            setLoading(false);
+            return;
+        }
 
         try {
-            // Modifique esta parte para incluir o token, se necessário para o seu backend
-            await onPasswordSubmit(password, token);
+            // The token is handled by Supabase client library,
+            // which updates the user session upon redirection from the email link.
+            // `onPasswordSubmit` in Home.jsx will call supabase.auth.updateUser()
+            await onPasswordSubmit(password);
+            // Success/error handling and modal closing should be managed by the `onPasswordSubmit` callback in Home.jsx
         } catch (err) {
-            setError("Ocorreu um erro ao redefinir a senha.");
-            console.error(err);
+            // This catch block might not be strictly necessary if onPasswordSubmit handles all errors
+            // and Home.jsx shows alerts. However, it can be a local fallback.
+            setError("Ocorreu um erro ao tentar redefinir a senha. Tente novamente.");
+            console.error("Error in ModalResetPasswordForm submit:", err);
         } finally {
-            setLoading(false);
+            setLoading(false); // Ensure loading is set to false
         }
     };
 
@@ -72,7 +94,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
                 </span>
                 <form
                     className={styles.form}
-                    onSubmit={handleResetPassword} // Use a nova função
+                    onSubmit={handleResetPasswordSubmit}
                 >
                     <label className={styles.label}>Nova Senha</label>
                     <section className={styles.passwordWrapper}>
@@ -82,6 +104,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            autoComplete="new-password"
                         />
                         {showPassword ? (
                             <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
@@ -98,6 +121,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
+                            autoComplete="new-password"
                         />
                         {showConfirmPassword ? (
                             <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />

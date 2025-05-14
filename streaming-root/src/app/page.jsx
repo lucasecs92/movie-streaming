@@ -10,7 +10,7 @@ import { useState, useCallback, useEffect } from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
 import ModalForgotPassword from "../components/ModalForgotPassword";
 import ModalResetPasswordForm from "../components/ModalResetPasswordForm";
-import { useSearchParams, useRouter } from 'next/navigation'; // Importe useSearchParams e useRouter
+import { useRouter } from 'next/navigation'; // Importe useRouter
 import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
 
 export default function Home() {
@@ -25,20 +25,31 @@ export default function Home() {
   const [isSeries, setIsSeries] = useState(false);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isResetPasswordFormModalOpen, setIsResetPasswordFormModalOpen] = useState(false);
-  const [resetToken, setResetToken] = useState(null); // To store a token sent to the user's email
-  const [resetEmail, setResetEmail] = useState("");
-  const searchParams = useSearchParams();  // Hook para acessar os parâmetros da URL
   const router = useRouter();
 
   useModalScrollLock(isLoginModalOpen || isCadastroModalOpen || isResetPasswordFormModalOpen);
 
+  const openResetPasswordFormModal = useCallback(() => {
+    setIsResetPasswordFormModalOpen(true);
+  }, []);
+
   useEffect(() => {
-    const urlToken = searchParams.get('token');
-    if (urlToken) {
-      setResetToken(urlToken);
-      openResetPasswordFormModal();
-    }
-  }, [searchParams]);
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "PASSWORD_RECOVERY") {
+          // This event fires when the user clicks the password recovery link
+          // and is redirected back to the app.
+          // Supabase client handles the token from the URL fragment (#access_token=...).
+          // Now we can show the form to enter a new password.
+          openResetPasswordFormModal();
+        }
+      }
+    );
+
+    return () => {
+      authListener?.unsubscribe();
+    };
+  }, [openResetPasswordFormModal]);
 
 
   const toggleBanner = useCallback((shouldShowBanner) => {
@@ -83,7 +94,7 @@ export default function Home() {
   };
 
   const openForgotPasswordModal = () => {
-    setIsLoginModalOpen(false);
+    setIsLoginModalOpen(false); // Close login modal if open
     setIsForgotPasswordModalOpen(true);
   };
 
@@ -91,29 +102,11 @@ export default function Home() {
     setIsForgotPasswordModalOpen(false);
   };
 
-  const openResetPasswordFormModal = () => {
-    setIsResetPasswordFormModalOpen(true);
-  };
-
-  const closeResetPasswordFormModal = () => {
-    setIsResetPasswordFormModalOpen(false);
-  };
-
-  const handleForgotPasswordSubmit = async (email) => {
-    console.log("E-mail de redefinição solicitado para:", email);
-    setIsForgotPasswordModalOpen(false); // Feche o ModalForgotPassword
-    setEmail(email); // Defina o email
-    openResetPasswordFormModal();
-  };
-
-  const handleResetPasswordRequest = (email) => {
-    setResetEmail(email); // Armazena o email
-    setIsForgotPasswordModalOpen(false);
-    setIsResetPasswordFormModalOpen(true); // Abre o modal de redefinição
-  };
-
+  // This function is called from ModalResetPasswordForm
   const handleResetPassword = async (newPassword) => {
     try {
+      // The user session should already have the necessary context
+      // from the PASSWORD_RECOVERY event.
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
@@ -121,15 +114,29 @@ export default function Home() {
       if (error) {
         alert("Erro ao redefinir a senha: " + error.message);
       } else {
-        alert("Senha redefinida com sucesso!");
+        alert("Senha redefinida com sucesso! Você pode fazer login com sua nova senha.");
         closeResetPasswordFormModal();
-        router.push('/login');
+        // Optionally, redirect to login or clear URL hash
+        // router.push('/'); // Or to a login page if you prefer
+        // Clear the hash from the URL if Supabase doesn't do it automatically
+        if (window.location.hash) {
+          window.history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
       }
     } catch (err) {
       console.error("Erro ao redefinir a senha", err);
       alert("Ocorreu um erro ao redefinir a senha.");
     }
   };
+
+  const closeResetPasswordFormModal = () => {
+    setIsResetPasswordFormModalOpen(false);
+    // Clear the hash from the URL after closing the modal
+    if (window.location.hash) {
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  };
+
 
   return (
     <section className={styles.containerPage}>
@@ -156,7 +163,7 @@ export default function Home() {
         voltarParaLista={voltarParaLista}
         setShowHeaderFooter={setShowHeaderFooter}
         isSeries={isSeries}
-        onLoginClick={openLoginModal} // Passa a função para o botão "Começar"
+        onLoginClick={openLoginModal}
       />
       {showHeaderFooter && <Footer />}
 
@@ -170,21 +177,21 @@ export default function Home() {
         showPassword={showPassword}
         toggleShowPassword={toggleShowPassword}
         onForgotPasswordClick={openForgotPasswordModal}
-        onResetPassword={handleForgotPasswordSubmit}
+        // Removed onResetPassword prop as it's not used in the new flow from ModalLogin
       />
       <ModalForgotPassword
         isOpen={isForgotPasswordModalOpen}
         onClose={closeForgotPasswordModal}
-        email={email}
-        handleEmailChange={handleEmailChange}
-        clearEmail={clearEmail}
-        onResetPassword={handleResetPasswordRequest}
+        email={email} // Pass current email or allow it to manage its own
+        handleEmailChange={handleEmailChange} // Or let it manage its own state
+        clearEmail={clearEmail} // Or let it manage its own state
+        // Removed onResetPassword prop, it now only sends the email and closes.
       />
       <ModalResetPasswordForm
         isOpen={isResetPasswordFormModalOpen}
         onClose={closeResetPasswordFormModal}
         onPasswordSubmit={handleResetPassword}
-        //token={resetToken}
+        // Token is handled by Supabase client, no need to pass as prop
       />
       <ModalCadastro
         isOpen={isCadastroModalOpen}
