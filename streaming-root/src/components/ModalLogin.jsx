@@ -128,6 +128,7 @@ export default function ModalLogin({
                 value={email}
                 onChange={handleEmailChange}
                 required
+                placeholder="seuemail@exemplo.com"
               />
               {email && (
                 <IoClose className={styles.clearIcon} onClick={clearEmail} />

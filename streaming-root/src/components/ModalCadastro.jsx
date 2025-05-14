@@ -137,6 +137,7 @@ export default function ModalCadastro({
                 value={email}
                 onChange={handleEmailChange}
                 required
+                placeholder="seuemail@exemplo.com"
               />
               {email && (
                 <IoClose className={styles.clearIcon} onClick={clearEmail} />

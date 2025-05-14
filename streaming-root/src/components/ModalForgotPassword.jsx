@@ -122,7 +122,7 @@ export default function ModalForgotPassword({
                             value={modalEmail}
                             onChange={handleModalEmailChange}
                             required
-                            placeholder="seuemail@example.com"
+                            placeholder="seuemail@exemplo.com"
                         />
                         {modalEmail && <IoClose className={styles.clearIcon} onClick={clearModalEmail} />}
                     </section>
