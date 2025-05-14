@@ -1,16 +1,20 @@
+"use client";
+
 import { IoClose, IoMenuSharp } from "react-icons/io5";
 import { MdOutlineHome, MdOutlineLocalMovies, MdLiveTv, MdLogout } from "react-icons/md";
-import { useState, useEffect, useRef } from "react"; 
+import { useState, useEffect, useRef } from "react";
 import styles from "../styles/Header.module.scss";
 import supabase from '../../lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [session, setSession] = useState(null);
   const [userName, setUserName] = useState(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
-  const dropdownRef = useRef(null); 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,42 +40,52 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       }
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    // supabase.auth.onAuthStateChange retorna { data: { subscription }, error }
+    // Vamos guardar o objeto data que contém a subscription.
+    const { data: authStateChangeData } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
         setUserName(session.user.user_metadata.full_name || session.user.email);
       } else {
         setUserName(null);
+        if (_event === "SIGNED_OUT") {
+          setIsDropdownOpen(false);
+        }
       }
     });
 
-    // Função para fechar o dropdown ao clicar fora
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
 
-    // Adiciona o listener ao montar o componente
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Remove o listener ao desmontar o componente
     return () => {
+      // CORREÇÃO: Acessamos a propriedade 'subscription' do objeto 'authStateChangeData'
+      // e chamamos 'unsubscribe' nela.
+      authStateChangeData?.subscription?.unsubscribe();
       document.removeEventListener('mousedown', handleClickOutside);
     };
-
-  }, []);
+  }, []); // As dependências vazias são intencionais para que o listener seja configurado/removido apenas na montagem/desmontagem.
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = async () => {
+    setIsDropdownOpen(false);
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Erro ao deslogar:", error);
     } else {
       console.log("Deslogado com sucesso");
+      onFilmesClick(true);
+      router.push('/');
+      if (isMobile && menuOpen) {
+        setMenuOpen(false);
+      }
     }
   };
 
@@ -79,10 +93,20 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleMobileMenuClick = (actionCallback) => {
+    if (actionCallback) {
+      actionCallback();
+    }
+    setMenuOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.navLeft}>
-        <h1 onClick={() => onFilmesClick(true)}>Cineminha</h1>
+        <h1 onClick={() => {
+          onFilmesClick(true);
+          if (isMobile && menuOpen) setMenuOpen(false);
+        }}>Cineminha</h1>
         {isMobile ? (
           <>
             {menuOpen ? (
@@ -94,28 +118,28 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
               <ul className={styles.navLeftUlMobile}>
                 {session ? (
                   <>
-                    <li onClick={() => onFilmesClick(true)}>
+                    <li onClick={() => handleMobileMenuClick(() => onFilmesClick(true))}>
                       <MdOutlineHome />
                       Home
                     </li>
-                    <li onClick={() => onFilmesClick(false)}>
+                    <li onClick={() => handleMobileMenuClick(() => onFilmesClick(false))}>
                       <MdOutlineLocalMovies />
                       Filmes
                     </li>
-                    <li onClick={onSeriesClick}>
+                    <li onClick={() => handleMobileMenuClick(onSeriesClick)}>
                       <MdLiveTv />
                       Séries
                     </li>
                   </>
-                ) : null}
+                ) : null }
                 <hr className={styles.divider} />
                 {session ? (
-                  <li className={styles.btnLoginMobile} onClick={handleLogout}>
+                  <li className={styles.btnLoginMobile} onClick={() => handleMobileMenuClick(handleLogout)}>
                     <MdLogout />
                     Sair
                   </li>
                 ) : (
-                  <li className={styles.btnLoginMobile} onClick={onLoginClick}>
+                  <li className={styles.btnLoginMobile} onClick={() => handleMobileMenuClick(onLoginClick)}>
                     LOGIN
                   </li>
                 )}
@@ -145,7 +169,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
               {isDropdownOpen && (
                 <section className={styles.dropdownMenu} onClick={handleLogout}>
                   <MdLogout />
-                  <section className={styles.btnLogout} >
+                  <section className={styles.btnLogout}>
                     Sair
                   </section>
                 </section>
