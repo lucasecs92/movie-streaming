@@ -12,8 +12,10 @@ import ModalForgotPassword from "../components/ModalForgotPassword";
 import ModalResetPasswordForm from "../components/ModalResetPasswordForm";
 import { useRouter } from 'next/navigation'; // Importe useRouter
 import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
+import { LoadingProvider, useLoading } from '../contexts/LoadingContext'; // Adjust path if necessary
+import LoadingOverlay from '../components/LoadingOverlay'; // Adjust path if necessary
 
-export default function Home() {
+function HomeComponent() {
   const [showBanner, setShowBanner] = useState(true);
   const [filmeSelecionado, setFilmeSelecionado] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -26,6 +28,7 @@ export default function Home() {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isResetPasswordFormModalOpen, setIsResetPasswordFormModalOpen] = useState(false);
   const router = useRouter();
+  const { setIsLoading } = useLoading();
 
   useModalScrollLock(isLoginModalOpen || isCadastroModalOpen || isResetPasswordFormModalOpen);
 
@@ -102,11 +105,9 @@ export default function Home() {
     setIsForgotPasswordModalOpen(false);
   };
 
-  // This function is called from ModalResetPasswordForm
   const handleResetPassword = async (newPassword) => {
+    setIsLoading(true); // Show global loader
     try {
-      // The user session should already have the necessary context
-      // from the PASSWORD_RECOVERY event.
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
@@ -116,9 +117,6 @@ export default function Home() {
       } else {
         alert("Senha redefinida com sucesso! Você pode fazer login com sua nova senha.");
         closeResetPasswordFormModal();
-        // Optionally, redirect to login or clear URL hash
-        // router.push('/'); // Or to a login page if you prefer
-        // Clear the hash from the URL if Supabase doesn't do it automatically
         if (window.location.hash) {
           window.history.pushState("", document.title, window.location.pathname + window.location.search);
         }
@@ -126,6 +124,8 @@ export default function Home() {
     } catch (err) {
       console.error("Erro ao redefinir a senha", err);
       alert("Ocorreu um erro ao redefinir a senha.");
+    } finally {
+      setIsLoading(false); // Hide global loader
     }
   };
 
@@ -133,7 +133,7 @@ export default function Home() {
     setIsResetPasswordFormModalOpen(false);
     // Clear the hash from the URL after closing the modal
     if (window.location.hash) {
-        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      window.history.pushState("", document.title, window.location.pathname + window.location.search);
     }
   };
 
@@ -177,7 +177,7 @@ export default function Home() {
         showPassword={showPassword}
         toggleShowPassword={toggleShowPassword}
         onForgotPasswordClick={openForgotPasswordModal}
-        // Removed onResetPassword prop as it's not used in the new flow from ModalLogin
+      // Removed onResetPassword prop as it's not used in the new flow from ModalLogin
       />
       <ModalForgotPassword
         isOpen={isForgotPasswordModalOpen}
@@ -185,13 +185,13 @@ export default function Home() {
         email={email} // Pass current email or allow it to manage its own
         handleEmailChange={handleEmailChange} // Or let it manage its own state
         clearEmail={clearEmail} // Or let it manage its own state
-        // Removed onResetPassword prop, it now only sends the email and closes.
+      // Removed onResetPassword prop, it now only sends the email and closes.
       />
       <ModalResetPasswordForm
         isOpen={isResetPasswordFormModalOpen}
         onClose={closeResetPasswordFormModal}
         onPasswordSubmit={handleResetPassword}
-        // Token is handled by Supabase client, no need to pass as prop
+      // Token is handled by Supabase client, no need to pass as prop
       />
       <ModalCadastro
         isOpen={isCadastroModalOpen}
@@ -206,5 +206,14 @@ export default function Home() {
         toggleShowConfirmPassword={toggleShowConfirmPassword}
       />
     </section>
+  );
+}
+
+export default function Home() {
+  return (
+    <LoadingProvider>
+      <HomeComponent />
+      <LoadingOverlay /> {/* Render LoadingOverlay here, it will be controlled by context */}
+    </LoadingProvider>
   );
 }

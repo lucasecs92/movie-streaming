@@ -7,8 +7,9 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
-import { useRouter } from 'next/navigation'; // Importe o hook useRouter do Next.js
+import supabase from '../../lib/supabaseClient';
+import { useRouter } from 'next/navigation';
+import { useLoading } from '../contexts/LoadingContext'; // Import useLoading
 
 export default function ModalCadastro({
   isOpen,
@@ -19,11 +20,13 @@ export default function ModalCadastro({
   clearEmail,
   showPassword,
   toggleShowPassword,
+  // Removed showConfirmPassword and toggleShowConfirmPassword as they are not used by this modal directly
 }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const router = useRouter(); // Inicialize o router
+  const router = useRouter();
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -61,43 +64,69 @@ export default function ModalCadastro({
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          full_name: name,
+    setIsLoading(true);
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: name,
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      setError(error.message);
-    } else {
-      window.alert("Cadastro realizado com sucesso!", data);
-      onClose();
-      // Redirecione o usuário para a página inicial após o cadastro
-      router.push('/');
+      if (signUpError) {
+        setError(signUpError.message);
+      } else {
+        // window.alert("Cadastro realizado com sucesso! Verifique seu e-mail para confirmação.", data); // Alert can be annoying
+        onClose();
+        router.push('/'); // Or to a "please verify email page"
+      }
+    } catch (catchError) {
+      console.error("Cadastro catch error:", catchError);
+      setError("Ocorreu um erro inesperado durante o cadastro.");
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleSignUp = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    });
+    setIsLoading(true);
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
 
-    if (error) {
-      console.error("Erro ao cadastrar com o Google", error);
+      if (oauthError) {
+        console.error("Erro ao cadastrar com o Google", oauthError);
+        setError("Erro ao cadastrar com o Google: " + oauthError.message);
+        setIsLoading(false);
+      }
+    } catch (catchError) {
+      console.error("Google signup catch error:", catchError);
+      setError("Ocorreu um erro inesperado com o cadastro via Google.");
+      setIsLoading(false);
     }
   };
 
   const handleGitHubSignUp = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-    });
+    setIsLoading(true);
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+      });
 
-    if (error) {
-      console.error("Erro ao cadastrar com o Github", error);
+      if (oauthError) {
+        console.error("Erro ao cadastrar com o Github", oauthError);
+        setError("Erro ao cadastrar com o GitHub: " + oauthError.message);
+        setIsLoading(false);
+      }
+    } catch (catchError) {
+      console.error("GitHub signup catch error:", catchError);
+      setError("Ocorreu um erro inesperado com o cadastro via GitHub.");
+      setIsLoading(false);
     }
   };
 
@@ -119,7 +148,7 @@ export default function ModalCadastro({
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
 
-          {error && 
+          {error &&
             <p className={styles.error}>
               <HiOutlineExclamationCircle />
               {error}
@@ -129,7 +158,14 @@ export default function ModalCadastro({
           <form className={styles.form} onSubmit={handleCadastro}>
             <label className={styles.label}>Nome</label>
             <section className={styles.inputWrapper}>
-              <input className={styles.input} type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+              <input
+                className={styles.input}
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                disabled={isGlobalLoading}
+              />
             </section>
             <label className={styles.label}>Email</label>
             <section className={styles.inputWrapper}>
@@ -140,6 +176,7 @@ export default function ModalCadastro({
                 onChange={handleEmailChange}
                 required
                 placeholder="seuemail@exemplo.com"
+                disabled={isGlobalLoading}
               />
               {email && (
                 <IoClose className={styles.clearIcon} onClick={clearEmail} />
@@ -153,6 +190,7 @@ export default function ModalCadastro({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isGlobalLoading}
               />
               {showPassword ? (
                 <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
@@ -160,14 +198,16 @@ export default function ModalCadastro({
                 <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
               )}
             </section>
-            <button className={styles.button} type="submit">Cadastrar</button>
+            <button className={styles.button} type="submit" disabled={isGlobalLoading}>
+              {isGlobalLoading ? "Cadastrando..." : "Cadastrar"}
+            </button>
             <span className={styles.spanOr}>Ou</span>
             <section className={styles.socialLogin}>
-              <button type="button" className={styles.googleButton} onClick={handleGoogleSignUp}>
+              <button type="button" className={styles.googleButton} onClick={handleGoogleSignUp} disabled={isGlobalLoading}>
                 <FcGoogle className={styles.socialIcon} />
                 Cadastrar com Google
               </button>
-              <button type="button" className={styles.githubButton} onClick={handleGitHubSignUp}>
+              <button type="button" className={styles.githubButton} onClick={handleGitHubSignUp} disabled={isGlobalLoading}>
                 <IoLogoGithub className={styles.socialIcon} />
                 Cadastrar com GitHub
               </button>

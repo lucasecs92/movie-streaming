@@ -2,26 +2,28 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import supabase from "../../lib/supabaseClient"; 
+import supabase from "../../lib/supabaseClient";
+import { useLoading } from '../contexts/LoadingContext'; // Import useLoading
 
 export default function ModalForgotPassword({
     isOpen,
     onClose,
-    email: initialEmail, // Rename to avoid conflict if managing email internally
-    handleEmailChange: parentHandleEmailChange, // Rename if managing email internally
-    clearEmail: parentClearEmail, // Rename if managing email internally
+    email: initialEmail,
+    handleEmailChange: parentHandleEmailChange,
+    clearEmail: parentClearEmail,
 }) {
-    // It's often better for modals to manage their own form state
     const [modalEmail, setModalEmail] = useState(initialEmail || "");
-    const [loading, setLoading] = useState(false);
+    const [localLoading, setLocalLoading] = useState(false); // Renamed for clarity
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
+    const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading
 
     useEffect(() => {
         if (isOpen) {
-            setModalEmail(initialEmail || ""); // Reset email when modal opens
-            setError(null); // Clear previous errors
-            setSuccessMessage(null); // Clear previous success messages
+            setModalEmail(initialEmail || "");
+            setError(null);
+            setSuccessMessage(null);
+            setLocalLoading(false); // Reset local loading state
         }
     }, [isOpen, initialEmail]);
 
@@ -48,36 +50,34 @@ export default function ModalForgotPassword({
 
     const handleModalEmailChange = (e) => {
         setModalEmail(e.target.value);
-        if (parentHandleEmailChange) { // If parent wants to sync, call its handler
+        if (parentHandleEmailChange) {
             parentHandleEmailChange(e);
         }
     };
 
     const clearModalEmail = () => {
         setModalEmail("");
-        if (parentClearEmail) { // If parent wants to sync, call its handler
+        if (parentClearEmail) {
             parentClearEmail();
         }
     };
 
     const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setLocalLoading(true); // For button text
+        setIsLoading(true);    // For global overlay
         setError(null);
         setSuccessMessage(null);
 
         if (!modalEmail) {
             setError("Por favor, insira seu endereço de e-mail.");
-            setLoading(false);
+            setLocalLoading(false);
+            setIsLoading(false);
             return;
         }
 
         try {
             const { error: supabaseError } = await supabase.auth.resetPasswordForEmail(modalEmail, {
-                // redirectTo should point to the page where your `Home.jsx` (or equivalent)
-                // is rendered, so the onAuthStateChange listener can pick up the PASSWORD_RECOVERY event.
-                // Make sure this URL is added to your Supabase project's "Site URL" and "Redirect URLs"
-                // under Authentication -> URL Configuration.
                 redirectTo: `${window.location.origin}/`,
             });
 
@@ -85,15 +85,13 @@ export default function ModalForgotPassword({
                 setError(supabaseError.message);
             } else {
                 setSuccessMessage("Um link de recuperação de senha foi enviado para o seu e-mail! Por favor, verifique sua caixa de entrada e clique no link para redefinir sua senha.");
-                // Don't close immediately, let user see the message. Or close after a delay.
-                // For now, we'll rely on the user closing it or an explicit close action.
-                // onClose(); // Optionally close the modal after success
             }
         } catch (err) {
             setError("Ocorreu um erro ao solicitar a redefinição de senha.");
             console.error(err);
         } finally {
-            setLoading(false);
+            setLocalLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -123,11 +121,12 @@ export default function ModalForgotPassword({
                             onChange={handleModalEmailChange}
                             required
                             placeholder="seuemail@exemplo.com"
+                            disabled={isGlobalLoading || localLoading}
                         />
                         {modalEmail && <IoClose className={styles.clearIcon} onClick={clearModalEmail} />}
                     </section>
-                    <button className={styles.button} type="submit" disabled={loading}>
-                        {loading ? "Enviando..." : "Enviar Link de Recuperação"}
+                    <button className={styles.button} type="submit" disabled={isGlobalLoading || localLoading}>
+                        {isGlobalLoading || localLoading ? "Enviando..." : "Enviar Link de Recuperação"}
                     </button>
                     {error && <p className={styles.error}>{error}</p>}
                     {successMessage && <p className={styles.success}>{successMessage}</p>}

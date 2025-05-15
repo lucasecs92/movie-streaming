@@ -9,6 +9,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { IoClose, IoLogoGithub } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from 'next/navigation';
+import { useLoading } from '../contexts/LoadingContext'; // Import useLoading
 
 export default function ModalLogin({
   isOpen,
@@ -24,6 +25,7 @@ export default function ModalLogin({
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading and global loading state
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -61,39 +63,70 @@ export default function ModalLogin({
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    setIsLoading(true);
+    try {
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-    if (error) {
-      setError(error.message);
-    } else {
-      window.alert("Login realizado com sucesso!", data);
-      onClose();
-      // Redirecione o usuário para a página inicial após o login
-      router.push('/');
+      if (signInError) {
+        setError(signInError.message);
+      } else {
+        // window.alert("Login realizado com sucesso!", data); // Alert can be annoying with loader
+        onClose();
+        router.push('/');
+      }
+    } catch (catchError) {
+      console.error("Login catch error:", catchError);
+      setError("Ocorreu um erro inesperado durante o login.");
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    });
+    setIsLoading(true);
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
 
-    if (error) {
-      console.error("Erro ao logar com o Google", error);
+      if (oauthError) {
+        console.error("Erro ao logar com o Google", oauthError);
+        setError("Erro ao logar com o Google: " + oauthError.message);
+        setIsLoading(false); // Clear loading on pre-redirect error
+      }
+      // For OAuth, redirection might happen before finally. If an error occurs *before* redirection,
+      // this will hide the loader. If redirection occurs, the page reloads, and loader is gone.
+      // If no error and redirect happens, setIsLoading(false) might not be hit here.
+    } catch (catchError) {
+      console.error("Google login catch error:", catchError);
+      setError("Ocorreu um erro inesperado com o login do Google.");
+      setIsLoading(false);
     }
+    // No finally here, as redirect might prevent it. Loader removed on error or page change.
   };
 
   const handleGitHubLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-    });
+    setIsLoading(true);
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+      });
 
-    if (error) {
-      console.error("Erro ao logar com o Github", error);
+      if (oauthError) {
+        console.error("Erro ao logar com o Github", oauthError);
+        setError("Erro ao logar com o GitHub: " + oauthError.message);
+        setIsLoading(false); // Clear loading on pre-redirect error
+      }
+    } catch (catchError) {
+      console.error("GitHub login catch error:", catchError);
+      setError("Ocorreu um erro inesperado com o login do GitHub.");
+      setIsLoading(false);
     }
+    // No finally here, as redirect might prevent it.
   };
 
   return (
@@ -114,10 +147,10 @@ export default function ModalLogin({
             <IoIosCloseCircleOutline onClick={onClose} />
           </span>
 
-          {error && 
+          {error &&
             <p className={styles.error}>
               <HiOutlineExclamationCircle />
-              O endereço de e-mail ou a senha não estão corretos.
+              {error} {/* Display the actual error message */}
             </p>
           }
 
@@ -131,6 +164,7 @@ export default function ModalLogin({
                 onChange={handleEmailChange}
                 required
                 placeholder="seuemail@exemplo.com"
+                disabled={isGlobalLoading}
               />
               {email && (
                 <IoClose className={styles.clearIcon} onClick={clearEmail} />
@@ -144,6 +178,7 @@ export default function ModalLogin({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isGlobalLoading}
               />
               {showPassword ? (
                 <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
@@ -151,17 +186,19 @@ export default function ModalLogin({
                 <LuEye className={styles.eyeIcon} onClick={toggleShowPassword} />
               )}
             </section>
-            
-            <p className={styles.forgot} onClick={onForgotPasswordClick}>Esqueceu a senha?</p>
 
-            <button className={styles.button} type="submit">Entrar</button>
+            <p className={styles.forgot} onClick={isGlobalLoading ? undefined : onForgotPasswordClick}>Esqueceu a senha?</p>
+
+            <button className={styles.button} type="submit" disabled={isGlobalLoading}>
+              {isGlobalLoading ? "Entrando..." : "Entrar"}
+            </button>
             <span className={styles.spanOr}>Ou</span>
             <section className={styles.socialLogin}>
-              <button type="button" className={styles.googleButton} onClick={handleGoogleLogin}>
+              <button type="button" className={styles.googleButton} onClick={handleGoogleLogin} disabled={isGlobalLoading}>
                 <FcGoogle className={styles.socialIcon} />
                 Continue com Google
               </button>
-              <button type="button" className={styles.githubButton} onClick={handleGitHubLogin}>
+              <button type="button" className={styles.githubButton} onClick={handleGitHubLogin} disabled={isGlobalLoading}>
                 <IoLogoGithub className={styles.socialIcon} />
                 Continue com GitHub
               </button>

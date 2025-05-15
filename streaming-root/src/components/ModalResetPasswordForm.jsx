@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+// No need to import useLoading here, as page.jsx's handleResetPassword (called via onPasswordSubmit) does it.
+// However, if you want to disable inputs while the global loader is active (even if triggered by parent),
+// you could import and use `useLoading`'s `isLoading` state for disabling.
+// For simplicity now, we assume the overlay is enough.
 
 export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubmit }) {
     const [password, setPassword] = useState("");
@@ -9,7 +13,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // This is local loading for the button
 
     useEffect(() => {
         const handleEsc = (event) => {
@@ -19,7 +23,6 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
         };
 
         if (isOpen) {
-            // Reset form state when modal opens
             setPassword("");
             setConfirmPassword("");
             setShowPassword(false);
@@ -46,9 +49,9 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    const handleResetPasswordSubmit = async (e) => { // Renamed to avoid conflict if onPasswordSubmit was also named this
+    const handleResetPasswordSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setLoading(true); // Set local button loading
         setError(null);
 
         if (!password) {
@@ -61,25 +64,23 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
             setLoading(false);
             return;
         }
-        if (password.length < 6) { // Example: Enforce minimum password length
+        if (password.length < 6) {
             setError("A senha deve ter pelo menos 6 caracteres.");
             setLoading(false);
             return;
         }
 
         try {
-            // The token is handled by Supabase client library,
-            // which updates the user session upon redirection from the email link.
-            // `onPasswordSubmit` in Home.jsx will call supabase.auth.updateUser()
+            // onPasswordSubmit is page.jsx's handleResetPassword, which sets the global loader.
             await onPasswordSubmit(password);
-            // Success/error handling and modal closing should be managed by the `onPasswordSubmit` callback in Home.jsx
+            // Success/error handling and modal closing are managed by onPasswordSubmit in page.jsx
         } catch (err) {
-            // This catch block might not be strictly necessary if onPasswordSubmit handles all errors
-            // and Home.jsx shows alerts. However, it can be a local fallback.
+            // This catch might be redundant if onPasswordSubmit handles all errors and alerts.
+            // It's here as a fallback for errors propagated from onPasswordSubmit.
             setError("Ocorreu um erro ao tentar redefinir a senha. Tente novamente.");
-            console.error("Error in ModalResetPasswordForm submit:", err);
+            console.error("Error in ModalResetPasswordForm submit (propagated from onPasswordSubmit):", err);
         } finally {
-            setLoading(false); // Ensure loading is set to false
+            setLoading(false); // Reset local button loading
         }
     };
 
@@ -105,6 +106,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             autoComplete="new-password"
+                            disabled={loading} // Disabled by local loading
                         />
                         {showPassword ? (
                             <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowPassword} />
@@ -122,6 +124,7 @@ export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubm
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                             autoComplete="new-password"
+                            disabled={loading} // Disabled by local loading
                         />
                         {showConfirmPassword ? (
                             <LuEyeClosed className={styles.eyeIcon} onClick={toggleShowConfirmPassword} />

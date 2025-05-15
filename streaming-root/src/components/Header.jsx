@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import styles from "../styles/Header.module.scss";
 import supabase from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import { useLoading } from '../contexts/LoadingContext'; // Import useLoading (adjust path if needed)
 
 export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -15,6 +16,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const router = useRouter();
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,8 +42,6 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       }
     });
 
-    // supabase.auth.onAuthStateChange retorna { data: { subscription }, error }
-    // Vamos guardar o objeto data que contém a subscription.
     const { data: authStateChangeData } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
@@ -63,12 +63,10 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      // CORREÇÃO: Acessamos a propriedade 'subscription' do objeto 'authStateChangeData'
-      // e chamamos 'unsubscribe' nela.
       authStateChangeData?.subscription?.unsubscribe();
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []); // As dependências vazias são intencionais para que o listener seja configurado/removido apenas na montagem/desmontagem.
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -76,24 +74,36 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
 
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Erro ao deslogar:", error);
-    } else {
-      console.log("Deslogado com sucesso");
-      onFilmesClick(true);
-      router.push('/');
-      if (isMobile && menuOpen) {
-        setMenuOpen(false);
+    setIsLoading(true); // Show global loader
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Erro ao deslogar:", error);
+        // Optionally, show an error to the user via a toast or context-based notification
+      } else {
+        console.log("Deslogado com sucesso");
+        onFilmesClick(true);
+        router.push('/');
+        if (isMobile && menuOpen) {
+          setMenuOpen(false);
+        }
       }
+    } catch (catchError) {
+      console.error("Logout catch error:", catchError);
+      // Optionally show an error
+    }
+    finally {
+      setIsLoading(false); // Hide global loader
     }
   };
 
   const toggleDropdown = () => {
+    if (isGlobalLoading) return; // Prevent opening dropdown if loading
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleMobileMenuClick = (actionCallback) => {
+    if (isGlobalLoading) return; // Prevent action if loading
     if (actionCallback) {
       actionCallback();
     }
@@ -104,15 +114,16 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     <header className={styles.header}>
       <nav className={styles.navLeft}>
         <h1 onClick={() => {
+          if (isGlobalLoading) return;
           onFilmesClick(true);
           if (isMobile && menuOpen) setMenuOpen(false);
         }}>Cineminha</h1>
         {isMobile ? (
           <>
             {menuOpen ? (
-              <IoClose className={styles.menuIcon} onClick={toggleMenu} />
+              <IoClose className={styles.menuIcon} onClick={isGlobalLoading ? undefined : toggleMenu} />
             ) : (
-              <IoMenuSharp className={styles.menuIcon} onClick={toggleMenu} />
+              <IoMenuSharp className={styles.menuIcon} onClick={isGlobalLoading ? undefined : toggleMenu} />
             )}
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
@@ -131,7 +142,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
                       Séries
                     </li>
                   </>
-                ) : null }
+                ) : null}
                 <hr className={styles.divider} />
                 {session ? (
                   <li className={styles.btnLoginMobile} onClick={() => handleMobileMenuClick(handleLogout)}>
@@ -150,9 +161,9 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
           <ul className={styles.navLeftUl}>
             {session ? (
               <>
-                <li onClick={() => onFilmesClick(true)}>Home</li>
-                <li onClick={() => onFilmesClick(false)}>Filmes</li>
-                <li onClick={onSeriesClick}>Séries</li>
+                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(true)}>Home</li>
+                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(false)}>Filmes</li>
+                <li onClick={isGlobalLoading ? undefined : onSeriesClick}>Séries</li>
               </>
             ) : null}
           </ul>
@@ -177,10 +188,10 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
             </li>
           ) : (
             <>
-              <li className={styles.btnLogin} onClick={onLoginClick}>
+              <li className={styles.btnLogin} onClick={isGlobalLoading ? undefined : onLoginClick}>
                 LOGIN
               </li>
-              <li className={styles.btnCadastro} onClick={onCadastroClick}>
+              <li className={styles.btnCadastro} onClick={isGlobalLoading ? undefined : onCadastroClick}>
                 CADASTRO
               </li>
             </>
