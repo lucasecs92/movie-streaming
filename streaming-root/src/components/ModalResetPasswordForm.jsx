@@ -1,11 +1,9 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.scss";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-// No need to import useLoading here, as page.jsx's handleResetPassword (called via onPasswordSubmit) does it.
-// However, if you want to disable inputs while the global loader is active (even if triggered by parent),
-// you could import and use `useLoading`'s `isLoading` state for disabling.
-// For simplicity now, we assume the overlay is enough.
 
 export default function ModalResetPasswordForm({ isOpen, onClose, onPasswordSubmit }) {
     const [password, setPassword] = useState("");

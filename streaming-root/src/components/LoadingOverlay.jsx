@@ -1,4 +1,5 @@
 "use client";
+
 import styles from '../styles/LoadingOverlay.module.scss'; // We'll create this SCSS file next
 import { AiOutlineLoading } from 'react-icons/ai'; 
 import { useLoading } from '../contexts/LoadingContext';

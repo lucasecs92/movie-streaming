@@ -1,4 +1,3 @@
-// Header.jsx
 "use client";
 
 import { IoClose, IoMenuSharp } from "react-icons/io5";
