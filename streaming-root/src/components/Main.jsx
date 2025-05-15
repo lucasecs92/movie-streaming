@@ -7,12 +7,16 @@ import { shows } from "../data/shows";
 import MovieList from "./MovieList";
 import ShowsList from "./ShowsList";
 import ShowDetails from "./ShowDetails";
-import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
+import supabase from '../../lib/supabaseClient';
+import { useLoading } from '../contexts/LoadingContext';
+
+const LOADER_DURATION = 250; // milliseconds
 
 export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado, setShowHeaderFooter, isSeries, onLoginClick }) {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [transitionEnabled] = useState(true);
-  const [session, setSession] = useState(null); // Estado para verificar se o usuário está logado
+  const [session, setSession] = useState(null);
+  const { setIsLoading } = useLoading();
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,15 +44,27 @@ export default function Main({ showBanner, filmeSelecionado, setFilmeSelecionado
   }, []);
 
   const handleClick = useCallback((item) => {
+    setIsLoading(true);
     setFilmeSelecionado(item);
-  }, [setFilmeSelecionado]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, LOADER_DURATION);
+  }, [setFilmeSelecionado, setIsLoading]);
+
+  const handleVoltarParaListaFromDetails = useCallback(() => {
+    setIsLoading(true);
+    setFilmeSelecionado(null);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, LOADER_DURATION);
+  }, [setFilmeSelecionado, setIsLoading]);
 
   return (
     <main className={styles.main}>
       {filmeSelecionado ? (
         <ShowDetails
           show={filmeSelecionado}
-          voltarParaLista={() => setFilmeSelecionado(null)}
+          voltarParaLista={handleVoltarParaListaFromDetails}
           setShowHeaderFooter={setShowHeaderFooter}
         />
       ) : (

@@ -3,6 +3,9 @@
 import styles from "../styles/ShowDetails.module.scss";
 import { useState, useEffect } from "react";
 import Player from "./Player";
+import { useLoading } from '../contexts/LoadingContext';
+
+const LOADER_DURATION = 250; // milliseconds
 
 const ShowDetails = ({
   show,
@@ -11,24 +14,40 @@ const ShowDetails = ({
 }) => {
   const [episodioSelecionado, setEpisodioSelecionado] = useState(null);
   const [temporadaSelecionada, setTemporadaSelecionada] = useState(null);
+  const { setIsLoading } = useLoading();
 
   const voltarParaDetalhes = () => {
+    setIsLoading(true);
     setEpisodioSelecionado(null);
     setShowHeaderFooter(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, LOADER_DURATION);
+  };
+
+  const handleEpisodioClick = (episodio) => {
+    setIsLoading(true);
+    setEpisodioSelecionado(episodio);
+    // setShowHeaderFooter(false) is handled by useEffect
+    setTimeout(() => {
+      setIsLoading(false);
+    }, LOADER_DURATION);
   };
 
   useEffect(() => {
     if (episodioSelecionado) {
       setShowHeaderFooter(false);
+    } else {
+      setShowHeaderFooter(true);
     }
   }, [episodioSelecionado, setShowHeaderFooter]);
 
   return (
-    <section>
+    <section className={styles.showDetailsPageContainer}>
       {episodioSelecionado ? (
         <Player
           filmeSelecionado={{
-            titulo: `${episodioSelecionado.descricao}`,
+            titulo: `${show.titulo} - ${temporadaSelecionada?.nome || ''} - ${episodioSelecionado.nome}`,
             iframeSrc: episodioSelecionado.iframeSrc,
           }}
           voltarParaLista={voltarParaDetalhes}
@@ -46,12 +65,12 @@ const ShowDetails = ({
             </section>
           </section>
           <section className={styles.temporadas}>
-            {show.temporadas ? (
+            {show.temporadas && show.temporadas.length > 0 ? (
               <>
                 <select
-                  onChange={(e) =>
-                    setTemporadaSelecionada(show.temporadas[e.target.value])
-                  }
+                  onChange={(e) => {
+                    setTemporadaSelecionada(show.temporadas[e.target.value]);
+                  }}
                   defaultValue=""
                   className={styles.temporadaSelect}
                 >
@@ -69,8 +88,15 @@ const ShowDetails = ({
                     {temporadaSelecionada.episodios.map((episodio, idx) => (
                       <li
                         key={idx}
-                        onClick={() => setEpisodioSelecionado(episodio)}
+                        onClick={() => handleEpisodioClick(episodio)}
                         className={styles.episodio}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                handleEpisodioClick(episodio);
+                            }
+                        }}
                       >
                         <strong>{episodio.nome}</strong>: {episodio.descricao}
                       </li>
