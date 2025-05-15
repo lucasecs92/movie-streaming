@@ -1,3 +1,4 @@
+// Header.jsx
 "use client";
 
 import { IoClose, IoMenuSharp } from "react-icons/io5";
@@ -6,7 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import styles from "../styles/Header.module.scss";
 import supabase from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
-import { useLoading } from '../contexts/LoadingContext'; // Import useLoading (adjust path if needed)
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -16,7 +17,8 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const router = useRouter();
-  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading();
+  const hoverTimeoutRef = useRef(null); // Ref to store timeout ID for hover delay
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,17 +56,20 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       }
     });
 
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
+    // No longer need handleClickOutside for hover behavior, but good to keep if you revert
+    // const handleClickOutside = (event) => {
+    //   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    //     setIsDropdownOpen(false);
+    //   }
+    // };
+    // document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       authStateChangeData?.subscription?.unsubscribe();
-      document.removeEventListener('mousedown', handleClickOutside);
+      // document.removeEventListener('mousedown', handleClickOutside);
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current); // Clear timeout on unmount
+      }
     };
   }, []);
 
@@ -74,12 +79,11 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
 
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    setIsLoading(true); // Show global loader
+    setIsLoading(true);
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error("Erro ao deslogar:", error);
-        // Optionally, show an error to the user via a toast or context-based notification
       } else {
         console.log("Deslogado com sucesso");
         onFilmesClick(true);
@@ -90,25 +94,43 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       }
     } catch (catchError) {
       console.error("Logout catch error:", catchError);
-      // Optionally show an error
     }
     finally {
-      setIsLoading(false); // Hide global loader
+      setIsLoading(false);
     }
   };
 
-  const toggleDropdown = () => {
-    if (isGlobalLoading) return; // Prevent opening dropdown if loading
-    setIsDropdownOpen(!isDropdownOpen);
+  const handleMouseEnterUserSection = () => {
+    if (isGlobalLoading) return;
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeaveUserSection = () => {
+    // Add a small delay before closing to allow mouse to move to the dropdown
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 200); // Adjust delay as needed (e.g., 200-300ms)
   };
 
   const handleMobileMenuClick = (actionCallback) => {
-    if (isGlobalLoading) return; // Prevent action if loading
+    if (isGlobalLoading) return;
     if (actionCallback) {
       actionCallback();
     }
     setMenuOpen(false);
   };
+
+  // When the mouse enters the dropdown menu itself, clear the timeout
+  // that would close it. This allows the user to interact with the menu.
+  const handleMouseEnterDropdownMenu = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+  };
+
 
   return (
     <header className={styles.header}>
@@ -131,7 +153,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
                   <>
                     <li onClick={() => handleMobileMenuClick(() => onFilmesClick(true))}>
                       <MdOutlineHome />
-                      Home
+                      Início
                     </li>
                     <li onClick={() => handleMobileMenuClick(() => onFilmesClick(false))}>
                       <MdOutlineLocalMovies />
@@ -161,7 +183,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
           <ul className={styles.navLeftUl}>
             {session ? (
               <>
-                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(true)}>Home</li>
+                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(true)}>Início</li>
                 <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(false)}>Filmes</li>
                 <li onClick={isGlobalLoading ? undefined : onSeriesClick}>Séries</li>
               </>
@@ -173,12 +195,24 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
           {session ? (
-            <li className={styles.userSection} ref={dropdownRef}>
-              <section className={styles.userName} onClick={toggleDropdown}>
-                {userName}!
+            <li
+              className={styles.userSection}
+              ref={dropdownRef}
+            >
+              <section 
+                className={styles.userName}
+                onMouseEnter={handleMouseEnterUserSection}
+                onMouseLeave={handleMouseLeaveUserSection}
+              >
+                {userName}
               </section>
               {isDropdownOpen && (
-                <section className={styles.dropdownMenu} onClick={handleLogout}>
+                <section
+                  className={styles.dropdownMenu}
+                  onClick={handleLogout} // Keep onClick for the logout action
+                  onMouseEnter={handleMouseEnterDropdownMenu} // Keep dropdown open when mouse is over it
+                  // onMouseLeave is handled by the parent li's onMouseLeave
+                >
                   <MdLogout />
                   <section className={styles.btnLogout}>
                     Sair
