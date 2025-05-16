@@ -1,7 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = "https://cnfurmgscgczqzmtjems.supabase.co"; // Use as variáveis de ambiente do Next.js
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNuZnVybWdzY2djenF6bXRqZW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0NTA0NzIsImV4cCI6MjA2MjAyNjQ3Mn0.l_bc23bCCns6aHHXfv2WBJk5YwZBRtVap_jPk4elMLY";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL; 
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+
+// Verificações para garantir que as variáveis de ambiente estão carregadas
+if (!supabaseUrl) {
+  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_URL");
+}
+if (!supabaseKey) {
+  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_KEY");
+}
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
