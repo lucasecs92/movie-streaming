@@ -404,17 +404,216 @@ export const shows = [
   },
   {
     id: 3,
-    titulo: "The Guild",
-    ano: "(2007)",
-    capa: "../../covers/the-guild-2007.jpg",
+    titulo: "Sherlock Holmes ",
+    ano: "(1954)",
+    capa: "../../covers/sherlock-holmes-1954.jpg",
     iframeSrc: "https://archive.org/embed/breaking-bad",
-    sinopse: "Uma série sobre um grupo de jogadores de MMORPG e suas aventuras na vida real.",
+    sinopse: "As aventuras do mestre detetive Sherlock Holmes, enquanto ele e seu assistente, Dr. Watson - e, com certa relutância, o atrapalhado Inspetor Lestrade - combatem criminosos em Londres.",
     temporadas: [
       {
         nome: "Temporada 1",
         episodios: [
-          { nome: "Episódio 1", descricao: "Introdução ao grupo." },
-          { nome: "Episódio 2", descricao: "Primeiros conflitos." },
+          { 
+            nome: "Episódio 1", 
+            descricao: "The Case of the Cunningham Heritage", 
+            iframeSrc: "https://www.youtube.com/embed/_aSH1-DM4zo?si=BGe6tC1nFarg3_Du",
+          },
+          { 
+            nome: "Episódio 2", 
+            descricao: "The Case of Lady Beryl", 
+            iframeSrc: "https://www.youtube.com/embed/rSvSw8uR1r4?si=n3GsapbxDvglpthK",
+          },
+          { 
+            nome: "Episódio 3", 
+            descricao: "The Case of Pensylvania Gun", 
+            iframeSrc: "https://www.youtube.com/embed/Uf5Jpe6gWFc?si=mDalEyeIla7VIR1r",
+          },
+          { 
+            nome: "Episódio 4", 
+            descricao: "The Case of the Texas Cowgirl",
+            iframeSrc: "https://www.youtube.com/embed/ogPqOUwBUy0?si=OO18zmmO-SDtYSJ-", 
+          },
+          { 
+            nome: "Episódio 5", 
+            descricao: "The Case of the Belligerent Ghost", 
+            iframeSrc: "https://www.youtube.com/embed/-XuxB-dgg1w?si=f54FdIgB6zJ5-9j7", 
+          },
+          { 
+            nome: "Episódio 6", 
+            descricao: "The Case of the Shy Ballerina", 
+            iframeSrc: "https://www.youtube.com/embed/Kogdgpdks8M?si=6n8g33XsYBcfxku6", 
+          },
+          { 
+            nome: "Episódio 7", 
+            descricao: "The Case of the Winthrop Legend", 
+            iframeSrc: "https://www.youtube.com/embed/63CkKijL5Tk?si=1rFDn-YjPi7Y4yBQ",
+          },
+          { 
+            nome: "Episódio 8", 
+            descricao: "The Case of the Blind Man's Bluff", 
+            iframeSrc: "https://www.youtube.com/embed/X0b1k-2h9HY?si=vpUc5YrdGmOF-lrA",
+          },
+          { 
+            nome: "Episódio 9", 
+            descricao: "The Case of Harry Crocker", 
+            iframeSrc: "https://www.youtube.com/embed/M2T_sizMuyA?si=eDySWVpUQVOUKKR8",
+          },
+          { 
+            nome: "Episódio 10", 
+            descricao: "The Mother Hubbard Case", 
+            iframeSrc: "https://www.youtube.com/embed/ZToshTrpAN0?si=mQ5ksmrucIKGjnm8",
+          },
+          { 
+            nome: "Episódio 11", 
+            descricao: "The Red Headed League", 
+            iframeSrc: "https://www.youtube.com/embed/tvwcxxqg5W0?si=P9rGOHJNlFOym9am",
+          },
+          
+        ],
+      },
+      {
+        nome: "Temporada 2",
+        episodios: [
+          { 
+            nome: "Episódio 12", 
+            descricao: "The Case of the Shoeless Engineer", 
+            iframeSrc: "https://www.youtube.com/embed/ivYfCt9raFE?si=rTFQPnAKmWbdyUVC",
+          },
+          { 
+            nome: "Episódio 13", 
+            descricao: "The Case of the Split Ticket", 
+            iframeSrc: "https://www.youtube.com/embed/TzMwIyGnBZ4?si=pzk7oLAaj9csfVeq",
+          },
+          { 
+            nome: "Episódio 14", 
+            descricao: "The Case of the French Interpreter", 
+            iframeSrc: "https://www.youtube.com/embed/Z3AsKK6jXNU?si=DMrFGJivgRzVdXMo",
+          },
+          { 
+            nome: "Episódio 15", 
+            descricao: "The Case of the Singing Violin", 
+            iframeSrc: "https://www.youtube.com/embed/dLG0irvJhi8?si=rptJgRgaXliUGcKo",
+          },
+          { 
+            nome: "Episódio 16", 
+            descricao: "The Case of the Greystone Inscription", 
+            iframeSrc: "https://www.youtube.com/embed/jdx-tCwwNO8?si=ykmb3vb7hSiwH3eY",
+          },
+          { 
+            nome: "Episódio 17", 
+            descricao: "The Case of the Laughing Mummy", 
+            iframeSrc: "https://www.youtube.com/embed/r3uY1sb0rYA?si=lqJ1heR-SQ4D4xS5",
+          },
+          { 
+            nome: "Episódio 18", 
+            descricao: "The Case of the Thistle Killer", 
+            iframeSrc: "https://www.youtube.com/embed/sgCTS1h1FHI?si=G8VYKUBzvlV4c5Iy",
+          },
+          { 
+            nome: "Episódio 19", 
+            descricao: "The Case of the Vanished Detective", 
+            iframeSrc: "https://www.youtube.com/embed/aVBlsXM43oY?si=KefvAoe1kDT935EL",
+          },
+          { 
+            nome: "Episódio 20", 
+            descricao: "The Case of the Careless Suffragette", 
+            iframeSrc: "https://www.youtube.com/embed/95p-19F9E_k?si=nwuDGMc638k2aBNc",
+          },
+          { 
+            nome: "Episódio 21", 
+            descricao: "The Case of the Reluctant Carpenter", 
+            iframeSrc: "https://www.youtube.com/embed/sX-uDb4av8Q?si=aTq-XyUNqFXhCvEi",
+          },
+          { 
+            nome: "Episódio 22", 
+            descricao: "The Case of the Deadly Prophecy", 
+            iframeSrc: "https://www.youtube.com/embed/0pcZuyCgaek?si=i-rYQrINsfmfXeQ0",
+          },
+          { 
+            nome: "Episódio 23", 
+            descricao: "The Case of the Christmas Pudding", 
+            iframeSrc: "https://www.youtube.com/embed/zzM3KZSxRjo?si=sE8IEEzwkIcGh7_r",
+          },
+          { 
+            nome: "Episódio 24", 
+            descricao: "The Case of the Night Train Riddle", 
+            iframeSrc: "https://www.youtube.com/embed/IZz2hWFpU8g?si=lI7rDKoldj4g345u",
+          },
+          { 
+            nome: "Episódio 25", 
+            descricao: "The Case of the Violet Suitor", 
+            iframeSrc: "https://www.youtube.com/embed/QbU9Zd8zyEU?si=YrltYBE_zAOjgYbq",
+          },
+          { 
+            nome: "Episódio 26", 
+            descricao: "The Case of the Baker Street Nursemaids", 
+            iframeSrc: "https://www.youtube.com/embed/AXlArjKthus?si=OpiHVTxvZTi9WKcD",
+          },
+          { 
+            nome: "Episódio 27", 
+            descricao: "The Case of the Perfect Husband", 
+            iframeSrc: "https://www.youtube.com/embed/qxgMc3nCK3U?si=pssFZzhw4JEh3RrF",
+          },
+          { 
+            nome: "Episódio 28", 
+            descricao: "The Case of the Jolly Hangman", 
+            iframeSrc: "https://www.youtube.com/embed/Y4bxzUGO4og?si=CJ0FS46VKH5fUw8C",
+          },
+          { 
+            nome: "Episódio 29", 
+            descricao: "The Case of the Impostor Mystery", 
+            iframeSrc: "https://www.youtube.com/embed/sNfSZyqVM2M?si=lGd-J2V8izJN28eG",
+          },
+          { 
+            nome: "Episódio 30", 
+            descricao: "The Case of the Eiffel Tower", 
+            iframeSrc: "https://www.youtube.com/embed/k1c-0XE3njo?si=Akm0DhqOsSMaOqyM",
+          },
+          { 
+            nome: "Episódio 31", 
+            descricao: "The Case of the Exhumed Client", 
+            iframeSrc: "https://www.youtube.com/embed/xFfplpqs86w?si=VzRv7zMOVGyYqwHx",
+          },
+          { 
+            nome: "Episódio 32", 
+            descricao: "The Case of the Improptu Performance", 
+            iframeSrc: "https://www.youtube.com/embed/iNNPJMaaAhA?si=S7FG28fs3wxiFRpE",
+          },
+          { 
+            nome: "Episódio 33", 
+            descricao: "The Case of the Baker Street Bachelors", 
+            iframeSrc: "https://www.youtube.com/embed/DphUIcBOdl4?si=WOv-ROZt09M2Vt5x",
+          },
+          { 
+            nome: "Episódio 34", 
+            descricao: "The Case of the Royal Murder", 
+            iframeSrc: "https://www.youtube.com/embed/DuGmx-ALbfQ?si=0Z6iKTdriASICQop",
+          },
+          { 
+            nome: "Episódio 35", 
+            descricao: "The Case of the Haunted Gainsborough", 
+            iframeSrc: "https://www.youtube.com/embed/NCSP8gsEgL8?si=VelCT3l53KEPJLnL",
+          },
+          { 
+            nome: "Episódio 36", 
+            descricao: "The Case of the Neurotic Detective", 
+            iframeSrc: "https://www.youtube.com/embed/0q1uccu7F5I?si=XEeEtN6fHxJBI8T-",
+          },
+          { 
+            nome: "Episódio 37", 
+            descricao: "The Case of the Unlucky Gambler", 
+            iframeSrc: "https://www.youtube.com/embed/UsOEw6rKj2M?si=P4Ev_tChvhcN4JSf",
+          },
+          { 
+            nome: "Episódio 38", 
+            descricao: "The Case of the Diamond Tooth", 
+            iframeSrc: "https://www.youtube.com/embed/AWG6eS121SA?si=kVa7tWL58IU4yJPR",
+          },
+          { 
+            nome: "Episódio 39", 
+            descricao: "The Case of the Tyrant's Daughter", 
+            iframeSrc: "https://www.youtube.com/embed/yyIG8GDYKhw?si=3n7oST_hkDUoUIOm",
+          },
         ],
       },
     ],
