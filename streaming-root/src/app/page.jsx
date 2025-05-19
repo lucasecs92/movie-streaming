@@ -10,10 +10,10 @@ import { useState, useCallback, useEffect } from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
 import ModalForgotPassword from "../components/ModalForgotPassword";
 import ModalResetPasswordForm from "../components/ModalResetPasswordForm";
-import { useRouter } from 'next/navigation'; // Importe useRouter
-import supabase from '../../lib/supabaseClient'; // Importe o cliente Supabase
-import { LoadingProvider, useLoading } from '../contexts/LoadingContext'; // Adjust path if necessary
-import LoadingOverlay from '../components/LoadingOverlay'; // Adjust path if necessary
+import { useRouter } from 'next/navigation'; 
+import supabase from '../../lib/supabaseClient'; 
+import { LoadingProvider, useLoading } from '../contexts/LoadingContext'; 
+import LoadingOverlay from '../components/LoadingOverlay';
 
 function HomeComponent() {
   const [showBanner, setShowBanner] = useState(true);
@@ -40,10 +40,6 @@ function HomeComponent() {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === "PASSWORD_RECOVERY") {
-          // This event fires when the user clicks the password recovery link
-          // and is redirected back to the app.
-          // Supabase client handles the token from the URL fragment (#access_token=...).
-          // Now we can show the form to enter a new password.
           openResetPasswordFormModal();
         }
       }
@@ -59,7 +55,7 @@ function HomeComponent() {
     setShowBanner(shouldShowBanner);
   }, []);
 
-  const voltarParaLista = useCallback(() => {
+  const voltarParaListaPrincipal = useCallback(() => {
     setFilmeSelecionado(null);
     setShowHeaderFooter(true);
   }, []);
@@ -106,7 +102,7 @@ function HomeComponent() {
   };
 
   const handleResetPassword = async (newPassword) => {
-    setIsLoading(true); // Show global loader
+    setIsLoading(true); 
     try {
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
@@ -125,7 +121,7 @@ function HomeComponent() {
       console.error("Erro ao redefinir a senha", err);
       alert("Ocorreu um erro ao redefinir a senha.");
     } finally {
-      setIsLoading(false); // Hide global loader
+      setIsLoading(false); 
     }
   };
 
@@ -145,12 +141,12 @@ function HomeComponent() {
           onFilmesClick={(shouldShow) => {
             toggleBanner(shouldShow);
             setIsSeries(false);
-            if (filmeSelecionado) voltarParaLista();
+            if (filmeSelecionado) voltarParaListaPrincipal();
           }}
           onSeriesClick={() => {
             setShowBanner(false);
             setIsSeries(true);
-            if (filmeSelecionado) voltarParaLista();
+            if (filmeSelecionado) voltarParaListaPrincipal();
           }}
           onLoginClick={openLoginModal}
           onCadastroClick={openCadastroModal}
@@ -160,7 +156,6 @@ function HomeComponent() {
         showBanner={showBanner}
         filmeSelecionado={filmeSelecionado}
         setFilmeSelecionado={setFilmeSelecionado}
-        voltarParaLista={voltarParaLista}
         setShowHeaderFooter={setShowHeaderFooter}
         isSeries={isSeries}
         onLoginClick={openLoginModal}
@@ -177,21 +172,18 @@ function HomeComponent() {
         showPassword={showPassword}
         toggleShowPassword={toggleShowPassword}
         onForgotPasswordClick={openForgotPasswordModal}
-      // Removed onResetPassword prop as it's not used in the new flow from ModalLogin
       />
       <ModalForgotPassword
         isOpen={isForgotPasswordModalOpen}
         onClose={closeForgotPasswordModal}
-        email={email} // Pass current email or allow it to manage its own
-        handleEmailChange={handleEmailChange} // Or let it manage its own state
-        clearEmail={clearEmail} // Or let it manage its own state
-      // Removed onResetPassword prop, it now only sends the email and closes.
+        email={email} 
+        handleEmailChange={handleEmailChange} 
+        clearEmail={clearEmail} 
       />
       <ModalResetPasswordForm
         isOpen={isResetPasswordFormModalOpen}
         onClose={closeResetPasswordFormModal}
         onPasswordSubmit={handleResetPassword}
-      // Token is handled by Supabase client, no need to pass as prop
       />
       <ModalCadastro
         isOpen={isCadastroModalOpen}
@@ -213,7 +205,7 @@ export default function Home() {
   return (
     <LoadingProvider>
       <HomeComponent />
-      <LoadingOverlay /> {/* Render LoadingOverlay here, it will be controlled by context */}
+      <LoadingOverlay />
     </LoadingProvider>
   );
 }
