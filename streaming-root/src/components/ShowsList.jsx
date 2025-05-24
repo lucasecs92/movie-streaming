@@ -6,7 +6,7 @@ const ShowsList = ({ shows, handleClick }) => {
 
   return (
     <section className={styles.listaContainer}>
-      <h3>Lista de Séries</h3>
+      <h3>Séries</h3>
       <section className={styles.gridShows}> 
         {shows.map((show) => (
           <section

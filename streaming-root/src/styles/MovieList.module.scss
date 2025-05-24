@@ -1,12 +1,13 @@
 .listaContainer {
   width: 100%;
-  padding: 8em 2em;
+  padding: 8em 4em;
 
   h3 {
     color: #fff;
     margin: 0 0 45px 0;
-    font-size: 24px;
+    font-size: 2.5em;
     font-weight: bold;
+    text-align: center;
   }
 }
 
@@ -17,7 +18,7 @@
   grid-template-columns: repeat(
     auto-fill,
     minmax(200px, 1fr)
-  ); // Ex: mínimo de 200px por card
+  );
   gap: 2rem;
 }
 
