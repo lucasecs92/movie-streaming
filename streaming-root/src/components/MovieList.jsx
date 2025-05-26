@@ -6,7 +6,7 @@ const MovieList = ({ filmes, handleClick }) => {
 
   return (
     <section className={styles.listaContainer}>
-      <h3>Lista de Filmes</h3>
+      <h3>Filmes</h3>
       <section className={styles.gridFilmes}> 
         {filmes.map((filme) => (
           <section
