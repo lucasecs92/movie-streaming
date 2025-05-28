@@ -28,7 +28,6 @@ const ShowDetails = ({
   const handleEpisodioClick = (episodio) => {
     setIsLoading(true);
     setEpisodioSelecionado(episodio);
-    // setShowHeaderFooter(false) is handled by useEffect
     setTimeout(() => {
       setIsLoading(false);
     }, LOADER_DURATION);
@@ -61,7 +60,7 @@ const ShowDetails = ({
                 <h2>{show.titulo}</h2>
                 <p>{show.ano}</p>
               </section>
-              <p>{show.sinopse || "Sinopse não disponível."}</p>
+              <p className={styles.sinopse}>{show.sinopse || "Sinopse não disponível."}</p>
             </section>
           </section>
           <section className={styles.temporadas}>
@@ -93,9 +92,9 @@ const ShowDetails = ({
                         role="button"
                         tabIndex={0}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                handleEpisodioClick(episodio);
-                            }
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleEpisodioClick(episodio);
+                          }
                         }}
                       >
                         <strong>{episodio.nome}</strong>: {episodio.descricao}

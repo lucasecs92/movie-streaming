@@ -1,12 +1,12 @@
 "use client";
 
-import styles from "../styles/MovieDetails.module.scss"; 
+import styles from "../styles/MovieDetails.module.scss";
 import Player from "./Player";
 import { useState, useEffect } from "react";
 import { useLoading } from '../contexts/LoadingContext';
 import { FaPlay } from "react-icons/fa6";
 
-const LOADER_DURATION = 250; 
+const LOADER_DURATION = 250;
 
 const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
   const [showPlayer, setShowPlayer] = useState(false);
@@ -14,9 +14,9 @@ const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
 
   useEffect(() => {
     if (showPlayer) {
-      setShowHeaderFooter(false); 
+      setShowHeaderFooter(false);
     } else {
-      setShowHeaderFooter(true);  
+      setShowHeaderFooter(true);
     }
   }, [showPlayer, setShowHeaderFooter]);
 
@@ -28,7 +28,7 @@ const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
     }, LOADER_DURATION);
   };
 
-  const handleVoltarParaDetalhesDoFilme = () => { 
+  const handleVoltarParaDetalhesDoFilme = () => {
     setIsLoading(true);
     setShowPlayer(false);
     setTimeout(() => {
@@ -37,34 +37,33 @@ const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
   };
 
   if (!filme) {
-    return null; 
+    return null;
   }
 
   return (
-    <section className={styles.movieDetailsPageContainer}> 
+    <section className={styles.movieDetailsPageContainer}>
       {showPlayer ? (
         <Player
-          filmeSelecionado={filme} 
-          voltarParaLista={handleVoltarParaDetalhesDoFilme} 
+          filmeSelecionado={filme}
+          voltarParaLista={handleVoltarParaDetalhesDoFilme}
         />
       ) : (
-        <section className={styles.movieDetailsContainer}> 
-          <section className={styles.movieDetailsWrapper}> 
+        <section className={styles.movieDetailsContainer}>
+          <section className={styles.movieDetailsWrapper}>
             <img src={filme.capa} alt={`Capa de ${filme.titulo}`} className={styles.capa} />
-            <section className={styles.descriptionMovie}> 
-              <section className={styles.descriptionMovieWrapper}> 
+            <section className={styles.descriptionMovie}>
+              <section className={styles.descriptionMovieWrapper}>
                 <h2>{filme.titulo}</h2>
                 <p>{filme.ano}</p>
               </section>
-              {filme.sinopse || "Sinopse não disponível."}
+              <p className={styles.sinopse}>{filme.sinopse || "Sinopse não disponível."}</p>
+              <section className={styles.actionSection}>
+                <button onClick={handleAssistirClick} className={styles.actionButton}>
+                  <FaPlay />
+                  ASSISTIR
+                </button>
+              </section>
             </section>
-          </section>
-          {/* Seção específica de MovieDetails */}
-          <section className={styles.actionSection}> 
-            <button onClick={handleAssistirClick} className={styles.actionButton}> 
-              <FaPlay />
-              ASSISTIR
-            </button>
           </section>
         </section>
       )}

@@ -15,7 +15,7 @@
   }
 
   .capa {
-    width: 20%;
+    width: 18.75rem;
     display: block;
     border-radius: 20px;
   }
@@ -28,40 +28,80 @@
     color: #ccc;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    justify-content: space-between;
 
     .descriptionMovieWrapper {
       p {
         font-size: 0.8em;
       }
+      h2,
+      p {
+        margin: 0;
+      }
     }
 
-    h2,
-    p {
-      margin: 0;
+    .sinopse {
+      font-size: 1em;
     }
   }
 
   .actionSection {
-    padding: 0 60px;
-
     .actionButton {
       background-color: #fe4f2d;
       color: white;
       border: none;
-      padding: 20px 25px;
+      padding: 15px 0;
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
       border-radius: 5px;
       margin-top: 20px;
-
+      width: 180px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
+      letter-spacing: 1.5px;
 
       svg {
-        font-size: 1.5em;
+        font-size: 1.3em;
+      }
+    }
+  }
+}
+
+@media (max-width: 920px) {
+  .movieDetailsContainer {
+    .descriptionMovie {
+      .sinopse {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .movieDetailsPageContainer {
+    height: auto;
+  }
+
+  .movieDetailsContainer {
+    .movieDetailsWrapper {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .capa {
+      margin: 0 auto;
+    }
+
+    .descriptionMovie {
+      width: 100%;
+
+      .actionSection {
+        .actionButton {
+          width: 100%;
+        }
       }
     }
   }

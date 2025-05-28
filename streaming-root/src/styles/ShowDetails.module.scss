@@ -1,6 +1,5 @@
 .showDetailsPageContainer {
   width: 100%;
-  height: 100vh;
 }
 
 .showDetailsContainer {
@@ -15,7 +14,7 @@
   }
 
   .capa {
-    width: 20%;
+    width: 18.75rem;
     display: block;
     border-radius: 20px;
   }
@@ -39,6 +38,10 @@
     h2,
     p {
       margin: 0;
+    }
+
+    .sinopse {
+      font-size: 1em;
     }
   }
 
@@ -66,7 +69,7 @@
       margin: 0;
 
       .episodio {
-        cursor: pointer; // Indicate it's clickable
+        cursor: pointer;
         padding: 8px;
         border-bottom: 1px solid #444;
         &:hover,
@@ -77,6 +80,44 @@
           border-bottom: none;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 1030px) {
+  .showDetailsContainer {
+    .showDetailsWrapper {
+      align-items: center;
+    }
+    .description {
+      .sinopse {
+        font-size: 0.8em;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .showDetailsPageContainer {
+    height: auto;
+  }
+
+  .showDetailsContainer {
+    .showDetailsWrapper {
+      flex-direction: column;
+      gap: 10px;
+
+      .capa {
+        margin: 0 auto;
+      }
+
+      .description {
+        width: 100%;
+      }
+    }
+
+    .temporadas {
+      width: 80%;
     }
   }
 }
