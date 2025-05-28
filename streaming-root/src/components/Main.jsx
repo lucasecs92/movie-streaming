@@ -7,7 +7,8 @@ import { shows } from "../data/shows";
 import MovieList from "./MovieList";
 import ShowsList from "./ShowsList";
 import ShowDetails from "./ShowDetails";
-import Player from "./Player";
+import MovieDetails from "./MovieDetails";
+//import Player from "./Player";
 import supabase from '../../lib/supabaseClient';
 import { useLoading } from '../contexts/LoadingContext';
 
@@ -37,11 +38,10 @@ export default function Main({
   const handleClick = useCallback((item) => {
     setIsLoading(true);
     setFilmeSelecionado(item);
-    setShowHeaderFooter(false);
     setTimeout(() => {
       setIsLoading(false);
     }, LOADER_DURATION);
-  }, [setFilmeSelecionado, setIsLoading, setShowHeaderFooter]);
+  }, [setFilmeSelecionado, setIsLoading]);
 
   const handleVoltarParaListaPrincipal = useCallback(() => {
     setIsLoading(true);
@@ -58,14 +58,14 @@ export default function Main({
         isSeries ? (
           <ShowDetails
             show={filmeSelecionado} 
-            voltarParaLista={handleVoltarParaListaPrincipal} // Volta para a lista de séries
-            setShowHeaderFooter={setShowHeaderFooter} // ShowDetails controla para episódios
+            voltarParaLista={handleVoltarParaListaPrincipal}
+            setShowHeaderFooter={setShowHeaderFooter} 
           />
         ) : (
-          // Se não for série e filmeSelecionado existir, então é um filme
-          <Player
-            filmeSelecionado={filmeSelecionado} // filmeSelecionado aqui é um objeto de filme
-            voltarParaLista={handleVoltarParaListaPrincipal} // Volta para a lista de filmes
+          <MovieDetails 
+            filme={filmeSelecionado} 
+            voltarParaLista={handleVoltarParaListaPrincipal}
+            setShowHeaderFooter={setShowHeaderFooter}
           />
         )
       ) : (
