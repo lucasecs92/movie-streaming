@@ -5,12 +5,28 @@ import Player from "./Player";
 import { useState, useEffect } from "react";
 import { useLoading } from '../contexts/LoadingContext';
 import { FaPlay } from "react-icons/fa6";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 const LOADER_DURATION = 250;
 
 const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
   const [showPlayer, setShowPlayer] = useState(false);
   const { setIsLoading } = useLoading();
+  const [showSynopsisText, setShowSynopsisText] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const smallScreen = window.innerWidth <= 768;
+      setIsSmallScreen(smallScreen);
+    };
+
+    if (typeof window !== 'undefined') {
+      checkScreenSize();
+      window.addEventListener('resize', checkScreenSize);
+      return () => window.removeEventListener('resize', checkScreenSize);
+    }
+  }, []);
 
   useEffect(() => {
     if (showPlayer) {
@@ -36,6 +52,10 @@ const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
     }, LOADER_DURATION);
   };
 
+  const toggleSynopsis = () => {
+    setShowSynopsisText(prevState => !prevState);
+  };
+
   if (!filme) {
     return null;
   }
@@ -56,7 +76,25 @@ const MovieDetails = ({ filme, voltarParaLista, setShowHeaderFooter }) => {
                 <h2>{filme.titulo}</h2>
                 <p>{filme.ano}</p>
               </section>
-              <p className={styles.sinopse}>{filme.sinopse || "Sinopse não disponível."}</p>
+
+              {isSmallScreen ? (
+                <>
+                  <button
+                    onClick={toggleSynopsis}
+                    className={styles.sinopseButton}
+                    aria-expanded={showSynopsisText}
+                  >
+                    SINOPSE
+                    {showSynopsisText ? <FaCaretUp /> : <FaCaretDown />}
+                  </button>
+                  {showSynopsisText && (
+                    <p className={styles.sinopse}>{filme.sinopse || "Sinopse não disponível."}</p>
+                  )}
+                </>
+              ) : (
+                <p className={styles.sinopse}>{filme.sinopse || "Sinopse não disponível."}</p>
+              )}
+
               <section className={styles.actionSection}>
                 <button onClick={handleAssistirClick} className={styles.actionButton}>
                   <FaPlay />

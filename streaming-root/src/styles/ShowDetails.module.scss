@@ -9,7 +9,7 @@
   .showDetailsWrapper {
     display: flex;
     flex-direction: row;
-    padding: 60px;
+    padding: 60px 60px 0 60px;
     gap: 60px;
   }
 
@@ -43,18 +43,41 @@
     .sinopse {
       font-size: 1em;
     }
+
+    .sinopseButton {
+      background-color: transparent;
+      color: #ccc;
+      border: none;
+      padding: 0px;
+      font-size: 0.9em;
+      font-weight: 500;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &:hover {
+        color: #fe4f2d;
+      }
+
+      svg {
+        font-size: 1em;
+      }
+    }
   }
 
   .temporadas {
     width: 40%;
-    margin: 20px 60px;
+    margin: 20px 60px 60px 60px;
     color: #ccc;
     text-align: left;
 
     .temporadaSelect {
       width: 100%;
       padding: 10px;
-      margin-bottom: 20px;
+      margin: 20px 0;
       font-size: 1em;
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -84,11 +107,19 @@
   }
 }
 
+@media (max-width: 1130px) {
+  .showDetailsContainer {
+    .temporadas {
+      width: 87%;
+    }
+    .capa {
+      width: 15.75rem;
+    }
+  }
+}
+
 @media (max-width: 1030px) {
   .showDetailsContainer {
-    .showDetailsWrapper {
-      align-items: center;
-    }
     .description {
       .sinopse {
         font-size: 0.8em;
@@ -106,6 +137,7 @@
     .showDetailsWrapper {
       flex-direction: column;
       gap: 10px;
+      padding: 0 60px;
 
       .capa {
         margin: 0 auto;
@@ -117,7 +149,19 @@
     }
 
     .temporadas {
-      width: 80%;
+      width: 82%;
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .showDetailsPageContainer {
+    font-size: 0.8em;
+  }
+
+  .showDetailsContainer {
+    .capa {
+      width: 12.75rem;
     }
   }
 }

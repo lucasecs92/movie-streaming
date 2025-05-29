@@ -4,6 +4,7 @@ import styles from "../styles/ShowDetails.module.scss";
 import { useState, useEffect } from "react";
 import Player from "./Player";
 import { useLoading } from '../contexts/LoadingContext';
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 const LOADER_DURATION = 250; // milliseconds
 
@@ -15,6 +16,21 @@ const ShowDetails = ({
   const [episodioSelecionado, setEpisodioSelecionado] = useState(null);
   const [temporadaSelecionada, setTemporadaSelecionada] = useState(null);
   const { setIsLoading } = useLoading();
+  const [showSynopsisText, setShowSynopsisText] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const smallScreen = window.innerWidth <= 768;
+      setIsSmallScreen(smallScreen);
+    };
+
+    if (typeof window !== 'undefined') {
+      checkScreenSize();
+      window.addEventListener('resize', checkScreenSize);
+      return () => window.removeEventListener('resize', checkScreenSize);
+    }
+  }, []);
 
   const voltarParaDetalhes = () => {
     setIsLoading(true);
@@ -41,6 +57,16 @@ const ShowDetails = ({
     }
   }, [episodioSelecionado, setShowHeaderFooter]);
 
+  useEffect(() => {
+    if (show && show.temporadas && show.temporadas.length > 0 && !temporadaSelecionada) {
+      setTemporadaSelecionada(show.temporadas[0]);
+    }
+  }, [show, temporadaSelecionada]);
+
+  const toggleSynopsis = () => {
+    setShowSynopsisText(prevState => !prevState);
+  };
+
   return (
     <section className={styles.showDetailsPageContainer}>
       {episodioSelecionado ? (
@@ -60,7 +86,24 @@ const ShowDetails = ({
                 <h2>{show.titulo}</h2>
                 <p>{show.ano}</p>
               </section>
-              <p className={styles.sinopse}>{show.sinopse || "Sinopse não disponível."}</p>
+
+              {isSmallScreen ? (
+                <>
+                  <button
+                    onClick={toggleSynopsis}
+                    className={styles.sinopseButton}
+                    aria-expanded={showSynopsisText}
+                  >
+                    SINOPSE
+                    {showSynopsisText ? <FaCaretUp /> : <FaCaretDown />}
+                  </button>
+                  {showSynopsisText && (
+                    <p className={styles.sinopse}>{show.sinopse || "Sinopse não disponível."}</p>
+                  )}
+                </>
+              ) : (
+                <p className={styles.sinopse}>{show.sinopse || "Sinopse não disponível."}</p>
+              )}
             </section>
           </section>
           <section className={styles.temporadas}>
@@ -68,12 +111,15 @@ const ShowDetails = ({
               <>
                 <select
                   onChange={(e) => {
-                    setTemporadaSelecionada(show.temporadas[e.target.value]);
+                    const selectedIndex = parseInt(e.target.value, 10);
+                    if (!isNaN(selectedIndex) && show.temporadas[selectedIndex]) {
+                      setTemporadaSelecionada(show.temporadas[selectedIndex]);
+                    }
                   }}
-                  defaultValue=""
+                  value={show.temporadas.findIndex(t => t === temporadaSelecionada) ?? ""}
                   className={styles.temporadaSelect}
                 >
-                  <option value="" disabled>
+                  <option value="" disabled={temporadaSelecionada !== null}>
                     Selecione uma temporada
                   </option>
                   {show.temporadas.map((temporada, index) => (

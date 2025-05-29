@@ -28,7 +28,6 @@
     color: #ccc;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     .descriptionMovieWrapper {
       p {
@@ -42,6 +41,30 @@
 
     .sinopse {
       font-size: 1em;
+    }
+
+    .sinopseButton {
+      background-color: transparent;
+      color: #ccc;
+      border: none;
+      margin-top: 20px;
+      padding: 0px;
+      font-size: 0.9em;
+      font-weight: 500;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &:hover {
+        color: #fe4f2d;
+      }
+
+      svg {
+        font-size: 1em;
+      }
     }
   }
 
@@ -70,6 +93,14 @@
   }
 }
 
+@media (max-width: 1130px) {
+  .movieDetailsContainer {
+    .capa {
+      width: 15.75rem;
+    }
+  }
+}
+
 @media (max-width: 920px) {
   .movieDetailsContainer {
     .descriptionMovie {
@@ -89,6 +120,7 @@
     .movieDetailsWrapper {
       flex-direction: column;
       gap: 10px;
+      padding: 0 60px 60px 60px;
     }
 
     .capa {
@@ -103,6 +135,18 @@
           width: 100%;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .movieDetailsPageContainer {
+    font-size: 0.8em;
+  }
+
+  .movieDetailsContainer {
+    .capa {
+      width: 12.75rem;
     }
   }
 }
