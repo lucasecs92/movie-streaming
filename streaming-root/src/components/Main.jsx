@@ -8,7 +8,6 @@ import MovieList from "./MovieList";
 import ShowsList from "./ShowsList";
 import ShowDetails from "./ShowDetails";
 import MovieDetails from "./MovieDetails";
-//import Player from "./Player";
 import supabase from '../../lib/supabaseClient';
 import { useLoading } from '../contexts/LoadingContext';
 

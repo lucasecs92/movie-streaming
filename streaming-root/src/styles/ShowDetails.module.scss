@@ -108,22 +108,15 @@
 }
 
 @media (max-width: 1130px) {
+  .showDetailsPageContainer {
+    font-size: 0.9em;
+  }
   .showDetailsContainer {
     .temporadas {
-      width: 87%;
+      width: auto;
     }
     .capa {
       width: 15.75rem;
-    }
-  }
-}
-
-@media (max-width: 1030px) {
-  .showDetailsContainer {
-    .description {
-      .sinopse {
-        font-size: 0.8em;
-      }
     }
   }
 }
@@ -147,18 +140,10 @@
         width: 100%;
       }
     }
-
-    .temporadas {
-      width: 82%;
-    }
   }
 }
 
 @media (max-width: 568px) {
-  .showDetailsPageContainer {
-    font-size: 0.8em;
-  }
-
   .showDetailsContainer {
     .capa {
       width: 12.75rem;

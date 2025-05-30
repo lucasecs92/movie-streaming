@@ -94,6 +94,9 @@
 }
 
 @media (max-width: 1130px) {
+  .movieDetailsPageContainer {
+    font-size: 0.9em;
+  }
   .movieDetailsContainer {
     .capa {
       width: 15.75rem;
@@ -101,12 +104,13 @@
   }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 820px) {
+  .movieDetailsPageContainer {
+    font-size: 0.8em;
+  }
   .movieDetailsContainer {
-    .descriptionMovie {
-      .sinopse {
-        font-size: 0.9em;
-      }
+    .movieDetailsWrapper {
+      align-items: center;
     }
   }
 }
@@ -140,11 +144,9 @@
 }
 
 @media (max-width: 568px) {
-  .movieDetailsPageContainer {
-    font-size: 0.8em;
-  }
-
   .movieDetailsContainer {
+    height: 100vh;
+
     .capa {
       width: 12.75rem;
     }
