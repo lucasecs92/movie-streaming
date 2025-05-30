@@ -1,12 +1,12 @@
 export const filmes = [
   {
     id: 1,
-    titulo: "King of the Hill - Pilot",
-    ano: "(1997)",
-    capa: "../../covers/king-of-the-hill-season01.jpg",
-    iframeSrc: "https://archive.org/embed/101-pilot_202503",
+    titulo: "O Estranho",
+    ano: "(1946)",
+    capa: "../../covers/the-stranger-1946.jpg",
+    iframeSrc: "https://www.youtube.com/embed/5BKcQaCIWLs?si=63SwSuacOpRNo8s5",
     sinopse:
-      "O episódio piloto da aclamada série animada King of the Hill, apresentando a família Hill e seu cotidiano em Arlen, Texas.",
+      "Charles Rankin (Orson Welles), um ex-chefe de campo de concentração nazista, vive sob a identidade de um correto professor universitário em uma pequena cidade. Ele deve tomar cuidado, pois toda a verdade está para vir à tona. Dirigido por Orson Welles e indicado ao Oscar de Melhor Roteiro Original.",
   },
   {
     id: 2,
