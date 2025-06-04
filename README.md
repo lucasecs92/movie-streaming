@@ -1,5 +1,7 @@
 # Cineminha 
 
+<img src="./screenshot/screenshot.png" width="60%">
+
 ## Principais Funcionalidades:
 
   - Autenticação Completa de Usuários:
