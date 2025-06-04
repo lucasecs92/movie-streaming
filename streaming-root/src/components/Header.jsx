@@ -17,7 +17,7 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
   const dropdownRef = useRef(null);
   const router = useRouter();
   const { setIsLoading, isLoading: isGlobalLoading } = useLoading();
-  const hoverTimeoutRef = useRef(null); // Ref to store timeout ID for hover delay
+  const hoverTimeoutRef = useRef(null); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,19 +55,10 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       }
     });
 
-    // No longer need handleClickOutside for hover behavior, but good to keep if you revert
-    // const handleClickOutside = (event) => {
-    //   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-    //     setIsDropdownOpen(false);
-    //   }
-    // };
-    // document.addEventListener('mousedown', handleClickOutside);
-
     return () => {
       authStateChangeData?.subscription?.unsubscribe();
-      // document.removeEventListener('mousedown', handleClickOutside);
       if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current); // Clear timeout on unmount
+        clearTimeout(hoverTimeoutRef.current); 
       }
     };
   }, []);
@@ -108,7 +99,6 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
   };
 
   const handleMouseLeaveUserSection = () => {
-    // Add a small delay before closing to allow mouse to move to the dropdown
     hoverTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
     }, 200); // Adjust delay as needed (e.g., 200-300ms)
@@ -122,8 +112,6 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     setMenuOpen(false);
   };
 
-  // When the mouse enters the dropdown menu itself, clear the timeout
-  // that would close it. This allows the user to interact with the menu.
   const handleMouseEnterDropdownMenu = () => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -208,9 +196,8 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
               {isDropdownOpen && (
                 <section
                   className={styles.dropdownMenu}
-                  onClick={handleLogout} // Keep onClick for the logout action
-                  onMouseEnter={handleMouseEnterDropdownMenu} // Keep dropdown open when mouse is over it
-                  // onMouseLeave is handled by the parent li's onMouseLeave
+                  onClick={handleLogout} 
+                  onMouseEnter={handleMouseEnterDropdownMenu} 
                 >
                   <MdLogout />
                   <section className={styles.btnLogout}>
