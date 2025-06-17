@@ -9,7 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import supabase from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
-import { useLoading } from '../contexts/LoadingContext'; // Import useLoading
+import { useLoading } from '../contexts/LoadingContext'; 
 
 export default function ModalCadastro({
   isOpen,
@@ -20,13 +20,12 @@ export default function ModalCadastro({
   clearEmail,
   showPassword,
   toggleShowPassword,
-  // Removed showConfirmPassword and toggleShowConfirmPassword as they are not used by this modal directly
 }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
-  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); // Get setIsLoading
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); 
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -77,11 +76,17 @@ export default function ModalCadastro({
       });
 
       if (signUpError) {
-        setError(signUpError.message);
+        if (signUpError.message.includes('pwned password')) {
+          setError("Essa senha é muito comum ou já foi exposta em um vazamento de dados. Por favor, escolha uma senha mais segura.");
+        } else {
+          // Para outros erros, você pode continuar mostrando a mensagem padrão ou mapeá-los também
+          setError(signUpError.message);
+        }
       } else {
-        // window.alert("Cadastro realizado com sucesso! Verifique seu e-mail para confirmação.", data); // Alert can be annoying
+        // Sucesso!
         onClose();
-        router.push('/'); // Or to a "please verify email page"
+        alert("Cadastro realizado com sucesso! Verifique seu e-mail para confirmar a conta.");
+        router.push('/');
       }
     } catch (catchError) {
       console.error("Cadastro catch error:", catchError);
