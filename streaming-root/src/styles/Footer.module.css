@@ -1,0 +1,13 @@
+.footer {
+  padding: 0.8rem;
+  width: 100%;
+  background-color: #151B23;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer p {
+  margin: 10px;
+  color: #fff;
+  font-size: 14px;
+}/*# sourceMappingURL=Footer.module.css.map */

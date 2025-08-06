@@ -1,0 +1,48 @@
+.main {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #151B23;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.homeContainer {
+  margin-top: 55px;
+  padding: 30vh 0;
+  background-image: url("../../public/movies-background.jpg");
+  background-size: 100vw;
+  background-attachment: fixed;
+}
+
+.banner {
+  text-align: center;
+  padding: 90px 0;
+  background-color: #015551;
+}
+
+.banner h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.banner p {
+  font-size: 16px;
+  color: rgba(204, 204, 204, 0.7333333333);
+}
+
+.startButton {
+  background-color: #fe4f2d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.startButton:hover {
+  background-color: rgba(254, 80, 45, 0.7450980392);
+}/*# sourceMappingURL=Main.module.css.map */

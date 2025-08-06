@@ -1,0 +1,125 @@
+.showDetailsPageContainer {
+  width: 100%;
+}
+
+.showDetailsContainer {
+  margin-top: 100px;
+  text-align: center;
+}
+.showDetailsContainer .showDetailsWrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 60px 60px 0 60px;
+  gap: 60px;
+}
+.showDetailsContainer .capa {
+  width: 18.75rem;
+  display: block;
+  border-radius: 20px;
+}
+.showDetailsContainer .description {
+  width: 60%;
+  margin-top: 2rem;
+  text-align: left;
+  font-size: 1.2em;
+  color: #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.showDetailsContainer .description .descriptionWrapper p {
+  font-size: 0.8em;
+}
+.showDetailsContainer .description h2,
+.showDetailsContainer .description p {
+  margin: 0;
+}
+.showDetailsContainer .description .sinopse {
+  font-size: 1em;
+}
+.showDetailsContainer .description .sinopseButton {
+  background-color: transparent;
+  color: #ccc;
+  border: none;
+  padding: 0px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.showDetailsContainer .description .sinopseButton:hover {
+  color: #fe4f2d;
+}
+.showDetailsContainer .description .sinopseButton svg {
+  font-size: 1em;
+}
+.showDetailsContainer .temporadas {
+  width: 40%;
+  margin: 20px 60px 60px 60px;
+  color: #ccc;
+  text-align: left;
+}
+.showDetailsContainer .temporadas .temporadaSelect {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #222;
+  color: #fff;
+  cursor: pointer;
+}
+.showDetailsContainer .temporadas .episodiosLista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.showDetailsContainer .temporadas .episodiosLista .episodio {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #444;
+}
+.showDetailsContainer .temporadas .episodiosLista .episodio:hover, .showDetailsContainer .temporadas .episodiosLista .episodio:focus {
+  background-color: #2a2a2a;
+}
+.showDetailsContainer .temporadas .episodiosLista .episodio:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 1130px) {
+  .showDetailsPageContainer {
+    font-size: 0.9em;
+  }
+  .showDetailsContainer .temporadas {
+    width: auto;
+  }
+  .showDetailsContainer .capa {
+    width: 15.75rem;
+  }
+}
+@media (max-width: 768px) {
+  .showDetailsPageContainer {
+    height: auto;
+  }
+  .showDetailsContainer .showDetailsWrapper {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 60px;
+  }
+  .showDetailsContainer .showDetailsWrapper .capa {
+    margin: 0 auto;
+  }
+  .showDetailsContainer .showDetailsWrapper .description {
+    width: 100%;
+  }
+}
+@media (max-width: 568px) {
+  .showDetailsContainer .capa {
+    width: 12.75rem;
+  }
+}/*# sourceMappingURL=ShowDetails.module.css.map */
