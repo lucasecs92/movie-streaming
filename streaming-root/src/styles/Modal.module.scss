@@ -11,7 +11,7 @@
   backdrop-filter: blur(10px);
   overflow-y: auto;
   inset: 0;
-  padding: 300px 14rem 0 14rem;
+  padding: 0 14rem;
 }
 
 .headerModal {
@@ -82,7 +82,6 @@
   position: relative;
   width: 100vw;
   max-width: 550px;
-  margin-bottom: 100px;
 }
 
 .closeButton {
@@ -247,15 +246,9 @@
   }
 }
 
-@media (max-width: 1015px) {
+@media (max-width: 998px) {
   .modalOverlay {
-    padding: 300px 5rem 0 5rem;
-  }
-}
-
-@media (max-width: 725px) {
-  .modalOverlay {
-    padding: 300px 0rem 0 0rem;
+    padding: 0;
   }
 }
 
