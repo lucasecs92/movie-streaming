@@ -10,7 +10,6 @@ import { useState, useCallback, useEffect } from "react";
 import useModalScrollLock from "../hooks/useModalScrollLock";
 import ModalForgotPassword from "../components/ModalForgotPassword";
 import ModalResetPasswordForm from "../components/ModalResetPasswordForm";
-import { useRouter } from 'next/navigation'; 
 import supabase from '../../lib/supabaseClient'; 
 import { LoadingProvider, useLoading } from '../contexts/LoadingContext'; 
 import LoadingOverlay from '../components/LoadingOverlay';
@@ -27,7 +26,6 @@ function HomeComponent() {
   const [isSeries, setIsSeries] = useState(false);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isResetPasswordFormModalOpen, setIsResetPasswordFormModalOpen] = useState(false);
-  const router = useRouter();
   const { setIsLoading } = useLoading();
 
   useModalScrollLock(isLoginModalOpen || isCadastroModalOpen || isResetPasswordFormModalOpen);
@@ -113,8 +111,8 @@ function HomeComponent() {
       } else {
         alert("Senha redefinida com sucesso! Você pode fazer login com sua nova senha.");
         closeResetPasswordFormModal();
-        if (window.location.hash) {
-          window.history.pushState("", document.title, window.location.pathname + window.location.search);
+        if (globalThis.location.hash) {
+          globalThis.history.pushState("", document.title, globalThis.location.pathname + globalThis.location.search);
         }
       }
     } catch (err) {
@@ -128,8 +126,8 @@ function HomeComponent() {
   const closeResetPasswordFormModal = () => {
     setIsResetPasswordFormModalOpen(false);
     // Clear the hash from the URL after closing the modal
-    if (window.location.hash) {
-      window.history.pushState("", document.title, window.location.pathname + window.location.search);
+    if (globalThis.location.hash) {
+      globalThis.history.pushState("", document.title, globalThis.location.pathname + globalThis.location.search);
     }
   };
 
