@@ -1,7 +1,7 @@
 .modalOverlay {
   width: 100vw;
   position: fixed;
-  background-color: rgba(21, 27, 35, 0.9529411765);
+  background-color: rgba(21, 27, 35, 0.95);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
           backdrop-filter: blur(10px);
   overflow-y: auto;
   inset: 0;
-  padding: 300px 14rem 0 14rem;
+  padding: 0 14rem;
 }
 
 .headerModal {
@@ -27,20 +27,20 @@
 }
 .headerModal h1 {
   margin: 0;
-  color: #fff;
+  color: #ffffff;
   font-size: 1.8rem;
   cursor: pointer;
   padding-left: 20px;
 }
 .headerModal span {
   font-weight: bold;
-  color: #ccc;
+  color: #cccccc;
   cursor: pointer;
   padding-right: 20px;
 }
 .headerModal span:hover {
   padding: 9px 20px;
-  background-color: rgba(204, 204, 204, 0.1647058824);
+  background-color: rgba(204, 204, 204, 0.16);
   border-radius: 8px;
 }
 
@@ -57,12 +57,12 @@
   gap: 0.5rem;
 }
 .modalHeading h2 {
-  color: #fff;
+  color: #ffffff;
   margin: 0;
   font-size: 2rem;
 }
 .modalHeading p {
-  color: #fff;
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 400;
   margin: 0;
@@ -76,7 +76,6 @@
   position: relative;
   width: 100vw;
   max-width: 550px;
-  margin-bottom: 100px;
 }
 
 .closeButton svg {
@@ -85,7 +84,7 @@
   right: -14px;
   border: none;
   font-size: 30px;
-  color: #ccc;
+  color: #cccccc;
   cursor: pointer;
 }
 
@@ -109,9 +108,9 @@
   margin: 25px 0 0 0;
   font-size: 0.9em;
   font-weight: 600;
+  border-radius: 5px;
   background-color: #dff0d8;
   color: #549270;
-  border-radius: 5px;
 }
 
 .form {
@@ -121,23 +120,23 @@
 
 .label {
   font-weight: bold;
-  color: #fff;
+  color: #ffffff;
   margin: 20px 0 5px 0;
 }
 
 .input {
   padding: 10px;
   padding-right: 40px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-radius: 4px;
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
   background-color: transparent;
-  color: #ccc;
+  color: #cccccc;
 }
 .input:focus {
-  background-color: rgba(21, 27, 35, 0.9529411765);
+  background-color: rgba(21, 27, 35, 0.95);
   border: 1px solid #fe4f2d;
   box-shadow: 0 0 0 1.5px #fe4f2d;
   outline: none;
@@ -155,7 +154,7 @@
   top: 46%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #fff;
+  color: #ffffff;
   font-size: 1.2rem;
 }
 
@@ -175,7 +174,7 @@
 .button {
   margin-top: 30px;
   padding: 10px;
-  background-color: #ccc;
+  background-color: #cccccc;
   color: #202020;
   border: none;
   border-radius: 8px;
@@ -187,13 +186,13 @@
 
 .spanOr {
   margin: 20px 0;
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   font-size: 0.8em;
 }
 
 .button:hover {
-  background-color: #fff;
+  background-color: #ffffff;
 }
 
 .socialLogin {
@@ -214,14 +213,14 @@
   border-radius: 8px;
 }
 .socialLogin .googleButton {
-  background-color: #fff;
+  background-color: #ffffff;
 }
 .socialLogin .googleButton:hover {
-  background-color: rgba(255, 255, 255, 0.8901960784);
+  background-color: rgba(255, 255, 255, 0.89);
 }
 .socialLogin .githubButton {
-  background-color: black;
-  color: #fff;
+  background-color: #151B23;
+  color: #ffffff;
 }
 .socialLogin .githubButton:hover {
   background-color: rgba(0, 0, 0, 0.651);
@@ -231,14 +230,9 @@
   height: 30px;
 }
 
-@media (max-width: 1015px) {
+@media (max-width: 998px) {
   .modalOverlay {
-    padding: 300px 5rem 0 5rem;
-  }
-}
-@media (max-width: 725px) {
-  .modalOverlay {
-    padding: 300px 0rem 0 0rem;
+    padding: 0;
   }
 }
 @media (max-width: 650px) {

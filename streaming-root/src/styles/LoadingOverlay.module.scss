@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .overlay {
   position: fixed;
   top: 0;
@@ -13,7 +15,7 @@
 
 .spinner {
   font-size: 6rem; 
-  color: #fe4f2d;   
+  color: $color-accent;   
   animation: spin 1s linear infinite;
 }
 

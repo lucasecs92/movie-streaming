@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .playerContainer {
   display: flex;
   flex-direction: column;
@@ -19,17 +21,16 @@
   align-items: center;
 
   padding: 0 10px 0 0;
-  color: #ccc;
+  color: $color-text-light;
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 
-  position: absolute; /* Faz o botão flutuar */
+  position: absolute; 
   top: 20px; 
-  // left: 20px; 
-  z-index: 10; /* Garante que fique acima do iframe */
+  z-index: 10; 
 
   &:hover {
-    color: #cccccc79;
+    color: $color-text-dimmed;
   }
   
 }

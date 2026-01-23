@@ -3,7 +3,7 @@
   padding: 8em 4em;
 }
 .listaContainer h3 {
-  color: #fff;
+  color: #ffffff;
   margin: 0 0 45px 0;
   font-size: 2.5em;
   font-weight: 600;
@@ -39,7 +39,7 @@
   transition: transform 400ms ease-in-out;
 }
 .capaWrap img:hover {
-  outline: 3px solid #fff;
+  outline: 3px solid #ffffff;
   outline-offset: 2px;
   cursor: pointer;
   transform: scale(1.03);
@@ -57,7 +57,7 @@
 }
 .capaWrap p:hover {
   cursor: pointer;
-  color: #fff;
+  color: #ffffff;
 }
 
 @media (max-width: 1330px) {

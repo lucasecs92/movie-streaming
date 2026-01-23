@@ -25,7 +25,7 @@
 .banner h2 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #ccc;
+  color: #cccccc;
 }
 
 .banner p {
@@ -35,13 +35,14 @@
 
 .startButton {
   background-color: #fe4f2d;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 .startButton:hover {
   background-color: rgba(254, 80, 45, 0.7450980392);

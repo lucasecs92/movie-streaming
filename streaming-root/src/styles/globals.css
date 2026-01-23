@@ -1,6 +1,6 @@
-/* font-family: 'Poppins', sans-serif; */
+/* --- font-family: 'Poppins', sans-serif; --- */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-/* font-family: "Golos Text", sans-serif; */
+/* --- font-family: "Golos Text", sans-serif; --- */
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap");
 * {
   font-family: "Poppins", sans-serif;
@@ -10,4 +10,5 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #151B23;
 }/*# sourceMappingURL=globals.css.map */

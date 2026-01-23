@@ -23,7 +23,7 @@
   margin-top: 2rem;
   text-align: left;
   font-size: 1.2em;
-  color: #ccc;
+  color: #cccccc;
   display: flex;
   flex-direction: column;
 }
@@ -39,7 +39,7 @@
 }
 .movieDetailsContainer .descriptionMovie .sinopseButton {
   background-color: transparent;
-  color: #ccc;
+  color: #cccccc;
   border: none;
   margin-top: 20px;
   padding: 0px;
@@ -60,7 +60,7 @@
 }
 .movieDetailsContainer .actionSection .actionButton {
   background-color: #fe4f2d;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 15px 0;
   font-size: 16px;

@@ -1,9 +1,11 @@
+@use 'variables' as *;
+
 .listaContainer {
   width: 100%;
   padding: 8em 4em;
 
   h3 {
-    color: #fff;
+    color: $color-white;
     margin: 0 0 45px 0;
     font-size: 2.5em;
     font-weight: 600;
@@ -37,10 +39,9 @@
     object-fit: cover; 
     border-radius: 5px;
     transition: transform 400ms ease-in-out;
-    // transition: transform 300ms ease-in-out, outline 300ms ease-in-out;
 
     &:hover {
-      outline: 3px solid #fff;
+      outline: 3px solid $color-white;
       outline-offset: 2px;
       cursor: pointer;
       transform: scale(1.03);
@@ -60,7 +61,7 @@
 
     &:hover {
       cursor: pointer;
-      color: #fff;
+      color: $color-white;
     }
   }
 }
@@ -73,7 +74,7 @@
 
 @media (max-width: 1100px) {
   .capaWrap {
-    flex: 0 0 calc(100% / 3); // 3 filmes por vez em telas menores
+    flex: 0 0 calc(100% / 3); 
     padding: 1rem;
 
     img {
@@ -85,7 +86,7 @@
 
 @media (max-width: 960px) {
   .capaWrap {
-    flex: 0 0 calc(100% / 2); // 2 filmes por vez em telas menores
+    flex: 0 0 calc(100% / 2); 
     padding: 1rem;
 
     img {
@@ -120,10 +121,9 @@
   .gridFilmes,
   .gridShows {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    // ou grid-template-columns: repeat(2, 1fr); para forçar 2 colunas
     gap: 0.8rem;
   }
   .capaWrap p {
-    min-height: auto; // Remover altura mínima se causar problemas de layout
+    min-height: auto; 
   }
 }

@@ -1,8 +1,9 @@
+@use 'variables' as *;
+
 .main {
   width: 100%;
-  // height: 100vh;
   margin: 0 auto;
-  background-color: #151B23;
+  background-color: $color-bg-dark;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,31 +21,32 @@
 .banner {
   text-align: center;
   padding: 90px 0;
-  background-color: #015551;
+  background-color: $color-primary;
 }
 
 .banner h2 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #ccc;
+  color: $color-text-light;
 }
 
 .banner p {
   font-size: 16px;
-  color: #ccccccbb;
+  color: $color-text-dimmed;
 }
 
 .startButton {
-  background-color: #fe4f2d;
-  color: white;
+  background-color: $color-accent;
+  color: $color-white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
+  transition: background-color 0.3s ease; 
 
   &:hover {
-    background-color: #fe502dbe;
+    background-color: $color-accent-hover;
   }
 }

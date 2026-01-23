@@ -1,5 +1,7 @@
+@use 'variables' as *;
+
 .containerPage {
-  background-color: #202020;
+  background-color: $color-bg-dark;
   min-height: 100vh; 
   display: flex;
   flex-direction: column;

@@ -1,9 +1,11 @@
+@use 'variables' as *;
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.4rem 1rem;
-  background-color: #151b23b6;
+  background-color: rgba($color-bg-dark, 0.71); // #151b23b6
 
   position: fixed;
   width: 100%;
@@ -17,7 +19,7 @@
 
   h1 {
     margin: 0;
-    color: #fff;
+    color: $color-white;
     font-size: 1.8rem;
   }
 }
@@ -30,13 +32,13 @@
   li {
     text-decoration: none;
     font-weight: bold;
-    color: #ccc;
+    color: $color-text-light;
     cursor: pointer;
     padding: 9px 25px;
     border-radius: 8px;
 
     &:hover {
-      background-color: #ffffff17;
+      background-color: rgba($color-white, 0.09); // #ffffff17
     }
   }
 }
@@ -48,7 +50,7 @@
   position: absolute;
   top: 7vh;
   left: 0;
-  background-color: #151b23b6;
+  background-color: rgba($color-bg-dark, 0.71);
   width: 40%;
   margin: 0;
   padding: 0;
@@ -56,7 +58,7 @@
   li {
     text-decoration: none;
     font-weight: bold;
-    color: #ccc;
+    color: $color-text-light;
     cursor: pointer;
     padding: 1rem 2rem;
     display: flex;
@@ -67,7 +69,7 @@
     }
 
     &:hover {
-      background-color: #555555d2;
+      background-color: rgba(#555555, 0.82); 
     }
   }
 
@@ -97,7 +99,6 @@
   list-style-type: none;
   gap: 0.6rem;
   margin: 0;
-  // align-items: center;
 
   .userSection {
     position: relative;
@@ -105,13 +106,13 @@
     align-items: center;
 
     .userName {
-      color: #ccc;
+      color: $color-text-light;
       cursor: pointer;
       margin: 9px 25px;
       border-radius: 5px;
 
       &:hover {
-        color: #fe4f2d;
+        color: $color-accent;
       }
     }
 
@@ -119,7 +120,7 @@
       position: absolute;
       top: 55px;
       right: 0;
-      background-color: #151b23b6;
+      background-color: rgba($color-bg-dark, 0.71);
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       z-index: 1000;
@@ -127,20 +128,20 @@
       align-items: center;
       padding: 0px 10px;
       cursor: pointer;
-      color: #ccc;
+      color: $color-text-light;
 
       svg {
         font-size: 1.5em;
       }
 
       &:hover {
-        background-color: #555555d2;
+        background-color: rgba(#555555, 0.82);
       }
     }
 
     .btnLogout {
       padding: 8px 15px;
-      white-space: nowrap; /* Impede quebras de linha */
+      white-space: nowrap;
       display: flex;
       gap: 10px;
       border-radius: 5px;
@@ -151,7 +152,7 @@
 .btnCadastro,
 .btnLogin {
   text-decoration: none;
-  color: #ccc;
+  color: $color-text-light;
   padding: 9px 25px;
   border: none;
   border-radius: 8px;
@@ -162,22 +163,22 @@
 
 .btnLogin {
   &:hover {
-    background-color: #ffffff17;
+    background-color: rgba($color-white, 0.09);
   }
 }
 
 .btnCadastro {
-  background-color: #fe4f2d;
+  background-color: $color-accent;
 
   &:hover {
-    background-color: #fe502dbe;
-    outline: 2px solid #fe502dbe;
+    background-color: $color-accent-hover;
+    outline: 2px solid $color-accent-hover;
   }
 }
 
 .menuIcon {
   font-size: 2rem;
-  color: #fff;
+  color: $color-white;
   cursor: pointer;
 }
 

@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.4rem 1rem;
-  background-color: rgba(21, 27, 35, 0.7137254902);
+  background-color: rgba(21, 27, 35, 0.71);
   position: fixed;
   width: 100%;
   top: 0;
@@ -16,7 +16,7 @@
 }
 .navLeft h1 {
   margin: 0;
-  color: #fff;
+  color: #ffffff;
   font-size: 1.8rem;
 }
 
@@ -28,13 +28,13 @@
 .navLeftUl li {
   text-decoration: none;
   font-weight: bold;
-  color: #ccc;
+  color: #cccccc;
   cursor: pointer;
   padding: 9px 25px;
   border-radius: 8px;
 }
 .navLeftUl li:hover {
-  background-color: rgba(255, 255, 255, 0.0901960784);
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .navLeftUlMobile {
@@ -44,7 +44,7 @@
   position: absolute;
   top: 7vh;
   left: 0;
-  background-color: rgba(21, 27, 35, 0.7137254902);
+  background-color: rgba(21, 27, 35, 0.71);
   width: 40%;
   margin: 0;
   padding: 0;
@@ -52,7 +52,7 @@
 .navLeftUlMobile li {
   text-decoration: none;
   font-weight: bold;
-  color: #ccc;
+  color: #cccccc;
   cursor: pointer;
   padding: 1rem 2rem;
   display: flex;
@@ -62,7 +62,7 @@
   font-size: 1.5rem;
 }
 .navLeftUlMobile li:hover {
-  background-color: rgba(85, 85, 85, 0.8235294118);
+  background-color: rgba(85, 85, 85, 0.82);
 }
 .navLeftUlMobile .divider {
   width: 100%;
@@ -94,7 +94,7 @@
   align-items: center;
 }
 .navRightUl .userSection .userName {
-  color: #ccc;
+  color: #cccccc;
   cursor: pointer;
   margin: 9px 25px;
   border-radius: 5px;
@@ -106,7 +106,7 @@
   position: absolute;
   top: 55px;
   right: 0;
-  background-color: rgba(21, 27, 35, 0.7137254902);
+  background-color: rgba(21, 27, 35, 0.71);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -114,17 +114,17 @@
   align-items: center;
   padding: 0px 10px;
   cursor: pointer;
-  color: #ccc;
+  color: #cccccc;
 }
 .navRightUl .userSection .dropdownMenu svg {
   font-size: 1.5em;
 }
 .navRightUl .userSection .dropdownMenu:hover {
-  background-color: rgba(85, 85, 85, 0.8235294118);
+  background-color: rgba(85, 85, 85, 0.82);
 }
 .navRightUl .userSection .btnLogout {
   padding: 8px 15px;
-  white-space: nowrap; /* Impede quebras de linha */
+  white-space: nowrap;
   display: flex;
   gap: 10px;
   border-radius: 5px;
@@ -133,7 +133,7 @@
 .btnCadastro,
 .btnLogin {
   text-decoration: none;
-  color: #ccc;
+  color: #cccccc;
   padding: 9px 25px;
   border: none;
   border-radius: 8px;
@@ -143,7 +143,7 @@
 }
 
 .btnLogin:hover {
-  background-color: rgba(255, 255, 255, 0.0901960784);
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .btnCadastro {
@@ -156,7 +156,7 @@
 
 .menuIcon {
   font-size: 2rem;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 }
 
