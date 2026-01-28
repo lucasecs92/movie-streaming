@@ -11,8 +11,9 @@
 .homeContainer {
   margin-top: 55px;
   padding: 30vh 0;
-  background-image: url("../../public/movies-background.jpg");
-  background-size: 100vw;
+  background-image: url("/images/movies-background.jpg");
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
@@ -20,6 +21,8 @@
   text-align: center;
   padding: 90px 0;
   background-color: #015551;
+  position: relative;
+  overflow: visible;
 }
 
 .banner h2 {
@@ -31,6 +34,26 @@
 .banner p {
   font-size: 16px;
   color: rgba(204, 204, 204, 0.7333333333);
+}
+
+.screenContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  top: 70px;
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  margin-bottom: 5rem;
+}
+
+.screenContainer img {
+  width: 80%;
+  max-width: 1000px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  display: block;
 }
 
 .startButton {

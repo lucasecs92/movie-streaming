@@ -82,6 +82,9 @@ export default function Main({
                   <button className={styles.startButton} onClick={onLoginClick}>
                     Começar
                   </button>
+                  <section className={styles.screenContainer}>
+                    <img src="/images/dashboard-cineminha.png" alt="Screenshot do cineminha" />
+                  </section>
                 </section>
               )}
             </section>

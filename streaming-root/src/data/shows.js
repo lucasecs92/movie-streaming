@@ -3,7 +3,7 @@ export const shows = [
     id: 1,
     titulo: "The Adventures Of Ozzie And Harriet",
     ano: "(1952)",
-    capa: "../../covers/the-adventures-of-ozzie-and-harriet-1952.jpg",
+    capa: "../images/covers/the-adventures-of-ozzie-and-harriet-1952.jpg",
     sinopse: "As Aventuras de Ozzie e Harriet é uma sitcom americana, exibida pela ABC de 3 de outubro de 1952 a 26 de março de 1966, estrelada pela família Nelson na vida real. Após uma longa temporada no rádio, o programa foi levado para a televisão, onde manteve seu sucesso, sendo exibido tanto no rádio quanto na televisão por alguns anos. A série é estrelada por Ozzie Nelson e sua esposa, a cantora Harriet Nelson, e seus filhos pequenos, David e Eric (Ricky) Nelson. Don DeFore teve um papel recorrente como o simpático vizinho dos Nelsons (Thorny).",
     temporadas: [
       {
@@ -331,7 +331,7 @@ export const shows = [
     id: 2,
     titulo: "Burn 'Em Up Barnes",
     ano: "(1932)",
-    capa: "../../covers/burn-em-up-barnes-1932.jpg",
+    capa: "../images/covers/burn-em-up-barnes-1932.jpg",
     sinopse: "Marjorie Temple, dona de uma linha de ônibus e de um terreno aparentemente sem valor, é atacada por ricos especuladores de petróleo que sabem que suas terras, na verdade, valem milhões. Quando tentam tirá-la do mercado para sempre, o jovem piloto de corridas Burn 'em Up Barnes vem em seu socorro — repetidas vezes.",
     temporadas: [
       {
@@ -405,7 +405,7 @@ export const shows = [
     id: 3,
     titulo: "Sherlock Holmes ",
     ano: "(1954)",
-    capa: "../../covers/sherlock-holmes-1954.jpg",
+    capa: "../images/covers/sherlock-holmes-1954.jpg",
     sinopse: "As aventuras do mestre detetive Sherlock Holmes, enquanto ele e seu assistente, Dr. Watson - e, com certa relutância, o atrapalhado Inspetor Lestrade - combatem criminosos em Londres.",
     temporadas: [
       {
@@ -620,7 +620,7 @@ export const shows = [
     id: 4,
     titulo: "Betty Boop's",
     ano: "(1933)",
-    capa: "../../covers/betty-boop-1933.jpg",
+    capa: "../images/covers/betty-boop-1933.jpg",
     sinopse: "A série de Betty Boop de 1933 captura a essência da era de ouro da animação e o espírito vibrante da personagem antes da imposição do Código Hays. Nesses curtas, Betty é a personificação da 'flapper' moderna e independente: uma jovem charmosa, cantora e dançarina com sua icônica voz 'Boop-Oop-a-Doop'.",
     temporadas: [
       {
@@ -883,7 +883,7 @@ export const shows = [
     id: 5,
     titulo: "Superman",
     ano: "(1941)",
-    capa: "../../covers/superman-1941.jpg",
+    capa: "../images/covers/superman-1941.jpg",
     sinopse: "Os curtas animados do Superman de 1941, produzidos pelos Fleischer Studios, apresentam o Homem de Aço em suas primeiras e icônicas aparições na tela. Ambientados em uma Metrópolis vibrante e com um visual art déco impressionante, cada episódio mostra Clark Kent, o repórter do Planeta Diário, transformando-se secretamente no Superman para combater uma variedade de ameaças.",
     temporadas: [
       {
@@ -986,7 +986,7 @@ export const shows = [
     id: 6,
     titulo: "Popeye The Sailor",
     ano: "(1933)",
-    capa: "../../covers/popeye-1933.jpg",
+    capa: "../images/covers/popeye-1933.jpg",
     sinopse: "Popeye começa sua carreira no cinema cantando sua música tema, demonstrando sua força em um carnaval, dançando hula com Betty Boop, esmurrando Bluto, comendo seu espinafre e salvando Olívia Palito da morte certa nos trilhos do trem.",
     temporadas: [
       {
@@ -1040,7 +1040,7 @@ export const shows = [
     id: 7,
     titulo: "O Cavaleiro Solitário",
     ano: "(1949)",
-    capa: "../../covers/the-lone-ranger-1949.jpg",
+    capa: "../images/covers/the-lone-ranger-1949.jpg",
     sinopse: "The Lone Ranger é uma série de televisão americana de faroeste que foi ao ar de 1949 a 1957, estrelada por Clayton Moore e Jay Silverheels como Tonto. A série live-action inicialmente contava com Gerald Mohr como narrador dos episódios. Fred Foy atuou como narrador e locutor da série de rádio de 1948 até o seu final e tornou-se locutor da versão para televisão quando a narração da história foi descontinuada. Este foi de longe o programa de televisão de maior audiência da rede ABC no início da década de 1950 e seu primeiro verdadeiro 'sucesso'.",
     temporadas: [
       {
@@ -1134,7 +1134,7 @@ export const shows = [
     id: 8,
     titulo: "Flash Gordon",
     ano: "(1936)",
-    capa: "../../covers/flash-gordon-1936.jpg",
+    capa: "../images/covers/flash-gordon-1936.jpg",
     sinopse: "Flash Gordon, Dale Arden e Dr. Alexis Zarkov visitam o planeta Mongo para frustrar os planos malignos do Imperador Ming, o Impiedoso, que colocou seu planeta em rota de colisão com a Terra.",
     temporadas: [
       {
@@ -1213,7 +1213,7 @@ export const shows = [
     id: 9,
     titulo: "Bonanza",
     ano: "(1959)",
-    capa: "../../covers/bonanza-1959.jpg",
+    capa: "../images/covers/bonanza-1959.jpg",
     sinopse: "As aventuras no oeste selvagem de Ben Cartwright e seus filhos enquanto defendem seu rancho em Nevada e ajudam a comunidade.",
     temporadas: [
       {
@@ -1382,7 +1382,7 @@ export const shows = [
     id: 10,
     titulo: "Crusader Rabbit",
     ano: "(1950)",
-    capa: "../../covers/crusader-rabbit-1950.jpg",
+    capa: "../images/covers/crusader-rabbit-1950.jpg",
     sinopse: "As aventuras engraçadas do heróico Coelho Cruzado e seu ajudante Rags, o Tigre.",
     temporadas: [
       {
@@ -1441,7 +1441,7 @@ export const shows = [
     id: 11,
     titulo: "Cisco Kid",
     ano: "(1950)",
-    capa: "../../covers/cisco-kid-1950.jpg",
+    capa: "../images/covers/cisco-kid-1950.jpg",
     sinopse: "O Cisco Kid atravessa a fronteira americana com seu ajudante, Pancho, lutando contra a corrupção com uma mistura de orgulho e humor que criou uma lenda no coração de gerações de telespectadores.",
     temporadas: [
       {
@@ -1490,7 +1490,7 @@ export const shows = [
     id: 12,
     titulo: "The Lucy Show",
     ano: "(1950)",
-    capa: "../../covers/the-lucy-show-1960.jpg",
+    capa: "../images/covers/the-lucy-show-1960.jpg",
     sinopse: "As desventuras loucas de uma mulher, a sua melhor amiga relutante e o seu patrão malandro.",
     temporadas: [
       {
