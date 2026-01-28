@@ -28,4 +28,31 @@
 
 .footerLinks a:hover {
   color: rgba(204, 204, 204, 0.7333333333);
+}
+
+@media (max-width: 992px) {
+  .footer {
+    font-size: 0.85rem;
+    align-items: center;
+    gap: 15px;
+    padding: 2.5rem 2rem;
+  }
+}
+@media (max-width: 792px) {
+  .footerLinks {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media (max-width: 692px) {
+  .footer {
+    padding: 1rem 2rem;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 15px;
+  }
+  .footerLinks {
+    flex-direction: row;
+    gap: 2rem;
+  }
 }/*# sourceMappingURL=Footer.module.css.map */
