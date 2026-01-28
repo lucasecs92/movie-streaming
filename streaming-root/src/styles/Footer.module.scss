@@ -23,13 +23,16 @@
     gap: 20px;
 }
 
-.footerLinks a {
+.footerLinks .linkButton {
     text-decoration: none;
     color: $color-white;
     transition: color 0.3s ease;
+    background-color: transparent;
+    border: none;
 }
 
-.footerLinks a:hover {
+.footerLinks .linkButton:hover {
+    cursor: pointer;
     color: $color-text-dimmed;
 }
 
