@@ -45,7 +45,7 @@
   top: 70px;
   mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  margin-bottom: 5rem;
+  margin-bottom: 15rem;
 }
 
 .screenContainer img {
