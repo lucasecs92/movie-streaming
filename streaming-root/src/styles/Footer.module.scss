@@ -1,16 +1,34 @@
 @use 'variables' as *;
 
 .footer {
-    padding: 0.8rem;
+    padding: 2.5rem 7rem;
     width: 100%;
     background-color: $color-bg-dark;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    font-size: 14px;
  
     p {
         margin: 10px;
         color: $color-white;
-        font-size: 14px;
     }
+}
+
+.footerLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.footerLinks a {
+    text-decoration: none;
+    color: $color-white;
+    transition: color 0.3s ease;
+}
+
+.footerLinks a:hover {
+    color: $color-text-dimmed;
 }
