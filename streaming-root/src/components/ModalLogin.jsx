@@ -114,16 +114,17 @@ export default function ModalLogin({
     try {
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: 'github',
+        options: {
+          // Isso garante que ele volte para a URL onde o usuário está agora
+          // (localhost em dev, ou seu domínio em produção)
+          redirectTo: `${window.location.origin}/`,
+        },
       });
 
-      if (oauthError) {
-        console.error("Erro ao logar com o Github", oauthError);
-        setError("Erro ao logar com o GitHub: " + oauthError.message);
-        setIsLoading(false); // Clear loading on pre-redirect error
-      }
+      if (oauthError) throw oauthError;
     } catch (catchError) {
-      console.error("GitHub login catch error:", catchError);
-      setError("Ocorreu um erro inesperado com o login do GitHub.");
+      console.error("Erro GitHub:", catchError);
+      setError("Erro ao autenticar com GitHub: " + catchError.message);
       setIsLoading(false);
     }
     // No finally here, as redirect might prevent it.

@@ -9,7 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import supabase from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
-import { useLoading } from '../contexts/LoadingContext'; 
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function ModalCadastro({
   isOpen,
@@ -25,7 +25,7 @@ export default function ModalCadastro({
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
-  const { setIsLoading, isLoading: isGlobalLoading } = useLoading(); 
+  const { setIsLoading, isLoading: isGlobalLoading } = useLoading();
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -121,16 +121,17 @@ export default function ModalCadastro({
     try {
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: 'github',
+        options: {
+        // Isso garante que ele volte para a URL onde o usuário está agora
+        // (localhost em dev, ou seu domínio em produção)
+          redirectTo: `${window.location.origin}/`,
+        },
       });
 
-      if (oauthError) {
-        console.error("Erro ao cadastrar com o Github", oauthError);
-        setError("Erro ao cadastrar com o GitHub: " + oauthError.message);
-        setIsLoading(false);
-      }
+      if (oauthError) throw oauthError;
     } catch (catchError) {
-      console.error("GitHub signup catch error:", catchError);
-      setError("Ocorreu um erro inesperado com o cadastro via GitHub.");
+      console.error("GitHub signup error:", catchError);
+      setError("Erro ao autenticar com GitHub: " + catchError.message);
       setIsLoading(false);
     }
   };
