@@ -30,7 +30,7 @@
 
 .footerLinks .linkButton:hover {
   cursor: pointer;
-  color: rgba(204, 204, 204, 0.7333333333);
+  color: #fe4f2d;
 }
 
 @media (max-width: 992px) {

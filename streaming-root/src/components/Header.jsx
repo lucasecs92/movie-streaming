@@ -1,180 +1,162 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { IoClose, IoMenuSharp } from "react-icons/io5";
-import { MdOutlineHome, MdOutlineLocalMovies, MdLiveTv, MdLogout } from "react-icons/md";
+import {
+  MdOutlineHome,
+  MdOutlineLocalMovies,
+  MdLiveTv,
+  MdLogout
+} from "react-icons/md";
 import { useState, useEffect, useRef } from "react";
 import styles from "../styles/Header.module.scss";
-import supabase from '../../lib/supabaseClient';
-import { useRouter } from 'next/navigation';
-import { useLoading } from '../contexts/LoadingContext';
+import supabase from "../../lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import { useLoading } from "../contexts/LoadingContext";
 
-export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onCadastroClick }) {
+export default function Header({
+  onFilmesClick,
+  onSeriesClick,
+  onLoginClick,
+  onCadastroClick
+}) {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [session, setSession] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const dropdownRef = useRef(null);
   const router = useRouter();
-  const { setIsLoading, isLoading: isGlobalLoading } = useLoading();
-  const hoverTimeoutRef = useRef(null); 
+  const { setIsLoading, isLoading } = useLoading();
+
+  // Fecha o dropdown se clicar fora dele
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 820);
-      if (window.innerWidth > 820) {
-        setMenuOpen(false);
-      }
+      if (window.innerWidth > 820) setMenuOpen(false);
     };
-
     window.addEventListener("resize", handleResize);
     handleResize();
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session) {
-        setUserName(session.user.user_metadata.full_name || session.user.email);
-      } else {
-        setUserName(null);
+    // Busca sessão inicial
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      setUserName(currentSession?.user?.user_metadata?.full_name || currentSession?.user?.email || null);
+    });
+
+    // Escuta mudanças (Login/Logout)
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      setSession(currentSession);
+      setUserName(currentSession?.user?.user_metadata?.full_name || currentSession?.user?.email || null);
+      
+      if (event === "SIGNED_OUT") {
+        setIsDropdownOpen(false);
+        setMenuOpen(false);
       }
     });
 
-    const { data: authStateChangeData } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (session) {
-        setUserName(session.user.user_metadata.full_name || session.user.email);
-      } else {
-        setUserName(null);
-        if (_event === "SIGNED_OUT") {
-          setIsDropdownOpen(false);
-        }
-      }
-    });
-
-    return () => {
-      authStateChangeData?.subscription?.unsubscribe();
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current); 
-      }
-    };
+    return () => authListener?.subscription?.unsubscribe();
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleLogout = async () => {
-    setIsDropdownOpen(false);
-    setIsLoading(true);
+  const handleLogout = async (e) => {
+    if (e) e.preventDefault();
+    
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Erro ao deslogar:", error);
-      } else {
-        console.log("Deslogado com sucesso");
-        onFilmesClick(true);
-        router.push('/');
-        if (isMobile && menuOpen) {
-          setMenuOpen(false);
-        }
-      }
-    } catch (catchError) {
-      console.error("Logout catch error:", catchError);
-    }
-    finally {
+      setIsLoading(true);
+      
+      // 1. Limpa a sessão no Supabase
+      await supabase.auth.signOut();
+      
+      // 2. Limpa estados locais imediatamente
+      setSession(null);
+      setUserName(null);
+      setIsDropdownOpen(false);
+      setMenuOpen(false);
+
+      // 3. Reset de navegação
+      onFilmesClick(true);
+      
+      // 4. Força o redirecionamento e recarregamento leve para limpar caches de auth
+      router.push("/");
+      router.refresh(); 
+
+    } catch (error) {
+      console.error("Erro ao sair:", error);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  const handleMouseEnterUserSection = () => {
-    if (isGlobalLoading) return;
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    setIsDropdownOpen(true);
-  };
-
-  const handleMouseLeaveUserSection = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
-      setIsDropdownOpen(false);
-    }, 200); // Adjust delay as needed (e.g., 200-300ms)
-  };
-
-  const handleMobileMenuClick = (actionCallback) => {
-    if (isGlobalLoading) return;
-    if (actionCallback) {
-      actionCallback();
-    }
-    setMenuOpen(false);
-  };
-
-  const handleMouseEnterDropdownMenu = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-  };
-
-
   return (
     <header className={styles.header}>
       <nav className={styles.navLeft}>
-        <h1 onClick={() => {
-          if (isGlobalLoading) return;
-          onFilmesClick(true);
-          if (isMobile && menuOpen) setMenuOpen(false);
-        }}>Cineminha</h1>
+        <h1 className={styles.logo}>
+          <button
+            type="button"
+            className={styles.logoButton}
+            onClick={() => { onFilmesClick(true); setMenuOpen(false); }}
+          >
+            Cineminha
+          </button>
+        </h1>
+
         {isMobile ? (
           <>
-            {menuOpen ? (
-              <IoClose className={styles.menuIcon} onClick={isGlobalLoading ? undefined : toggleMenu} />
-            ) : (
-              <IoMenuSharp className={styles.menuIcon} onClick={isGlobalLoading ? undefined : toggleMenu} />
-            )}
+            <button
+              type="button"
+              className={styles.menuIcon}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <IoClose /> : <IoMenuSharp />}
+            </button>
+
             {menuOpen && (
               <ul className={styles.navLeftUlMobile}>
-                {session ? (
+                {session && (
                   <>
-                    <li onClick={() => handleMobileMenuClick(() => onFilmesClick(true))}>
-                      <MdOutlineHome />
-                      Início
-                    </li>
-                    <li onClick={() => handleMobileMenuClick(() => onFilmesClick(false))}>
-                      <MdOutlineLocalMovies />
-                      Filmes
-                    </li>
-                    <li onClick={() => handleMobileMenuClick(onSeriesClick)}>
-                      <MdLiveTv />
-                      Séries
-                    </li>
+                    <li><button onClick={() => { onFilmesClick(true); setMenuOpen(false); }}><MdOutlineHome /> Início</button></li>
+                    <li><button onClick={() => { onFilmesClick(false); setMenuOpen(false); }}><MdOutlineLocalMovies /> Filmes</button></li>
+                    <li><button onClick={() => { onSeriesClick(); setMenuOpen(false); }}><MdLiveTv /> Séries</button></li>
                   </>
-                ) : null}
-                <hr className={styles.divider} />
-                {session ? (
-                  <li className={styles.btnLoginMobile} onClick={() => handleMobileMenuClick(handleLogout)}>
-                    <MdLogout />
-                    Sair
-                  </li>
-                ) : (
-                  <li className={styles.btnLoginMobile} onClick={() => handleMobileMenuClick(onLoginClick)}>
-                    LOGIN
-                  </li>
                 )}
+                <hr className={styles.divider} />
+                <li>
+                  {session ? (
+                    <button className={styles.btnLogoutMobile} onClick={handleLogout}>
+                      <MdLogout /> Sair
+                    </button>
+                  ) : (
+                    <button className={styles.btnLoginMobile} onClick={() => { onLoginClick(); setMenuOpen(false); }}>
+                      LOGIN
+                    </button>
+                  )}
+                </li>
               </ul>
             )}
           </>
         ) : (
           <ul className={styles.navLeftUl}>
-            {session ? (
+            {session && (
               <>
-                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(true)}>Início</li>
-                <li onClick={isGlobalLoading ? undefined : () => onFilmesClick(false)}>Filmes</li>
-                <li onClick={isGlobalLoading ? undefined : onSeriesClick}>Séries</li>
+                <li><button onClick={() => onFilmesClick(true)}>Início</button></li>
+                <li><button onClick={() => onFilmesClick(false)}>Filmes</button></li>
+                <li><button onClick={onSeriesClick}>Séries</button></li>
               </>
-            ) : null}
+            )}
           </ul>
         )}
       </nav>
@@ -182,38 +164,31 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
       <nav className={styles.navRight}>
         <ul className={styles.navRightUl}>
           {session ? (
-            <li
-              className={styles.userSection}
-              ref={dropdownRef}
-            >
-              <section 
+            <li className={styles.userSection} ref={dropdownRef}>
+              <button
+                type="button"
                 className={styles.userName}
-                onMouseEnter={handleMouseEnterUserSection}
-                onMouseLeave={handleMouseLeaveUserSection}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                {userName}
-              </section>
+                {userName} {isDropdownOpen ? "▲" : "▼"}
+              </button>
+
               {isDropdownOpen && (
-                <section
-                  className={styles.dropdownMenu}
-                  onClick={handleLogout} 
-                  onMouseEnter={handleMouseEnterDropdownMenu} 
-                >
-                  <MdLogout />
-                  <section className={styles.btnLogout}>
-                    Sair
-                  </section>
-                </section>
+                <div className={styles.dropdownMenu}>
+                  <button
+                    type="button"
+                    className={styles.dropdownItem}
+                    onClick={handleLogout}
+                  >
+                    <MdLogout /> Sair
+                  </button>
+                </div>
               )}
             </li>
           ) : (
             <>
-              <li className={styles.btnLogin} onClick={isGlobalLoading ? undefined : onLoginClick}>
-                LOGIN
-              </li>
-              <li className={styles.btnCadastro} onClick={isGlobalLoading ? undefined : onCadastroClick}>
-                CADASTRO
-              </li>
+              <li><button className={styles.btnLogin} onClick={onLoginClick}>LOGIN</button></li>
+              <li><button className={styles.btnCadastro} onClick={onCadastroClick}>CADASTRO</button></li>
             </>
           )}
         </ul>
@@ -221,3 +196,10 @@ export default function Header({ onFilmesClick, onSeriesClick, onLoginClick, onC
     </header>
   );
 }
+
+Header.propTypes = {
+  onFilmesClick: PropTypes.func.isRequired,
+  onSeriesClick: PropTypes.func.isRequired,
+  onLoginClick: PropTypes.func.isRequired,
+  onCadastroClick: PropTypes.func.isRequired
+};
