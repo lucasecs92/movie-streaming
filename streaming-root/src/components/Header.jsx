@@ -28,7 +28,7 @@ export default function Header({
 
   const dropdownRef = useRef(null);
   const router = useRouter();
-  const { setIsLoading, isLoading } = useLoading();
+  const { setIsLoading } = useLoading();
 
   // Fecha o dropdown se clicar fora dele
   useEffect(() => {
