@@ -174,7 +174,7 @@ export default function Header({
               </button>
 
               {isDropdownOpen && (
-                <div className={styles.dropdownMenu}>
+                <section className={styles.dropdownMenu}>
                   <button
                     type="button"
                     className={styles.dropdownItem}
@@ -182,7 +182,7 @@ export default function Header({
                   >
                     <MdLogout /> Sair
                   </button>
-                </div>
+                </section>
               )}
             </li>
           ) : (

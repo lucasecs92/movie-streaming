@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .header {
   display: flex;
@@ -29,7 +29,7 @@
   list-style-type: none;
   margin: 0;
 
-  li {  
+  li {
     padding: 9px 25px;
     border-radius: 8px;
 
@@ -76,7 +76,7 @@
     }
 
     &:hover {
-      background-color: rgba(#555555, 0.82); 
+      background-color: rgba(#555555, 0.82);
     }
   }
 
@@ -141,23 +141,26 @@
       position: absolute;
       top: 55px;
       right: 0;
-      background-color: rgba($color-bg-dark, 0.71);
-      border: none;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      padding: 0px 10px;
-      cursor: pointer;
-      color: $color-text-light;
 
-      svg {
-        font-size: 1.5em;
-      }
+      .dropdownItem {
+        display: flex;
+        padding: 0.5rem;
+        gap: 5px;
+        background-color: rgba($color-bg-dark, 0.71);
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        color: $color-text-light;
+        cursor: pointer;
+        z-index: 1000;
 
-      &:hover {
-        background-color: rgba(#555555, 0.82);
+        svg {
+          font-size: 1.5em;
+        }
+
+        &:hover {
+          background-color: rgba(#555555, 0.82);
+        }
       }
     }
 
