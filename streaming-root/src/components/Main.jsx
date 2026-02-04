@@ -82,12 +82,12 @@ export default function Main({
         <section className={styles.homeContainer}>
           {session ? (
             <section className={styles.banner}>
-              <h2>Bem-vindo(a) ao Cineminha!</h2>
+              <h2><span className={styles.bannerTitleSpan}>Bem-vindo(a) ao </span>Cineminha</h2>
               <p>Assista aos melhores filmes e séries aqui.</p>
             </section>
           ) : (
             <section className={styles.banner}>
-              <h2>Bem-vindo(a) ao Cineminha!</h2>
+              <h2><span className={styles.bannerTitleSpan}>Bem-vindo(a) ao </span>Cineminha</h2>
               <button className={styles.startButton} onClick={onLoginClick}>
                 Começar
               </button>
