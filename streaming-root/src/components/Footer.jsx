@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"; 
 import styles from "../styles/Footer.module.scss";
 
 export default function Footer({ onTermsClick, onPrivacyClick }) {
@@ -6,12 +7,20 @@ export default function Footer({ onTermsClick, onPrivacyClick }) {
       <p>&copy; 2026 Cineminha. Todos os direitos reservados.</p>
       <ul className={styles.footerLinks}>
         <li>
-          <button onClick={(e) => { e.preventDefault(); onTermsClick(); }} className={styles.linkButton}>
+          <button 
+            type="button" 
+            onClick={(e) => { e.preventDefault(); onTermsClick(); }} 
+            className={styles.linkButton}
+          >
             Termos de Uso
           </button>
         </li>
         <li>
-          <button onClick={(e) => { e.preventDefault(); onPrivacyClick(); }} className={styles.linkButton}>
+          <button 
+            type="button" 
+            onClick={(e) => { e.preventDefault(); onPrivacyClick(); }} 
+            className={styles.linkButton}
+          >
             Política de Privacidade
           </button>
         </li>
@@ -19,3 +28,9 @@ export default function Footer({ onTermsClick, onPrivacyClick }) {
     </footer>
   );
 }
+
+// validação das props
+Footer.propTypes = {
+  onTermsClick: PropTypes.func.isRequired,
+  onPrivacyClick: PropTypes.func.isRequired,
+};
