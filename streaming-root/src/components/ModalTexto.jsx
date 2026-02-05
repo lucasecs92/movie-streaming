@@ -9,7 +9,6 @@ export default function ModalTexto({ isOpen, onClose, title, children }) {
       <section className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <section className={styles.header}>
           <h2>{title}</h2>
-          <button onClick={onClose} className={styles.closeBtn}>&times;</button>
         </section>
         <section className={styles.content}>
           {children}
