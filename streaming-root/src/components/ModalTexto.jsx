@@ -13,7 +13,6 @@ export default function ModalTexto({ isOpen, onClose, title, children }) {
 
   useEffect(() => {
     if (isOpen) {
-      // Correção: globalThis
       globalThis.addEventListener("keydown", handleEsc);
     }
     return () => {
@@ -25,23 +24,12 @@ export default function ModalTexto({ isOpen, onClose, title, children }) {
 
   return (
     <section className={styles.overlay}>
-      {/* 
-        1. O fundo agora é um BUTTON real. 
-        Isso satisfaz o erro de "Non-interactive elements".
-        Ele deve ser estilizado no CSS para cobrir toda a tela atrás do modal.
-      */}
       <button
         type="button"
         className={styles.overlayClickArea}
         onClick={onClose}
         aria-label="Fechar modal"
       />
-
-      {/* 
-        2. O Modal usa a tag <dialog>. 
-        Isso satisfaz o erro "Use <dialog> instead of the 'dialog' role".
-        Removemos o onClick daqui para evitar erros de interatividade.
-      */}
       <dialog open className={styles.modal} aria-labelledby="modal-title">
         <header className={styles.header}>
           <h2 id="modal-title">{title}</h2>
@@ -55,7 +43,6 @@ export default function ModalTexto({ isOpen, onClose, title, children }) {
           </button>
         </header>
         
-        {/* 3. section em vez de Section para evitar erros de Landmark */}
         <section className={styles.content}>
           {children}
         </section>

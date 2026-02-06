@@ -54,9 +54,7 @@ export default function Main({
     }, LOADER_DURATION);
   }, [setFilmeSelecionado, setIsLoading, setShowHeaderFooter]);
 
-  // 2. Extração da lógica de renderização para evitar ternários aninhados
   const renderContent = () => {
-    // Caso 1: Item selecionado (Detalhes)
     if (filmeSelecionado) {
       if (isSeries) {
         return (
@@ -76,7 +74,7 @@ export default function Main({
       );
     }
 
-    // Caso 2: Banner inicial
+    // Banner inicial
     if (showBanner) {
       return (
         <section className={styles.homeContainer}>
@@ -115,7 +113,7 @@ export default function Main({
   );
 }
 
-// 3. Adicionar validação de Props para corrigir os erros de linting
+// validação de Props para corrigir os erros de linting
 Main.propTypes = {
   showBanner: PropTypes.bool.isRequired,
   filmeSelecionado: PropTypes.object,

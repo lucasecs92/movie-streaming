@@ -29,14 +29,12 @@
 }
 
 .modal {
-  // Reset de estilos padrão da tag <dialog>
   border: 1px solid #333;
   padding: 0;
   margin: auto;
   display: flex;
   flex-direction: column;
   
-  // Estilos visuais
   background: $color-bg-dark;
   color: $color-white;
   width: 100%;
@@ -61,7 +59,6 @@
     font-size: 1.5rem;
   }
 
-  // Estilo do botão "X"
   .closeBtn {
     background: transparent;
     border: none;
@@ -87,7 +84,7 @@
   overflow-y: auto;
   line-height: 1.6;
   font-size: 0.95rem;
-  color: $color-text-light; // Adicionado ponto e vírgula corrigindo seu erro
+  color: $color-text-light; 
 
   h3 { 
     color: $color-white; 
