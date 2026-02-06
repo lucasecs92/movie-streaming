@@ -25,23 +25,18 @@
   list-style-type: none;
   margin: 0;
 }
-.navLeftUl li {
-  padding: 9px 25px;
-  border-radius: 8px;
-}
-.navLeftUl li:hover {
-  background-color: rgba(255, 255, 255, 0.09);
-}
 .navLeftUl li button {
   background: none;
   border: none;
-  padding: 0;
   font-size: 1rem;
   font-weight: 700;
   color: #cccccc;
+  padding: 9px 25px;
+  border-radius: 8px;
 }
 .navLeftUl li button:hover {
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .navLeftUlMobile {
@@ -127,21 +122,23 @@
   position: absolute;
   top: 55px;
   right: 0;
+}
+.navRightUl .userSection .dropdownMenu .dropdownItem {
+  display: flex;
+  padding: 0.5rem;
+  gap: 5px;
   background-color: rgba(21, 27, 35, 0.71);
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  padding: 0px 10px;
-  cursor: pointer;
   color: #cccccc;
+  cursor: pointer;
+  z-index: 1000;
 }
-.navRightUl .userSection .dropdownMenu svg {
+.navRightUl .userSection .dropdownMenu .dropdownItem svg {
   font-size: 1.5em;
 }
-.navRightUl .userSection .dropdownMenu:hover {
+.navRightUl .userSection .dropdownMenu .dropdownItem:hover {
   background-color: rgba(85, 85, 85, 0.82);
 }
 .navRightUl .userSection .btnLogout {

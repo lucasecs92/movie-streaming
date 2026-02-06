@@ -20,13 +20,13 @@
 .banner {
   text-align: center;
   padding: 90px 0;
-  background-color: #0d1928;
+  background-color: #040507;
   position: relative;
   overflow: visible;
 }
 
 .banner h2 {
-  font-size: 24px;
+  font-size: 2.5rem;
   margin-bottom: 10px;
   color: #cccccc;
 }
@@ -34,6 +34,13 @@
 .banner p {
   font-size: 16px;
   color: rgba(204, 204, 204, 0.7333333333);
+}
+
+.bannerTitleSpan {
+  font-size: 3rem;
+  font-family: "Send Flowers", cursive;
+  color: rgb(182, 182, 2);
+  padding-right: 8px;
 }
 
 .screenContainer {
