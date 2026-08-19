@@ -58,11 +58,12 @@ function HomeComponent() {
   };
 
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") openModal('resetPassword');
     });
-    return () => authListener?.unsubscribe();
-  }, []);
+
+    return () => subscription.unsubscribe();
+  }, [openModal]);
 
   // --- Handlers de Navegação ---
   const voltarParaListaPrincipal = useCallback(() => {

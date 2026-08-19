@@ -65,7 +65,7 @@ export default function ModalCadastro({
 
     setIsLoading(true);
     try {
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { error: signUpError } = await supabase.auth.signUp({
         email: email,
         password: password,
         options: {
@@ -139,8 +139,22 @@ export default function ModalCadastro({
   return (
     <section className={styles.modalOverlay}>
       <nav className={styles.headerModal}>
-        <h1 onClick={handleHomeClick}>Cineminha</h1>
-        <span onClick={handleLoginClick}>Já é usuário?</span>
+        <button 
+          type="button"
+          className={styles.brandButton} 
+          onClick={handleHomeClick}
+          aria-label="Voltar para home"
+        >
+          Cineminha
+        </button>
+        <button 
+          type="button"
+          className={styles.loginLink}
+          onClick={handleLoginClick}
+          aria-label="Ir para login"
+        >
+          Já é usuário?
+        </button>
       </nav>
 
       <section className={styles.modalWrap}>
@@ -162,9 +176,10 @@ export default function ModalCadastro({
           }
 
           <form className={styles.form} onSubmit={handleCadastro}>
-            <label className={styles.label}>Nome</label>
+            <label className={styles.label} htmlFor="name">Nome</label>
             <section className={styles.inputWrapper}>
               <input
+                id="name"
                 className={styles.input}
                 type="text"
                 value={name}
@@ -173,9 +188,10 @@ export default function ModalCadastro({
                 disabled={isGlobalLoading}
               />
             </section>
-            <label className={styles.label}>Email</label>
+            <label className={styles.label} htmlFor="email">Email</label>
             <section className={styles.inputWrapper}>
               <input
+                id="email"
                 className={styles.input}
                 type="email"
                 value={email}
@@ -188,9 +204,10 @@ export default function ModalCadastro({
                 <IoClose className={styles.clearIcon} onClick={clearEmail} />
               )}
             </section>
-            <label className={styles.label}>Senha</label>
+            <label className={styles.label} htmlFor="password">Senha</label>
             <section className={styles.passwordWrapper}>
               <input
+                id="password"
                 className={styles.input}
                 type={showPassword ? "text" : "password"}
                 value={password}

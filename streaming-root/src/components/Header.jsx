@@ -128,19 +128,19 @@ export default function Header({
               <ul className={styles.navLeftUlMobile}>
                 {session && (
                   <>
-                    <li><button onClick={() => { onFilmesClick(true); setMenuOpen(false); }}><MdOutlineHome /> Início</button></li>
-                    <li><button onClick={() => { onFilmesClick(false); setMenuOpen(false); }}><MdOutlineLocalMovies /> Filmes</button></li>
-                    <li><button onClick={() => { onSeriesClick(); setMenuOpen(false); }}><MdLiveTv /> Séries</button></li>
+                    <li><button type="button" onClick={() => { onFilmesClick(true); setMenuOpen(false); }}><MdOutlineHome /> Início</button></li>
+                    <li><button type="button" onClick={() => { onFilmesClick(false); setMenuOpen(false); }}><MdOutlineLocalMovies /> Filmes</button></li>
+                    <li><button type="button" onClick={() => { onSeriesClick(); setMenuOpen(false); }}><MdLiveTv /> Séries</button></li>
                   </>
                 )}
                 <hr className={styles.divider} />
                 <li>
                   {session ? (
-                    <button className={styles.btnLogoutMobile} onClick={handleLogout}>
+                    <button type="button" className={styles.btnLogoutMobile} onClick={handleLogout}>
                       <MdLogout /> Sair
                     </button>
                   ) : (
-                    <button className={styles.btnLoginMobile} onClick={() => { onLoginClick(); setMenuOpen(false); }}>
+                    <button type="button" className={styles.btnLoginMobile} onClick={() => { onLoginClick(); setMenuOpen(false); }}>
                       LOGIN
                     </button>
                   )}
@@ -152,9 +152,9 @@ export default function Header({
           <ul className={styles.navLeftUl}>
             {session && (
               <>
-                <li><button onClick={() => onFilmesClick(true)}>Início</button></li>
-                <li><button onClick={() => onFilmesClick(false)}>Filmes</button></li>
-                <li><button onClick={onSeriesClick}>Séries</button></li>
+                <li><button type="button" onClick={() => onFilmesClick(true)}>Início</button></li>
+                <li><button type="button" onClick={() => onFilmesClick(false)}>Filmes</button></li>
+                <li><button type="button" onClick={onSeriesClick}>Séries</button></li>
               </>
             )}
           </ul>
@@ -187,8 +187,8 @@ export default function Header({
             </li>
           ) : (
             <>
-              <li><button className={styles.btnLogin} onClick={onLoginClick}>LOGIN</button></li>
-              <li><button className={styles.btnCadastro} onClick={onCadastroClick}>CADASTRO</button></li>
+              <li><button type="button" className={styles.btnLogin} onClick={onLoginClick}>LOGIN</button></li>
+              <li><button type="button" className={styles.btnCadastro} onClick={onCadastroClick}>CADASTRO</button></li>
             </>
           )}
         </ul>

@@ -86,7 +86,7 @@ export default function Main({
           ) : (
             <section className={styles.banner}>
               <h2><span className={styles.bannerTitleSpan}>Bem-vindo(a) ao </span>Cineminha</h2>
-              <button className={styles.startButton} onClick={onLoginClick}>
+              <button type="button" className={styles.startButton} onClick={onLoginClick}>
                 Começar
               </button>
               <section className={styles.screenContainer}>
